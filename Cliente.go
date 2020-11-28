@@ -91,8 +91,9 @@ func main() {
 	
 	var conn *grpc.ClientConn
 	flag = true
+	var ip string
 	for;flag;{
-		var ip string
+		
 		ip = "dist"
 		ip += strconv.Itoa(rand.Intn(4) + 109)
 		fmt.Println(ip)
