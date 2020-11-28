@@ -14,13 +14,8 @@ import (
 )
 
 type Server struct {}
-
-var IDNODE int64 = 0
-
-var i = 0
-var id int64 = 0
-
-
+var IDNODE int64 = 1 // Conflicto LOG
+var id int64 = 0 // Conflicto clientes simultaneos
 
 func Propuesta(msj *nodos.MessageNode){
 	// Conectamos con el DataNode
@@ -30,7 +25,8 @@ func Propuesta(msj *nodos.MessageNode){
 		log.Fatalf("Error al conectar con el servidor: %s", err)
 	}   
 	ConexionNameNode := nodos.NewChatService2Client(conn2)
-	ConexionNameNode.Propuesta(context.Background(), msj)  // Enviamos propuesta
+	response , _ := ConexionNameNode.Propuesta(context.Background(), msj)  // Enviamos propuesta
+	fmt.Println(response)
 }
 
 
@@ -57,8 +53,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 		}		
 	}
 
-	fileName := message.NombreLibro
-	i += 1
+	/*fileName := message.NombreLibro
 	_, err := os.Create("Fragmentos/"+fileName)
 	if err != nil {
 			fmt.Println(err)
@@ -66,17 +61,15 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 	}
 	// write/save buffer to disk
 	ioutil.WriteFile("Fragmentos/"+fileName, message.Chunks, os.ModeAppend)
-	fmt.Println("Fragmento: ", fileName)
+	fmt.Println("Fragmento: ", fileName)*/
 
-	return &cliente.ResponseCliente{},nil
-	
-	
+	return &cliente.ResponseCliente{},nil	
 }
 
 
 // Conexion DataNode.
 func main() {
-	lis, err := net.Listen("tcp", ":9000")
+	lis, err := net.Listen("tcp", ":9001")
 	if err != nil {
 			log.Fatalf("Failed to listen on port 9000: %v", err)
 	}            

@@ -15,7 +15,62 @@ type Server struct {}
 
 func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode,error){
 	fmt.Println(message)
-	return &nodos.ResponseNode{},nil
+	flag := 0
+	flag1 := 0
+	flag2 := 0
+	flag3 := 0
+	cantidad_error := 0
+	cantidad1 := message.Cantidad1
+	cantidad2 := message.Cantidad2
+	cantidad3 := message.Cantidad3
+
+	if(message.Cantidad1 != 0){
+		var conn *grpc.ClientConn
+		conn, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
+		if err != nil {
+			flag = 1
+			flag1 = 1			
+			cantidad1 = 0
+			cantidad_error += message.Cantidad1
+		}   
+	}	
+	if(message.Cantidad2 != 0){
+		var conn *grpc.ClientConn
+		conn, err := grpc.Dial("dist110:9001", grpc.WithInsecure())
+		if err != nil {
+			flag = 1
+			flag2 = 1			
+			cantidad2 = 0
+			cantidad_error += message.Cantidad2
+		}   
+	}	
+	if(message.Cantidad2 != 0){
+		var conn *grpc.ClientConn
+		conn, err := grpc.Dial("dist111:9002", grpc.WithInsecure())
+		if err != nil {
+			flag = 1
+			flag3 = 1
+			cantidad3 = 0
+			cantidad_error += message.Cantidad3
+		}   
+	}
+
+	if(flag==0){
+		return &nodos.ResponseNode{Cantidad1: message.Cantidad1, Cantidad2: message.Cantidad2, Cantidad3: message.Cantidad3},nil
+	}
+	if(flag1 == 0){
+		cantidad1 += cantidad_error	
+		cantidad_error = 0	
+	}
+	if(flag2 == 0){
+		cantidad2 += cantidad_error		
+		cantidad_error = 0	
+	}
+	if(flag3 == 0){
+		cantidad3 += cantidad_error		
+		cantidad_error = 0	
+	}
+	return &nodos.ResponseNode{Cantidad1: cantidad1, Cantidad2: cantidad2, Cantidad3: cantidad3},nil
 }
 
 // Conexion DataNode.
