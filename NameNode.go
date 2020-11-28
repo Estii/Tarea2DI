@@ -92,12 +92,18 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		fmt.Println("Propuesta rechazada, no hay DataNodes disponibles")
 		return &nodos.ResponseNode{Cantidad1: -1, Cantidad2: -1, Cantidad3:-1},nil
 	}
-    b := []byte(message.NombreLibro+" "+strconv.FormatInt(cantidadT,10)+"\n")
-    err := ioutil.WriteFile("Log/log.txt", b, 0644)
-    if err != nil {
-        log.Fatal(err)
+
+	file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
+	if err != nil {
+			log.Println(err)
 	}
-	
+	//defer file.Close()
+	if _, err := file.WriteString(message.NombreLibro+" "+strconv.FormatInt(cantidadT,10)+"\n"); err!=nil{
+			log.Fatal(err)
+	}
+	file.Close()
+
+
 	if(flag==0){	
 		fmt.Println("Propuesta aceptada")
 		var k int64
@@ -134,6 +140,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			}
 			file.Close() 
 		}
+		fmt.Println("Añadido al log correctamente.\n")
 		return &nodos.ResponseNode{Cantidad1: message.Cantidad1, Cantidad2: message.Cantidad2, Cantidad3: message.Cantidad3},nil
 	}
 	if(flag1 == 0){
@@ -188,6 +195,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
         file.Close()
 	}
 	fmt.Println("Propuesta Modificada: [ DN1:"+strconv.FormatInt(cantidad1,10)+" | DN2:"+strconv.FormatInt(cantidad2,10)+" | DN3:"+strconv.FormatInt(cantidad3,10)+" ]")
+	fmt.Println("Añadido al log correctamente.\n")
 
 	return &nodos.ResponseNode{Cantidad1: cantidad1, Cantidad2: cantidad2, Cantidad3: cantidad3},nil
 }
