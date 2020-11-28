@@ -8,7 +8,9 @@ import (
 	"google.golang.org/grpc"
 	"fmt"
 	"golang.org/x/net/context"
-
+	"time"
+	"os"
+	"ioutil"
 )
 
 type Server struct {}
@@ -46,7 +48,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *MessageCliente) (*Res
 		cantidad_resto := cantidad%3
 		cantidades := [3]int64{cantidad_uniforme + cantidad_resto, cantidad_uniforme, cantidad_uniforme}
 		fmt.Println(cantidades)
-		message := MessageNode{ Pruebai:"HOLA" }
+		message := nodos.MessageNode{ Pruebai:"HOLA" }
 		Propuesta(&message)
 		return &ResponseCliente{},nil
 	}
