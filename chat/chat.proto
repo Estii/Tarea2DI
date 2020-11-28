@@ -11,6 +11,7 @@ message MessageCliente{
     int64 ID = 3;
     string NombreLibro = 4;
     int64 CantidadChunks = 5;
+    int64 Tipo = 6;
 }
 
 message EstadoE{

@@ -76,17 +76,24 @@ func Cargar_Libro(tipo int){
 						partSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
 						partBuffer := make([]byte, partSize)
 						file.Read(partBuffer)	
-						message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.Itoa(j), Chunks:partBuffer, ID:id, Termino:0 }
-						if(tipo==1){
-							fmt.Println("Aun en implementacion:(")
+						if(tipo==1){							
+							message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.Itoa(j), Chunks:partBuffer, ID:id, Termino:0, Tipo: 1 }
+							ConexionSubida.EnviarLibro(context.Background(), &message)
 						}
-						if(tipo==2){
+						if(tipo==2){							
+							message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.Itoa(j), Chunks:partBuffer, ID:id, Termino:0 , Tipo: 2}
 							ConexionSubida.EnviarLibro(context.Background(), &message)
 						}
 						j+=1
 					}				
-					message := chat.MessageCliente{Termino: 1, CantidadChunks:Cantidad, ID:id} // Se envia un mensaje de termino de envio.
-					ConexionSubida.EnviarLibro(context.Background(), &message)
+					if(tipo==1){							
+						message := chat.MessageCliente{ Termino: 1, CantidadChunks:Cantidad, ID:id , Tipo: 1 }
+						ConexionSubida.EnviarLibro(context.Background(), &message)
+					}
+					if(tipo==2){							
+						message := chat.MessageCliente{ Termino: 1, CantidadChunks:Cantidad, ID:id , Tipo: 2}
+						ConexionSubida.EnviarLibro(context.Background(), &message)
+					}
 					file.Close()
 				}  
 			}	
