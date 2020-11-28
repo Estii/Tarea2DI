@@ -76,7 +76,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 func remover(){
     var files []string
     root := "./Fragmentos/"
-    err = filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+    err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
       files = append(files, path)
       return nil
     })
