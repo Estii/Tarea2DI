@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"net"
-	"Tarea2DI/chat"
+	cliente "Tarea2DI/chat"
 	nodos "Tarea2DI/chat2"
 	"google.golang.org/grpc"
 	"fmt"
@@ -36,7 +36,7 @@ func Propuesta(prop *nodos.MessageNode){
 }
 
 
-func (s *Server) EnviarLibro(ctx context.Context, message *MessageCliente) (*ResponseCliente,error){
+func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 
 	if(id == 0){ // Node disponible
 		id = message.ID
@@ -50,7 +50,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *MessageCliente) (*Res
 		fmt.Println(cantidades)
 		message := nodos.MessageNode{ Pruebai:"HOLA" }
 		Propuesta(&message)
-		return &ResponseCliente{},nil
+		return &cliente.ResponseCliente{},nil
 	}
 
 	for id != message.ID { // Si no esta disponible, esperara hasta que pueda.
@@ -72,7 +72,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *MessageCliente) (*Res
 	ioutil.WriteFile("Fragmentos/"+fileName, message.Chunks, os.ModeAppend)
 	fmt.Println("Fragmento: ", fileName)
 
-	return &ResponseCliente{},nil
+	return &cliente.ResponseCliente{},nil
 	
 	
 }
