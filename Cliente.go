@@ -96,7 +96,7 @@ func main() {
 		ip = "dist"
 		ip += strconv.Itoa(rand.Intn(4) + 109)
 		fmt.Println(ip)
-		conn, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
+		conn, err := grpc.Dial(ip+":9000", grpc.WithInsecure())
 		if err != nil {
 			log.Fatalf("Error al conectar con el servidor: %s", err)
 		}else{
@@ -107,7 +107,7 @@ func main() {
 				if response.Estado == 1 {
 					flag = false
 				}  
-			}
+			}	
 		}
 	}
 
