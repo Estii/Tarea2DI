@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"path/filepath"
 	"os"    
+	"time"
 )
 
 type Server struct {}
@@ -30,8 +31,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			semaforo = message.ID
 		}				
 	}
-	
-	fmt.Println("DataNode " + message.ID +" ha enviando una solicitud [ Centralizada ]")
+
+	fmt.Println("DataNode " + strconv.FormatInt(message.ID) +" ha enviando una solicitud [ Centralizada ]")
 	var flag int64 = 0
 	var flag1 int64 = 0
 	var flag2 int64 = 0
