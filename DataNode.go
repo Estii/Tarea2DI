@@ -6,6 +6,8 @@ import (
 	"Tarea2DI/chat"
 	nodos "Tarea2DI/chat2"
 	"google.golang.org/grpc"
+	"fmt"
+
 )
 
 type Server struct {}
@@ -17,7 +19,7 @@ var id int64 = 0
 
 
 
-func Propuesta(prop *MessageNode){
+func Propuesta(prop *nodos.MessageNode){
 	fmt.Println(prop.Pruebai)
 	// Conectamos con el DataNode
 	var conn2 *grpc.ClientConn
@@ -26,7 +28,7 @@ func Propuesta(prop *MessageNode){
 		log.Fatalf("Error al conectar con el servidor: %s", err)
 	}   
 	ConexionNameNode := nodos.NewChatServiceClient(conn2)
-	message := MessageNode{ Pruebai:"HOLA_datanode" }
+	message := nodos.MessageNode{ Pruebai:"HOLA_datanode" }
 	ConexionNameNode.Propuesta(context.Background(), &message)  // Enviamos propuesta
 }
 
