@@ -43,8 +43,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			fmt.Println(err)
 			if err != nil {
 				flag = 1
-				flag2 = 1			
-				cantidad2 = 0
+				flag1 = 1			
+				cantidad1 = 0
 				cantidad_error += message.Cantidad2
 			}  
 		}
@@ -86,8 +86,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			fmt.Println(err)
 			if err != nil {
 				flag = 1
-				flag2 = 1			
-				cantidad2 = 0
+				flag3 = 1			
+				cantidad3 = 0
 				cantidad_error += message.Cantidad2
 			}  
 		}
