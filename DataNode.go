@@ -35,7 +35,6 @@ func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente
 			os.Exit(1)
 	}
 	ioutil.WriteFile("Fragmentos/"+fileName, message.Chunks, os.ModeAppend)
-	indice+=1
 	fmt.Println("Fragmento: ", fileName)
 	return &cliente.ResponseCliente{},nil
 }
