@@ -13,7 +13,15 @@ message MessageCliente{
     int64 CantidadChunks = 5;
 }
 
+message EstadoE{
+    int64 Estado = 1;
+}
+message EstadoS{
+    int64 Estado = 1;
+}
+
 service ChatService{
     rpc EnviarLibro(MessageCliente) returns (ResponseCliente){}
+    rpc CheckEstado(EstadoE) returns (EstadoS) {}
 }
 

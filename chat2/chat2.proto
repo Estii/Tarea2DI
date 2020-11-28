@@ -13,15 +13,9 @@ message MessageNode{
     int64 Cantidad3 = 3;
 }
 
-message EstadoE{
-    int64 Estado = 1;
-}
-message EstadoS{
-    int64 Estado = 1;
-}
 
 service ChatService2{
     rpc Propuesta(MessageNode) returns (ResponseNode){}
-    rpc CheckEstado(EstadoE) returns (EstadoS) {}
+
 }
 
