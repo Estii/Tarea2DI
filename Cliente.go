@@ -33,7 +33,7 @@ func Subir_Centralizado(){
 			log.Fatalf("Error al conectar con el servidor: %s", err)
 			return
 		}else{
-			ConexionSubida = chat.NewChatServiceClient(conn)		
+			ConexionSubida := chat.NewChatServiceClient(conn)		
 			response,err := ConexionSubida.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
 			fmt.Println(response)
 			if err == nil {
