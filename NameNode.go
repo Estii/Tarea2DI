@@ -42,7 +42,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 				flag = 1
 				flag1 = 1			
 				cantidad1 = 0
-				cantidad_error += message.Cantidad2
+				cantidad_error += message.Cantidad1
 			}  
 		}
 	}	
@@ -65,7 +65,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			}  
 		}
 	}	
-	if(message.Cantidad2 != 0){
+	if(message.Cantidad3 != 0){
 		var conn *grpc.ClientConn
 		conn, err := grpc.Dial("dist111:9002", grpc.WithInsecure())
 		if err != nil {
@@ -80,7 +80,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 				flag = 1
 				flag3 = 1			
 				cantidad3 = 0
-				cantidad_error += message.Cantidad2
+				cantidad_error += message.Cantidad3
 			}  
 		}
 	}
