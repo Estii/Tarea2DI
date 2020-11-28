@@ -74,7 +74,7 @@ func main() {
 	var finalizar bool
   
 	finalizar=true
-	for;flag;{
+	for;finalizar;{
 		fmt.Println("")
 		fmt.Println("1-  Subir Libro  [ Distribuido ]")
 		fmt.Println("2-  Subir Libro  [ Centralizado ]")
