@@ -100,6 +100,29 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	
 	if(flag==0){	
 		fmt.Println("Propuesta aceptada")
+
+		for k:=1;i<message.Cantidad1;k++{
+			b := []byte(message.NombreLibro+"_"+k+" dist109\n")
+			err := ioutil.WriteFile("Log/log.txt", b, 0644)
+			if err != nil {
+				log.Fatal(err)
+			}  
+		}
+		for k:=1;i<message.Cantidad2;k++{
+			b := []byte(message.NombreLibro+"_"+k+" dist110\n")
+			err := ioutil.WriteFile("Log/log.txt", b, 0644)
+			if err != nil {
+				log.Fatal(err)
+			}  
+		}		
+		for k:=1;i<message.Cantidad3;k++{
+			b := []byte(message.NombreLibro+"_"+k+" dist111\n")
+			err := ioutil.WriteFile("Log/log.txt", b, 0644)
+			if err != nil {
+				log.Fatal(err)
+			}  
+		}
+
 		return &nodos.ResponseNode{Cantidad1: message.Cantidad1, Cantidad2: message.Cantidad2, Cantidad3: message.Cantidad3},nil
 	}
 	if(flag1 == 0){
