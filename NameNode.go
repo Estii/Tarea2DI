@@ -5,6 +5,8 @@ import (
 	"net"
 	nodos "Tarea2DI/chat2"
 	"google.golang.org/grpc"
+	"fmt"
+	"golang.org/x/net/context"
 )
 
 
@@ -13,6 +15,7 @@ type Server struct {}
 
 func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode,error){
 	fmt.Println(message)
+	fmt.Println("HOLA")
 	return &nodos.ResponseNode{},nil
 }
 
