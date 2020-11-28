@@ -21,6 +21,8 @@ func Subir_Centralizado(conn *grpc.ClientConn){
 	id := rand.Int63n(100000000000000000)
 	
 	ConexionSubida := chat.NewChatServiceClient(conn)
+	var seleccion int
+	var libro string
 	// Leemos el archivo a fragmentar.
 	fmt.Println("Seleccione un libro:")
 	fmt.Println("1- MobyDick")
@@ -31,13 +33,13 @@ func Subir_Centralizado(conn *grpc.ClientConn){
     fmt.Scanln(&seleccion)
 	switch seleccion {
     case 1:
-		libro := "MobyDick"
+		libro = "MobyDick"
     case 2:
-		libro := "Dracula"	
+		libro = "Dracula"	
     case 3:
-		libro := "La_vuelta_al_mundo_en_80_dias"
+		libro = "La_vuelta_al_mundo_en_80_dias"
     case 4:
-		libro := "Orgullo_y_prejuicio"
+		libro = "Orgullo_y_prejuicio"
     case 5:
      	return
 	}
