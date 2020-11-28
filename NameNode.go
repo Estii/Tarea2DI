@@ -51,8 +51,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	if(message.Cantidad2 != 0){
 		var conn2 *grpc.ClientConn
 		conn2, err2 := grpc.Dial("dist110:9000", grpc.WithInsecure())		
-		c2 := nodos.NewChatService2Client(conn2)
-		
+		Conexion := nodos.NewChatService2Client(conn2)
 		defer conn2.Close()
 		if err2 != nil {
 			flag = 1
@@ -60,7 +59,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad2 = 0
 			cantidad_error += message.Cantidad2
 		}else{		
-			r2,err2 := c2.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})
+			r2,err2 := Conexion.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})
 			fmt.Println(r2)
 			fmt.Println(err2)
 			if err2 != nil {
