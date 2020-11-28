@@ -16,17 +16,15 @@ import (
 
 
 
-func Subir_Centralizado(){
+func Subir_Centralizado(tipo int){
 	var flag bool
 	rand.Seed(time.Now().UnixNano())
-	
 	//var conn *grpc.ClientConn
 	flag = true
 	var ip string
 	for;flag;{		
 		ip = "dist"
 		ip += strconv.Itoa(rand.Intn(3) + 109)
-		fmt.Println(ip)
 		conn, err := grpc.Dial(ip+":9000", grpc.WithInsecure())
 		if err != nil {
 			log.Fatalf("Error al conectar con el servidor: %s", err)
@@ -34,12 +32,9 @@ func Subir_Centralizado(){
 		}else{
 			ConexionSubida := chat.NewChatServiceClient(conn)		
 			response,err := ConexionSubida.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
-			fmt.Println(response)
 			if err == nil {
 				if response.Estado == 1 {
 					id := rand.Int63n(100000000000000000)
-	
-					//ConexionSubida := chat.NewChatServiceClient(conn)
 					var seleccion int
 					var libro string
 					// Leemos el archivo a fragmentar.
@@ -61,8 +56,7 @@ func Subir_Centralizado(){
 						libro = "Orgullo_y_prejuicio"
 					case 5:
 						 return
-					}
-				
+					}				
 					fmt.Println("Subiendo libro "+libro)
 					fileToBeChunked := "./Libros/"+libro+".pdf"
 					file, err := os.Open(fileToBeChunked)
@@ -70,14 +64,12 @@ func Subir_Centralizado(){
 						fmt.Println(err)
 						os.Exit(1)
 					}
-					defer file.Close()
-				
+					defer file.Close()				
 					// Se fragmenta el archivo en tamaño asignado.
 					fileInfo, _ := file.Stat()
 					var fileSize int64 = fileInfo.Size()
 					const fileChunk = 250000 
 					totalPartsNum := uint64(math.Ceil(float64(fileSize) / float64(fileChunk)))
-					
 					var j = 0
 					var Cantidad int64 = int64(totalPartsNum)
 					for i := uint64(0); i < totalPartsNum; i++ { // Se envia chunk por chunk al datanode.
@@ -85,10 +77,14 @@ func Subir_Centralizado(){
 						partBuffer := make([]byte, partSize)
 						file.Read(partBuffer)	
 						message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.Itoa(j), Chunks:partBuffer, ID:id, Termino:0 }
-						ConexionSubida.EnviarLibro(context.Background(), &message)
+						if(tipo==1){
+							fmt.Println("Aun en implementacion:(")
+						}
+						if(tipo==2){
+							ConexionSubida.EnviarLibro(context.Background(), &message)
+						}
 						j+=1
-					}
-				
+					}				
 					message := chat.MessageCliente{Termino: 1, CantidadChunks:Cantidad} // Se envia un mensaje de termino de envio.
 					ConexionSubida.EnviarLibro(context.Background(), &message)
 					file.Close()
@@ -96,8 +92,6 @@ func Subir_Centralizado(){
 			}	
 		}
 	}
-
-
 }
 
 
@@ -105,17 +99,8 @@ func Subir_Centralizado(){
 
 func main() {
 
-	// Conectamos con el DataNode.
-	/*var conn *grpc.ClientConn
-	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
-	if err != nil {
-		log.Fatalf("Error al conectar con el servidor: %s", err)
-	}*/
-
-
 	var seleccion int
 	var finalizar bool
-  
 	finalizar=true
 	for;finalizar;{
 		fmt.Println("")
@@ -129,9 +114,9 @@ func main() {
 		//remover()
 		switch seleccion {
 			case 1:
-				fmt.Println("Aun en implementacacion...")
+				Cargar_Libro(1)
 			case 2:
-				Subir_Centralizado()
+				Cargar_Libro(2)
 			case 3:				
 				fmt.Println("Aun en implementacacion...")
 			case 4:				
@@ -140,9 +125,6 @@ func main() {
 				finalizar = false
 		}
 	}
-
-	
-
 }
 
 
