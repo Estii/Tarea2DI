@@ -62,7 +62,7 @@ func Propuesta(msj *nodos.MessageNode){
 
 }
 
-func printSlice(listachunks []byte) {
+func printSlice(listachunks [][]byte) {
 	fmt.Printf("len=%d cap=%d %v\n", len(listachunks), cap(listachunks), listachunks)
 }
 
