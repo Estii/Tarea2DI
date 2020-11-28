@@ -2,22 +2,22 @@ syntax = "proto3";
 package chat;
 
 message ResponseNode{
-    int64 cantidad1 = 1;
-    int64 cantidad2 = 2;
-    int64 cantidad3 = 3;
+    int64 Cantidad1 = 1;
+    int64 Cantidad2 = 2;
+    int64 Cantidad3 = 3;
 }
 
 message MessageNode{
-    int64 cantidad1 = 1;
-    int64 cantidad2 = 2;
-    int64 cantidad3 = 3;
+    int64 Cantidad1 = 1;
+    int64 Cantidad2 = 2;
+    int64 Cantidad3 = 3;
 }
 
 message EstadoE{
-    int64 estado = 1;
+    int64 Estado = 1;
 }
 message EstadoS{
-    int64 estado = 1;
+    int64 Estado = 1;
 }
 
 service ChatService2{
