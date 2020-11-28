@@ -37,7 +37,9 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad_error += message.Cantidad1
 		}else{
 			c := nodos.NewChatService2Client(conn)		
-			_,err := c.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})
+			r,err := c.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})
+			fmt.Println(r)
+			fmt.Println(err)
 			if err != nil {
 				flag = 1
 				flag1 = 1			
@@ -47,19 +49,19 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		}
 	}	
 	if(message.Cantidad2 != 0){
-		var conn *grpc.ClientConn
-		conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
-		if err != nil {
+		var conn2 *grpc.ClientConn
+		conn2, err2 := grpc.Dial("dist110:9000", grpc.WithInsecure())
+		if err2 != nil {
 			flag = 1
 			flag2 = 1			
 			cantidad2 = 0
 			cantidad_error += message.Cantidad2
 		}else{
-			c := nodos.NewChatService2Client(conn)		
-			r,err := c.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})
-			fmt.Println(r)
-			fmt.Println(err)
-			if err != nil {
+			c2 := nodos.NewChatService2Client(conn2)		
+			r2,err2 := c2.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})
+			fmt.Println(r2)
+			fmt.Println(err2)
+			if err2 != nil {
 				flag = 1
 				flag2 = 1			
 				cantidad2 = 0
@@ -68,17 +70,19 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		}
 	}	
 	if(message.Cantidad3 != 0){
-		var conn *grpc.ClientConn
-		conn, err := grpc.Dial("dist111:9000", grpc.WithInsecure())
-		if err != nil {
+		var conn3 *grpc.ClientConn
+		conn3, err3 := grpc.Dial("dist111:9000", grpc.WithInsecure())
+		if err3 != nil {
 			flag = 1
 			flag3 = 1
 			cantidad3 = 0
 			cantidad_error += message.Cantidad3
 		}else{
-			c := nodos.NewChatService2Client(conn)		
-			_,err := c.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})
-			if err != nil {
+			c3 := nodos.NewChatService2Client(conn3)		
+			r3,err3 := c3.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})			
+			fmt.Println(r3)
+			fmt.Println(err3)
+			if err3 != nil {
 				flag = 1
 				flag3 = 1			
 				cantidad3 = 0
