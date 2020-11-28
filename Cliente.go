@@ -44,11 +44,11 @@ func Subir_Centralizado(){
 					var libro string
 					// Leemos el archivo a fragmentar.
 					fmt.Println("Seleccione un libro:")
-					fmt.Println("1- MobyDick")
-					fmt.Println("1- Dracula")
-					fmt.Println("2- La vuelta al mundo en 80 dias")
-					fmt.Println("3- Orgullo y prejuicio")
-					fmt.Println("4 -Salir")
+					fmt.Println("1-  MobyDick")
+					fmt.Println("2-  Dracula")
+					fmt.Println("3-  La vuelta al mundo en 80 dias")
+					fmt.Println("4-  Orgullo y prejuicio")
+					fmt.Println("5  -Salir")
 					fmt.Scanln(&seleccion)
 					switch seleccion {
 					case 1:
