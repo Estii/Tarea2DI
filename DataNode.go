@@ -18,6 +18,8 @@ import (
 type Server struct {}
 var IDNODE int64 = 2 // Conflicto LOG
 var id int64 = 0 // Conflicto clientes simultaneos
+var nombre_libro string
+var listachunks []bytes
 
 func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cliente.EstadoS,error){
 	return &cliente.EstadoS{Estado:1},nil
@@ -51,8 +53,8 @@ func Propuesta(msj *nodos.MessageNode){
 			log.Fatalf("Error al conectar con el servidor: %s", err)
 		}   
 		Conexion := cliente.NewChatServiceClient(conn2)
-		message := cliente.MessageCliente{ NombreLibro:libro+"_"+strconv.FormatInt(indice,10) }
-		response , _ := Conexion.SubirChunk(context.Background(), msj)  // Enviamos propuesta	
+		message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10) }
+		response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta	
 	}
 
 
@@ -63,8 +65,6 @@ func printSlice(s []int) {
 	fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
 }
 
-var nombre_libro string
-var listachunks []bytes
 func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 
 	if(id == 0){ // Node disponible
