@@ -22,7 +22,7 @@ func main() {
 
 	// Conectamos con el DataNode
 	var conn *grpc.ClientConn
-	conn, err := grpc.Dial("dist110:9001", grpc.WithInsecure())
+	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Error al conectar con el servidor: %s", err)
 	}   
