@@ -32,7 +32,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		}				
 	}
 
-	fmt.Println("DataNode " + strconv.FormatInt(message.ID) +" ha enviando una solicitud [ Centralizada ]")
+	fmt.Println("DataNode " + strconv.FormatInt(message.ID,10) +" ha enviando una solicitud [ Centralizada ]")
 	var flag int64 = 0
 	var flag1 int64 = 0
 	var flag2 int64 = 0
