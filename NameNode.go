@@ -149,15 +149,18 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		cantidad_error = 0	
 	}	
 	var k int64
+	var indice int64
+	indice = 0
 	for k=0;k<cantidad1;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
         if err != nil {
                 log.Println(err)
         }
         //defer file.Close()
-        if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist109\n"); err!=nil{
+        if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(indice,10)+" dist109\n"); err!=nil{
                 log.Fatal(err)
-        }
+		}
+		indice+=1;
         file.Close()
 	}
 	for k=0;k<cantidad2;k++{
@@ -166,9 +169,10 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
                 log.Println(err)
         }
         //defer file.Close()
-        if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist110\n"); err!=nil{
+        if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(indice,10)+" dist110\n"); err!=nil{
                 log.Fatal(err)
-        }
+		}
+		indice+=1
         file.Close()
 	}	
 	for k=0;k<cantidad3;k++{
@@ -177,9 +181,10 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
                 log.Println(err)
         }
         //defer file.Close()
-        if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist110\n"); err!=nil{
+        if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(indice,10)+" dist111\n"); err!=nil{
                 log.Fatal(err)
-        }
+		}
+		indice+=1
         file.Close()
 	}
 	fmt.Println("Propuesta Modificada: [ DN1:"+strconv.FormatInt(cantidad1,10)+" | DN2:"+strconv.FormatInt(cantidad2,10)+" | DN3:"+strconv.FormatInt(cantidad3,10)+" ]")
