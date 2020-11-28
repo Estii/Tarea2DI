@@ -99,8 +99,8 @@ func main() {
 			log.Fatalf("Error al conectar con el servidor: %s", err)
 		}else{
 			c := chat.NewChatServiceClient(conn)		
-			estado,err := c.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
-			if estado == 1 {
+			response,err := c.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
+			if response.EstadoS == 1 {
 				flag = false
 			}  
 		}
