@@ -72,9 +72,26 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 	return &cliente.ResponseCliente{},nil	
 }
 
+func remover(){
+    var files []string
+    root = "./Fragmentos/"
+    err = filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+      files = append(files, path)
+      return nil
+    })
+    if err != nil {
+      log.Printf("remover")
+      panic(err)
+    }
+    for i:=1;i<len(files);i++{
+    	os.Remove(files[i])      
+    }
+  }
+
 
 // Conexion DataNode.
 func main() {
+	remover()
 	lis, err := net.Listen("tcp", ":9000")
 	if err != nil {
 			log.Fatalf("Failed to listen on port 9000: %v", err)
