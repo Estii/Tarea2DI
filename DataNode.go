@@ -12,7 +12,7 @@ import (
 	"strconv"
 	"path/filepath"
 	"os"
-	//"io/ioutil"
+	"io/ioutil"
 
 )
 
@@ -60,13 +60,13 @@ func Propuesta(msj *nodos.MessageNode){
 		fmt.Println(response)
 	}
 	for k=0;k<response.Cantidad2;k++{
-		fileName := nombre_libroo+"_"+strconv.FormatInt(indice,10)
+		fileName := nombre_libro+"_"+strconv.FormatInt(indice,10)
 		_, err := os.Create("Fragmentos/"+fileName)
 		if err != nil {
 				fmt.Println(err)
 				os.Exit(1)
 		}
-		ioutil.WriteFile("Fragmentos/"+fileName, message.Chunks, os.ModeAppend)
+		ioutil.WriteFile("Fragmentos/"+fileName, listachunks[indice], os.ModeAppend)
 		indice+=1
 		fmt.Println("Fragmento: ", fileName)
 	}
