@@ -13,14 +13,14 @@ import (
 	"path/filepath"
 	"os"
 	//"io/ioutil"
-	"bytes"
+
 )
 
 type Server struct {}
 var IDNODE int64 = 2 // Conflicto LOG
 var id int64 = 0 // Conflicto clientes simultaneos
 var nombre_libro string
-var listachunks []bytes
+var listachunks []byte
 
 func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cliente.EstadoS,error){
 	return &cliente.EstadoS{Estado:1},nil
