@@ -20,7 +20,7 @@ func main() {
 
 	// Codigo ClienteUploader -----------------------------
 
-	// Conectamos con el DataNode
+	// Conectamos con el DataNode.
 	var conn *grpc.ClientConn
 	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 	if err != nil {
@@ -28,7 +28,7 @@ func main() {
 	}   
 	ConexionSubida := chat.NewChatServiceClient(conn)
 
-	// Leemos el archivo a fragmentar
+	// Leemos el archivo a fragmentar.
 	libro := "MobyDick"
 	fmt.Println("Subiendo libro "+libro)
 	fileToBeChunked := "./Libros/"+libro+".pdf"
@@ -39,7 +39,7 @@ func main() {
 	}
 	defer file.Close()
 
-	// Se fragmenta el archivo en tamaño asignado
+	// Se fragmenta el archivo en tamaño asignado.
 	fileInfo, _ := file.Stat()
 	var fileSize int64 = fileInfo.Size()
 	const fileChunk = 250000 

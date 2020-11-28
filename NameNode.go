@@ -15,6 +15,7 @@ import (
 
 type Server struct {}
 
+// Propuesta Version Centralizada.
 func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode,error){
 	var flag int64 = 0
 	var flag1 int64 = 0
@@ -100,11 +101,11 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	}
 	file.Close()
 
-	// En caso de que no exista problema, acepta la propuesta
+	// En caso de que no exista problema, acepta la propuesta.
 	if(flag==0){	
 		fmt.Println("Propuesta aceptada")
 		var k int64
-		// Escribimos log de chunks DataNode 1
+		// Escribimos log de chunks DataNode 1.
 		for k=0;k<message.Cantidad1;k++{
 			file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
@@ -115,7 +116,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			}
 			file.Close()
 		}
-		// Escribimos log de chunks DataNode 2
+		// Escribimos log de chunks DataNode 2.
 		for k=0;k<message.Cantidad2;k++{
 			file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
@@ -126,7 +127,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			}
 			file.Close()
 		}	
-		// Escribimos log de chunks DataNode 3
+		// Escribimos log de chunks DataNode 3.
 		for k=0;k<message.Cantidad3;k++{
 			file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
@@ -141,8 +142,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		return &nodos.ResponseNode{Cantidad1: message.Cantidad1, Cantidad2: message.Cantidad2, Cantidad3: message.Cantidad3},nil
 	}
 
-	// Si no acepta la propuesta, es porque debemos reorganizar la reparticion
-	// En caso de que algun DataNode este disponible, se le asigna la cantidad de error de los nodos no disponibles
+	// Si no acepta la propuesta, es porque debemos reorganizar la reparticion.
+	// En caso de que algun DataNode este disponible, se le asigna la cantidad de error de los nodos no disponibles.
 	if(flag1 == 0){
 		cantidad1 += cantidad_error	
 		cantidad_error = 0	
@@ -157,21 +158,20 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	}	
 	var k int64
 	var indice int64
-	indice = 0 // Indice ayuda a enumerar chunks
-	// Escribimos log de chunks DataNode 1
+	indice = 0 // Indice ayuda a enumerar chunks.
+	// Escribimos log de chunks DataNode 1.
 	for k=0;k<cantidad1;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
         if err != nil {
                 log.Println(err)
         }
-        //defer file.Close()
         if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(indice,10)+" dist109\n"); err!=nil{
                 log.Fatal(err)
 		}
 		indice+=1;
         file.Close()
 	}
-	// Escribimos log de chunks DataNode 2
+	// Escribimos log de chunks DataNode 2.
 	for k=0;k<cantidad2;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
         if err != nil {
@@ -183,7 +183,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		indice+=1
         file.Close()
 	}	
-	// Escribimos log de chunks DataNode 3
+	// Escribimos log de chunks DataNode 3.
 	for k=0;k<cantidad3;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
         if err != nil {
@@ -200,7 +200,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	return &nodos.ResponseNode{Cantidad1: cantidad1, Cantidad2: cantidad2, Cantidad3: cantidad3},nil
 }
 
-// Limpia archivo log al iniciar programa
+// Limpia archivo log al iniciar programa.
 func LimpiarArchivo(){
     var files []string
     root := "./Log/"

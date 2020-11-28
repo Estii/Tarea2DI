@@ -22,10 +22,12 @@ var id int64 = 0 // Conflicto clientes simultaneos
 var nombre_libro string
 var listachunks [][]byte
 
+// Utilizada para saber si el DataNode esta disponible para usar.
 func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cliente.EstadoS,error){
 	return &cliente.EstadoS{Estado:1},nil
 }
 
+// Crea el chunk respectivo en la carpeta Fragmentos.
 func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 	fileName := message.NombreLibro
 	_, err := os.Create("Fragmentos/"+fileName)
@@ -38,8 +40,9 @@ func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente
 	return &cliente.ResponseCliente{},nil
 }
 
+// Propuesta Version Centralizada.
 func Propuesta(msj *nodos.MessageNode){
-	// Conectamos con el DataNode
+	// Conectamos con el DataNode.
 	var conn2 *grpc.ClientConn
 	conn2, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
 	if err != nil {
@@ -47,9 +50,9 @@ func Propuesta(msj *nodos.MessageNode){
 	}   
 	ConexionNameNode := nodos.NewChatService2Client(conn2)
 	fmt.Println("Propuesta inicial: [ DN1:"+strconv.FormatInt(msj.Cantidad1,10)+" | DN2:"+strconv.FormatInt(msj.Cantidad2,10)+" | DN3:"+strconv.FormatInt(msj.Cantidad3,10)+" ]")
-	response , _ := ConexionNameNode.Propuesta(context.Background(), msj)  // Enviamos propuesta
+	response , _ := ConexionNameNode.Propuesta(context.Background(), msj)  // Enviamos propuesta.
 	fmt.Println("Respuesta NameNode: [ DN1:"+strconv.FormatInt(response.Cantidad1,10)+" | DN2:"+strconv.FormatInt(response.Cantidad2,10)+" | DN3:"+strconv.FormatInt(response.Cantidad3,10)+" ]")
-	// Enviamos a DataNode ID = 1
+	// Enviamos a DataNode ID = 1.
 	var k int64
 	var indice int64
 	indice = 0
@@ -61,11 +64,11 @@ func Propuesta(msj *nodos.MessageNode){
 		}   
 		Conexion := cliente.NewChatServiceClient(conn2)
 		message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10) }
-		response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta	
+		response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta.
 		indice+=1
 		fmt.Println(response)
 	}
-	// Escribimos en el DataNode ID = 2
+	// Escribimos en el DataNode ID = 2.
 	for k=0;k<response.Cantidad2;k++{
 		fileName := nombre_libro+"_"+strconv.FormatInt(indice,10)
 		_, err := os.Create("Fragmentos/"+fileName)
@@ -77,7 +80,7 @@ func Propuesta(msj *nodos.MessageNode){
 		indice+=1
 		fmt.Println("Fragmento: ", fileName)
 	}
-	// Enviamos a DataNode ID = 3
+	// Enviamos a DataNode ID = 3.
 	for k=0;k<response.Cantidad3;k++{
 		var conn2 *grpc.ClientConn
 		conn2, err := grpc.Dial("dist111:9000", grpc.WithInsecure())
@@ -86,7 +89,7 @@ func Propuesta(msj *nodos.MessageNode){
 		}   
 		Conexion := cliente.NewChatServiceClient(conn2)
 		message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10),Chunks:listachunks[indice] }
-		response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta	
+		response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta.	
 		indice+=1
 		fmt.Println(response)
 	}
@@ -94,12 +97,12 @@ func Propuesta(msj *nodos.MessageNode){
 
 
 func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
-	if(id == 0){ // Node disponible
+	if(id == 0){ // Node disponible.
 		fmt.Println("Se ha recibido el libro "+ message.NombreLibro[0:len(message.NombreLibro)-2])
 		id = message.ID
 		nombre_libro = message.NombreLibro[0:len(message.NombreLibro)-2]
 	}
-	if(message.Termino == 1){ // Fin de recepcion de chunks de un libro, enviamos propuesta
+	if(message.Termino == 1){ // Fin de recepcion de chunks de un libro, enviamos propuesta.
 		id = 0
 		cantidad := message.CantidadChunks
 		cantidad_uniforme := cantidad/3
@@ -117,11 +120,11 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 			id = message.ID
 		}				
 	}
-	listachunks = append(listachunks, message.Chunks) // Añadimos el chunk a la lista
+	listachunks = append(listachunks, message.Chunks) // Añadimos el chunk a la lista.
 	return &cliente.ResponseCliente{},nil	
 }
 
-// Borra archivos al iniciar programa
+// Borra archivos al iniciar programa.
 func LimpiarArchivos(){ 
     var files []string
     root := "./Fragmentos/"
