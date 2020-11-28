@@ -17,7 +17,10 @@ import (
 
 
 func Subir_Centralizado(conn *grpc.ClientConn){
+	rand.Seed(time.Now().UnixNano())
+	id := rand.Int63n(100000000000000000)
 
+	
 	ConexionSubida := chat.NewChatServiceClient(conn)
 
 	// Leemos el archivo a fragmentar.
@@ -59,12 +62,7 @@ func Subir_Centralizado(conn *grpc.ClientConn){
 
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
-	id := rand.Int63n(100000000000000000)
 
-	// Codigo ClienteUploader -----------------------------
-
-	
 	// Conectamos con el DataNode.
 	var conn *grpc.ClientConn
 	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
