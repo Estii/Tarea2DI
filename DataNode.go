@@ -92,7 +92,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 			id = message.ID
 		}		
 	}
-	listachunks = append(s, message.Chunks)
+	listachunks = append(listachunks, message.Chunks)
 	/*fileName := message.NombreLibro
 	_, err := os.Create("Fragmentos/"+fileName)
 	if err != nil {
