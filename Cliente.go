@@ -19,12 +19,29 @@ import (
 func Subir_Centralizado(conn *grpc.ClientConn){
 	rand.Seed(time.Now().UnixNano())
 	id := rand.Int63n(100000000000000000)
-
 	
 	ConexionSubida := chat.NewChatServiceClient(conn)
-
 	// Leemos el archivo a fragmentar.
-	libro := "MobyDick"
+	fmt.Println("Seleccione un libro:")
+	fmt.Println("1- MobyDick")
+    fmt.Println("1- Dracula")
+    fmt.Println("2- La vuelta al mundo en 80 dias")
+    fmt.Println("3- Orgullo y prejuicio")
+    fmt.Println("4 -Salir")
+    fmt.Scanln(&seleccion)
+	switch seleccion {
+    case 1:
+		libro := "MobyDick"
+    case 2:
+		libro := "Dracula"	
+    case 3:
+		libro := "La_vuelta_al_mundo_en_80_dias"
+    case 4:
+		libro := "Orgullo_y_prejuicio"
+    case 5:
+     	return
+	}
+	
 	fmt.Println("Subiendo libro "+libro)
 	fileToBeChunked := "./Libros/"+libro+".pdf"
 	file, err := os.Open(fileToBeChunked)
