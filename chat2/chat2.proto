@@ -2,13 +2,15 @@ syntax = "proto3";
 package chat;
 
 message ResponseNode{
-    repeated int64 PropuestaReturn = 1;
-    string Pruebao = 2;
+    int64 cantidad1 = 1;
+    int64 cantidad2 = 2;
+    int64 cantidad3 = 3;
 }
 
 message MessageNode{
-    repeated int64 PropuestaSend = 1;
-    string Pruebai = 2;
+    int64 cantidad1 = 1;
+    int64 cantidad2 = 2;
+    int64 cantidad3 = 3;
 }
 
 service ChatService2{

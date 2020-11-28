@@ -46,8 +46,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 		cantidad := message.CantidadChunks
 		cantidad_uniforme := cantidad/3
 		cantidad_resto := cantidad%3
-		cantidades := [3]int64{cantidad_uniforme + cantidad_resto, cantidad_uniforme, cantidad_uniforme}
-		message := nodos.MessageNode{ PropuestaSend:cantidades, Pruebai:"HOLA" }
+		message := nodos.MessageNode{ cantidad1:cantidad_uniforme + cantidad_resto, cantidad2:cantidad_uniforme,cantidad3:cantidad_uniforme }
 		Propuesta(&message)
 		return &cliente.ResponseCliente{},nil
 	}

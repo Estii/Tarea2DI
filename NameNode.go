@@ -14,7 +14,7 @@ type Server struct {}
 
 
 func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode,error){
-	fmt.Println(message.PropuestaSend)
+	fmt.Println(message)
 	return &nodos.ResponseNode{},nil
 }
 
