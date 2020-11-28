@@ -1,0 +1,17 @@
+syntax = "proto3";
+package chat;
+
+message ResponseNode{
+    repeated int64 PropuestaReturn = 1;
+    string Pruebao = 2;
+}
+
+message MessageNode{
+    repeated int64 PropuestaSend = 1;
+    string Pruebai = 2;
+}
+
+service ChatService{
+    rpc Propuesta(MessageNode) returns (ResponseNode){}
+}
+

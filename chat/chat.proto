@@ -1,0 +1,19 @@
+syntax = "proto3";
+package chat;
+
+message ResponseCliente{
+    int64 Retorno = 1;
+}
+
+message MessageCliente{
+    bytes Chunks = 1;
+    int64 Termino = 2;
+    int64 ID = 3;
+    string NombreLibro = 4;
+    int64 CantidadChunks = 5;
+}
+
+service ChatService{
+    rpc EnviarLibro(MessageCliente) returns (ResponseCliente){}
+}
+
