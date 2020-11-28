@@ -24,6 +24,7 @@ func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cl
 }
 
 func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
+	fmt.Println(message)
 	return &cliente.ResponseCliente{Estado:1},nil
 }
 
@@ -50,7 +51,7 @@ func Propuesta(msj *nodos.MessageNode, listachunks bytes){
 			log.Fatalf("Error al conectar con el servidor: %s", err)
 		}   
 		Conexion := nodos.NewChatServiceClient(conn2)
-		message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.FormatInt(indice,10), Chunks: }
+		message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.FormatInt(indice,10) }
 		response , _ := Conexion.SubirChunk(context.Background(), msj)  // Enviamos propuesta	
 	}
 
