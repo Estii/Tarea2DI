@@ -23,5 +23,6 @@ message EstadoS{
 service ChatService{
     rpc EnviarLibro(MessageCliente) returns (ResponseCliente){}
     rpc CheckEstado(EstadoE) returns (EstadoS) {}
+    rpc SubirChunk(MessageCliente) returns (ResponseCliente) {}
 }
 

@@ -16,10 +16,18 @@ import (
 )
 
 type Server struct {}
-var IDNODE int64 = 1 // Conflicto LOG
+var IDNODE int64 = 2 // Conflicto LOG
 var id int64 = 0 // Conflicto clientes simultaneos
 
-func Propuesta(msj *nodos.MessageNode){
+func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cliente.EstadoS,error){
+	return &cliente.EstadoS{Estado:1},nil
+}
+
+func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
+	return &cliente.ResponseCliente{Estado:1},nil
+}
+
+func Propuesta(msj *nodos.MessageNode, listachunks bytes){
 	// Conectamos con el DataNode
 	var conn2 *grpc.ClientConn
 	conn2, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
@@ -30,14 +38,32 @@ func Propuesta(msj *nodos.MessageNode){
 	fmt.Println("Propuesta inicial: [ DN1:"+strconv.FormatInt(msj.Cantidad1,10)+" | DN2:"+strconv.FormatInt(msj.Cantidad2,10)+" | DN3:"+strconv.FormatInt(msj.Cantidad3,10)+" ]")
 	response , _ := ConexionNameNode.Propuesta(context.Background(), msj)  // Enviamos propuesta
 	fmt.Println("Respuesta NameNode: [ DN1:"+strconv.FormatInt(response.Cantidad1,10)+" | DN2:"+strconv.FormatInt(response.Cantidad2,10)+" | DN3:"+strconv.FormatInt(response.Cantidad3,10)+" ]")
+	
+	// Enviamos a DataNode ID = 1
+	var k int64
+	var indice int64
+	indice = 0
+	for k=0;k<cantidad1;k++{
+		var conn2 *grpc.ClientConn
+		conn2, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
+		if err != nil {
+			log.Fatalf("Error al conectar con el servidor: %s", err)
+		}   
+		Conexion := nodos.NewChatServiceClient(conn2)
+		message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.FormatInt(indice,10), Chunks: }
+		response , _ := Conexion.SubirChunk(context.Background(), msj)  // Enviamos propuesta	
+	}
+
+
+
 }
 
-func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cliente.EstadoS,error){
-	return &cliente.EstadoS{Estado:1},nil
+func printSlice(s []int) {
+	fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
 }
-
 
 var nombre_libro string
+var listachunks []bytes
 func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 
 	if(id == 0){ // Node disponible
@@ -46,6 +72,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 		nombre_libro = message.NombreLibro[0:len(message.NombreLibro)-2]
 	}
 	if(message.Termino == 1){ // Fin de recepcion de chunks de un libro, enviamos propuesta
+		printSlice(listachunks)
 		id = 0
 		cantidad := message.CantidadChunks
 		cantidad_uniforme := cantidad/3
@@ -64,7 +91,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 			id = message.ID
 		}		
 	}
-
+	listachunks = append(s, message.Chunks)
 	/*fileName := message.NombreLibro
 	_, err := os.Create("Fragmentos/"+fileName)
 	if err != nil {
@@ -92,7 +119,6 @@ func LimpiarArchivos(){
     	os.Remove(files[i])      
     }
   }
-
 
 // Conexion DataNode.
 func main() {
