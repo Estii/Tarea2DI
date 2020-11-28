@@ -103,9 +103,11 @@ func main() {
 			c := chat.NewChatServiceClient(conn)		
 			response,_ := c.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
 			fmt.Println(response)
-			if response.Estado == 1 {
-				flag = false
-			}  
+			if err != nil {
+				if response.Estado == 1 {
+					flag = false
+				}  
+			}
 		}
 	}
 
