@@ -19,10 +19,10 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	flag1 := 0
 	flag2 := 0
 	flag3 := 0
-	cantidad_error := 0
-	cantidad1 := message.Cantidad1
-	cantidad2 := message.Cantidad2
-	cantidad3 := message.Cantidad3
+	var cantidad_error int64 = 0
+	var cantidad1 int64 = message.Cantidad1
+	var cantidad2 int64 =  message.Cantidad2
+	var cantidad3 int64 =  message.Cantidad3
 
 	if(message.Cantidad1 != 0){
 		var conn *grpc.ClientConn
