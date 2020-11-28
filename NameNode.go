@@ -16,6 +16,8 @@ func (s *Server) CheckEstado(ctx context.Context, message *nodos.EstadoE) (*nodo
 	return &nodos.EstadoS{},nil
 }
 
+
+
 func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode,error){
 	fmt.Println(message)
 	var flag int64 = 0
@@ -117,7 +119,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 
 // Conexion DataNode.
 func main() {
-	lis, err := net.Listen("tcp", ":9005")
+	lis, err := net.Listen("tcp", ":9000")
 	if err != nil {
 			log.Fatalf("Failed to listen on port 9000: %v", err)
 	}            

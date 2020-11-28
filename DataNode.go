@@ -20,7 +20,7 @@ var id int64 = 0 // Conflicto clientes simultaneos
 func Propuesta(msj *nodos.MessageNode){
 	// Conectamos con el DataNode
 	var conn2 *grpc.ClientConn
-	conn2, err := grpc.Dial("dist112:9005", grpc.WithInsecure())
+	conn2, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Error al conectar con el servidor: %s", err)
 	}   
