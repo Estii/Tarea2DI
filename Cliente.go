@@ -85,7 +85,7 @@ func Cargar_Libro(tipo int){
 						}
 						j+=1
 					}				
-					message := chat.MessageCliente{Termino: 1, CantidadChunks:Cantidad} // Se envia un mensaje de termino de envio.
+					message := chat.MessageCliente{Termino: 1, CantidadChunks:Cantidad, ID:id} // Se envia un mensaje de termino de envio.
 					ConexionSubida.EnviarLibro(context.Background(), &message)
 					file.Close()
 				}  
