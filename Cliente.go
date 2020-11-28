@@ -7,9 +7,9 @@ import (
 	"os"
 	"log"
 	"strconv"
-	"./chat"
+	"Tarea2DI/chat"
 	"google.golang.org/grpc"
-	"golang.org/x/net/context"	
+	"golang.org/x/net/context"
 	"math/rand"
 	"time"
 )
