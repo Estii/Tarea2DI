@@ -130,7 +130,7 @@ func main() {
 			case 1:
 				fmt.Println("Aun en implementacacion...")
 			case 2:
-				Subir_Centralizado(conn)
+				Subir_Centralizado(c)
 			case 3:				
 				fmt.Println("Aun en implementacacion...")
 			case 4:				
