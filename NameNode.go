@@ -13,7 +13,7 @@ import (
 type Server struct {}
 
 func (s *Server) CheckEstado(ctx context.Context, message *nodos.EstadoE) (*nodos.EstadoS,error){
-	return &nodos.EstadoS{Estado:1},nil
+	return &nodos.EstadoS{},nil
 }
 
 func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode,error){
@@ -48,7 +48,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	}	
 	if(message.Cantidad2 != 0){
 		var conn *grpc.ClientConn
-		conn, err := grpc.Dial("dist110:9001", grpc.WithInsecure())
+		conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 		if err != nil {
 			flag = 1
 			flag2 = 1			
@@ -69,7 +69,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	}	
 	if(message.Cantidad3 != 0){
 		var conn *grpc.ClientConn
-		conn, err := grpc.Dial("dist111:9002", grpc.WithInsecure())
+		conn, err := grpc.Dial("dist111:9000", grpc.WithInsecure())
 		if err != nil {
 			flag = 1
 			flag3 = 1
