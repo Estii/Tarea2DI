@@ -12,12 +12,6 @@ import (
 
 type Server struct {}
 
-func (s *Server) CheckEstado(ctx context.Context, message *nodos.EstadoE) (*nodos.EstadoS,error){
-	return &nodos.EstadoS{},nil
-}
-
-
-
 func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode,error){
 	fmt.Println(message)
 	var flag int64 = 0
