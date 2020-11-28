@@ -28,6 +28,15 @@ func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cl
 
 func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 	fmt.Println(message)
+	fileName := message.NombreLibro
+	_, err := os.Create("Fragmentos/"+fileName)
+	if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+	}
+	ioutil.WriteFile("Fragmentos/"+fileName, message.Chunks, os.ModeAppend)
+	indice+=1
+	fmt.Println("Fragmento: ", fileName)
 	return &cliente.ResponseCliente{},nil
 }
 
@@ -77,7 +86,7 @@ func Propuesta(msj *nodos.MessageNode){
 			log.Fatalf("Error al conectar con el servidor: %s", err)
 		}   
 		Conexion := cliente.NewChatServiceClient(conn2)
-		message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10) }
+		message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10),Chunks:listachunks[indice] }
 		response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta	
 		indice+=1
 		fmt.Println(response)
