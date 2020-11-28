@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"os"
 	//"io/ioutil"
+	"bytes"
 )
 
 type Server struct {}
