@@ -121,7 +121,8 @@ func remover(){
     }
     for i:=1;i<len(files);i++{
     	os.Remove(files[i])      
-    }
+	}
+	os.Create("./Log/log.txt")
   }
 
 
