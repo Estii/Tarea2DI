@@ -17,7 +17,7 @@ import (
 
 
 func Subir_Centralizado(conn *grpc.ClientConn){
-	rand.Seed(time.Now().UnixNano())
+	
 	id := rand.Int63n(100000000000000000)
 	
 	ConexionSubida := chat.NewChatServiceClient(conn)
@@ -72,9 +72,7 @@ func Subir_Centralizado(conn *grpc.ClientConn){
 
 	message := chat.MessageCliente{Termino: 1, CantidadChunks:Cantidad} // Se envia un mensaje de termino de envio.
 	ConexionSubida.EnviarLibro(context.Background(), &message)
-
 	file.Close()
-
 }
 
 
@@ -83,12 +81,31 @@ func Subir_Centralizado(conn *grpc.ClientConn){
 func main() {
 
 	// Conectamos con el DataNode.
-	var conn *grpc.ClientConn
+	/*var conn *grpc.ClientConn
 	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Error al conectar con el servidor: %s", err)
-	}   
+	}*/
 	
+	rand.Seed(time.Now().UnixNano())
+	for;flag;{
+		var conn *grpc.ClientConn
+		var ip string
+		ip = "dist"
+		ip += strconv.Itoa(rand.Intn(4) + 109)
+		conn, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
+		if err != nil {
+			log.Fatalf("Error al conectar con el servidor: %s", err)
+		}else{
+			c := cliente.NewChatServiceClient(conn)		
+			estado,err := c.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
+			if estado == 1 {
+				flag = 1
+			}  
+		}
+	}
+
+
 	var seleccion int
 	var finalizar bool
   
