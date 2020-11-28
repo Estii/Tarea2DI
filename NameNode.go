@@ -23,7 +23,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	var cantidad1 int64 = message.Cantidad1
 	var cantidad2 int64 = message.Cantidad2
 	var cantidad3 int64 = message.Cantidad3
-	fmt.Println("Se ha recibido la siguiente propuesta: [ DN1:"+strconv.FormatInt(message.Cantidad1,10)+" | DN2:"+strconv.FormatInt(message.Cantidad2,10)+" | DN3:"+strconv.FormatInt(message.Cantidad3,10))
+	fmt.Println("Se ha recibido la siguiente propuesta: [ DN1:"+strconv.FormatInt(message.Cantidad1,10)+" | DN2:"+strconv.FormatInt(message.Cantidad2,10)+" | DN3:"+strconv.FormatInt(message.Cantidad3,10)+" ]")
 
 	if(message.Cantidad1 != 0){
 		var conn *grpc.ClientConn
@@ -100,7 +100,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		cantidad3 += cantidad_error		
 		cantidad_error = 0	
 	}	
-	fmt.Println("Propuesta Modificada: [ DN1:"+strconv.FormatInt(cantidad1,10)+" | DN2:"+strconv.FormatInt(cantidad2,10)+" | DN3:"+strconv.FormatInt(cantidad3,10))
+	fmt.Println("Propuesta Modificada: [ DN1:"+strconv.FormatInt(cantidad1,10)+" | DN2:"+strconv.FormatInt(cantidad2,10)+" | DN3:"+strconv.FormatInt(cantidad3,10)+" ]")
 
 	return &nodos.ResponseNode{Cantidad1: cantidad1, Cantidad2: cantidad2, Cantidad3: cantidad3},nil
 }
