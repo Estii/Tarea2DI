@@ -27,6 +27,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	var cantidad1 int64 = message.Cantidad1
 	var cantidad2 int64 = message.Cantidad2
 	var cantidad3 int64 = message.Cantidad3
+	var cantidadT int64 = message.Cantidad1 + message.Cantidad2 + message.Cantidad3
 	fmt.Println("Se ha recibido el libro "+message.NombreLibro+" con la siguiente propuesta: [ DN1:"+strconv.FormatInt(message.Cantidad1,10)+" | DN2:"+strconv.FormatInt(message.Cantidad2,10)+" | DN3:"+strconv.FormatInt(message.Cantidad3,10)+" ]")
 
 	if(message.Cantidad1 != 0){
@@ -91,7 +92,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		fmt.Println("Propuesta rechazada, no hay DataNodes disponibles")
 		return &nodos.ResponseNode{Cantidad1: -1, Cantidad2: -1, Cantidad3:-1},nil
 	}
-    b := []byte("Hola mundo!\n")
+    b := []byte(message.NombreLibro+" "+strconv.FormatInt(cantidadT,10)+"\n")
     err := ioutil.WriteFile("Log/log.txt", b, 0644)
     if err != nil {
         log.Fatal(err)
