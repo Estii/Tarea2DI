@@ -25,7 +25,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	}
 
 	for semaforo != message.ID { // Si no esta disponible, esperara hasta que pueda.
-		fmt.Println("DataNode Ocupado porfavor espere un momento...")
+		fmt.Println("NameNode Ocupado porfavor espere un momento...")
 		time.Sleep(5 * time.Second)	
 		if( semaforo ==0 ){
 			semaforo = message.ID
