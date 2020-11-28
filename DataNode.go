@@ -10,7 +10,8 @@ import (
 	"golang.org/x/net/context"
 	"time"
 	"strconv"
-	//"os"
+	"path/filepath"
+	"os"
 	//"io/ioutil"
 )
 
@@ -74,7 +75,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 
 func remover(){
     var files []string
-    root = "./Fragmentos/"
+    root := "./Fragmentos/"
     err = filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
       files = append(files, path)
       return nil

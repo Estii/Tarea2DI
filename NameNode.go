@@ -9,6 +9,8 @@ import (
 	"fmt"
 	"golang.org/x/net/context"
 	"strconv"
+	"path/filepath"
+	"os"
 )
 
 
@@ -108,8 +110,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 
 func remover(){
     var files []string
-    root = "./Log/"
-    err = filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+    root := "./Log/"
+    err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
       files = append(files, path)
       return nil
     })
