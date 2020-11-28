@@ -39,7 +39,7 @@ func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cl
 func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 
 	if(id == 0){ // Node disponible
-		fmt.Println("Se ha recibido el libro "+ message.NombreLibro)
+		fmt.Println("Se ha recibido el libro "+ message.NombreLibro[0:len(message.NombreLibro)-2])
 		id = message.ID
 	}
 	if(message.Termino == 1){ // Fin de recepcion de chunks de un libro, enviamos propuesta
