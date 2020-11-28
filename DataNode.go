@@ -10,7 +10,7 @@ import (
 	"golang.org/x/net/context"
 	"time"
 	"os"
-	"ioutil"
+	"io/ioutil"
 )
 
 type Server struct {}
