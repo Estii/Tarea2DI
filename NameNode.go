@@ -95,11 +95,10 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 
 	file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
-			log.Println(err)
+		log.Println(err)
 	}
-	//defer file.Close()
 	if _, err := file.WriteString(message.NombreLibro+" "+strconv.FormatInt(cantidadT,10)+"\n"); err!=nil{
-			log.Fatal(err)
+		log.Fatal(err)
 	}
 	file.Close()
 
@@ -110,33 +109,31 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		for k=0;k<message.Cantidad1;k++{
 			file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
-					log.Println(err)
+				log.Println(err)
 			}
-			//defer file.Close()
 			if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist109\n"); err!=nil{
-					log.Fatal(err)
+				log.Fatal(err)
 			}
 			file.Close()
 		}
 		for k=0;k<message.Cantidad2;k++{
 			file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
-					log.Println(err)
+				log.Println(err)
 			}
-			//defer file.Close()
 			if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist110\n"); err!=nil{
-					log.Fatal(err)
+				log.Fatal(err)
 			}
 			file.Close()
 		}	
 		for k=0;k<message.Cantidad3;k++{
 			file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
-					log.Println(err)
+				log.Println(err)
 			}
 			//defer file.Close()
 			if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist111\n"); err!=nil{
-					log.Fatal(err)
+				log.Fatal(err)
 			}
 			file.Close() 
 		}

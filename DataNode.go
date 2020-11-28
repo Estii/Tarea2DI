@@ -49,7 +49,6 @@ func Propuesta(msj *nodos.MessageNode){
 	fmt.Println("Propuesta inicial: [ DN1:"+strconv.FormatInt(msj.Cantidad1,10)+" | DN2:"+strconv.FormatInt(msj.Cantidad2,10)+" | DN3:"+strconv.FormatInt(msj.Cantidad3,10)+" ]")
 	response , _ := ConexionNameNode.Propuesta(context.Background(), msj)  // Enviamos propuesta
 	fmt.Println("Respuesta NameNode: [ DN1:"+strconv.FormatInt(response.Cantidad1,10)+" | DN2:"+strconv.FormatInt(response.Cantidad2,10)+" | DN3:"+strconv.FormatInt(response.Cantidad3,10)+" ]")
-	
 	// Enviamos a DataNode ID = 1
 	var k int64
 	var indice int64
@@ -66,6 +65,7 @@ func Propuesta(msj *nodos.MessageNode){
 		indice+=1
 		fmt.Println(response)
 	}
+	// Escribimos en el DataNode ID = 2
 	for k=0;k<response.Cantidad2;k++{
 		fileName := nombre_libro+"_"+strconv.FormatInt(indice,10)
 		_, err := os.Create("Fragmentos/"+fileName)
@@ -77,6 +77,7 @@ func Propuesta(msj *nodos.MessageNode){
 		indice+=1
 		fmt.Println("Fragmento: ", fileName)
 	}
+	// Enviamos a DataNode ID = 3
 	for k=0;k<response.Cantidad3;k++{
 		var conn2 *grpc.ClientConn
 		conn2, err := grpc.Dial("dist111:9000", grpc.WithInsecure())
@@ -89,52 +90,38 @@ func Propuesta(msj *nodos.MessageNode){
 		indice+=1
 		fmt.Println(response)
 	}
-
 }
 
 
 func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
-
 	if(id == 0){ // Node disponible
 		fmt.Println("Se ha recibido el libro "+ message.NombreLibro[0:len(message.NombreLibro)-2])
 		id = message.ID
 		nombre_libro = message.NombreLibro[0:len(message.NombreLibro)-2]
 	}
 	if(message.Termino == 1){ // Fin de recepcion de chunks de un libro, enviamos propuesta
-
 		id = 0
 		cantidad := message.CantidadChunks
 		cantidad_uniforme := cantidad/3
 		cantidad_resto := cantidad%3
 		message := nodos.MessageNode{ Cantidad1:cantidad_uniforme + cantidad_resto, Cantidad2:cantidad_uniforme,Cantidad3:cantidad_uniforme,NombreLibro:nombre_libro }
 		Propuesta(&message)
-		
 		nombre_libro = " "
 		return &cliente.ResponseCliente{},nil
 	}
-
 	for id != message.ID { // Si no esta disponible, esperara hasta que pueda.
 		fmt.Println("DataNode Ocupado porfavor espere un momento...")
 		time.Sleep(5 * time.Second)	
 		if( id ==0 ){
 			id = message.ID
-		}		
+		}				
 	}
 	listachunks = append(listachunks, message.Chunks)
-	/*fileName := message.NombreLibro
-	_, err := os.Create("Fragmentos/"+fileName)
-	if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-	}
-	// write/save buffer to disk
-	ioutil.WriteFile("Fragmentos/"+fileName, message.Chunks, os.ModeAppend)
-	fmt.Println("Fragmento: ", fileName)*/
-
 	return &cliente.ResponseCliente{},nil	
 }
 
-func LimpiarArchivos(){
+// Borra archivos al iniciar programa
+func LimpiarArchivos(){ 
     var files []string
     root := "./Fragmentos/"
     err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
