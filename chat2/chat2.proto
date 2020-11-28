@@ -13,6 +13,7 @@ message MessageNode{
     int64 Cantidad2 = 2;
     int64 Cantidad3 = 3;
     string NombreLibro = 4;
+    int64 ID = 5;
 }
 
 
