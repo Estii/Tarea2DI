@@ -86,8 +86,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error al conectar con el servidor: %s", err)
 	}*/
-	
+	var flag bool
 	rand.Seed(time.Now().UnixNano())
+	flag = true
 	for;flag;{
 		var conn *grpc.ClientConn
 		var ip string
@@ -100,7 +101,7 @@ func main() {
 			c := cliente.NewChatServiceClient(conn)		
 			estado,err := c.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
 			if estado == 1 {
-				flag = 1
+				flag = false
 			}  
 		}
 	}
