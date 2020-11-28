@@ -25,11 +25,9 @@ func Propuesta(msj *nodos.MessageNode){
 		log.Fatalf("Error al conectar con el servidor: %s", err)
 	}   
 	ConexionNameNode := nodos.NewChatService2Client(conn2)
-	fmt.Println("Inicio")
-	fmt.Println(msj)
+	fmt.Println("Propuesta inicial: " + msj)
 	response , _ := ConexionNameNode.Propuesta(context.Background(), msj)  // Enviamos propuesta
-	fmt.Println("Final")
-	fmt.Println(response)
+	ffmt.Println("Respuesta NameNode: "+ response)
 }
 
 func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cliente.EstadoS,error){
@@ -39,6 +37,7 @@ func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cl
 func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 
 	if(id == 0){ // Node disponible
+		fmt.Println("Se ha recibido el libro "+ message.NombreLibro)
 		id = message.ID
 	}
 	if(message.Termino == 1){ // Fin de recepcion de chunks de un libro, enviamos propuesta

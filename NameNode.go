@@ -14,7 +14,6 @@ import (
 type Server struct {}
 
 func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode,error){
-	fmt.Println(message)
 	var flag int64 = 0
 	var flag1 int64 = 0
 	var flag2 int64 = 0
@@ -23,6 +22,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	var cantidad1 int64 = message.Cantidad1
 	var cantidad2 int64 = message.Cantidad2
 	var cantidad3 int64 = message.Cantidad3
+	fmt.Println("Se ha recibido la siguiente propuesta: [ DN1:"+message.Cantidad1+" | DN2:"+message.Cantidad2+" | DN3:"+message.Cantidad3)
 
 	if(message.Cantidad1 != 0){
 		var conn *grpc.ClientConn
@@ -35,8 +35,6 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		}else{
 			c := cliente.NewChatServiceClient(conn)		
 			r,err := c.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
-			fmt.Println(r)
-			fmt.Println(err)
 			if err != nil {
 				flag = 1
 				flag1 = 1			
@@ -57,8 +55,6 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad_error += message.Cantidad2
 		}else{		
 			r2,err2 := Conexion.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
-			fmt.Println(r2)
-			fmt.Println(err2)
 			if err2 != nil {
 				flag = 1
 				flag2 = 1			
@@ -78,8 +74,6 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		}else{
 			c3 := cliente.NewChatServiceClient(conn3)		
 			r3,err3 := c3.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})			
-			fmt.Println(r3)
-			fmt.Println(err3)
 			if err3 != nil {
 				flag = 1
 				flag3 = 1			
@@ -89,12 +83,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		}
 	}
 
-	fmt.Println(flag)
-	fmt.Println(flag1)
-	fmt.Println(flag2)
-	fmt.Println(flag3)
-
-	if(flag==0){
+	if(flag==0){	
+		fmt.Println("Propuesta aceptada")
 		return &nodos.ResponseNode{Cantidad1: message.Cantidad1, Cantidad2: message.Cantidad2, Cantidad3: message.Cantidad3},nil
 	}
 	if(flag1 == 0){
@@ -109,6 +99,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		cantidad3 += cantidad_error		
 		cantidad_error = 0	
 	}
+	fmt.Println("Propuesta Modificada: [ DN1:"+message.Cantidad1+" | DN2:"+message.Cantidad2+" | DN3:"+message.Cantidad3)
+
 	return &nodos.ResponseNode{Cantidad1: cantidad1, Cantidad2: cantidad2, Cantidad3: cantidad3},nil
 }
 

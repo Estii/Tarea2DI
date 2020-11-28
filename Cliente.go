@@ -29,6 +29,7 @@ func main() {
 	ConexionSubida := chat.NewChatServiceClient(conn)
 
 	libro := "MobyDick"
+	fmt.Printf("Subiendo libro "+libro)
 	fileToBeChunked := "./Libros/"+libro+".pdf" // change here!
 	file, err := os.Open(fileToBeChunked)
 	if err != nil {
@@ -49,8 +50,7 @@ func main() {
 	for i := uint64(0); i < totalPartsNum; i++ {
 		partSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
 		partBuffer := make([]byte, partSize)
-		file.Read(partBuffer)
-		fmt.Println(Cantidad)		
+		file.Read(partBuffer)	
 		message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.Itoa(j), Chunks:partBuffer, ID:id, Termino:0 }
 		ConexionSubida.EnviarLibro(context.Background(), &message)
 		j+=1
