@@ -92,8 +92,7 @@ func main() {
 	var conn *grpc.ClientConn
 	flag = true
 	var ip string
-	for;flag;{
-		
+	for;flag;{		
 		ip = "dist"
 		ip += strconv.Itoa(rand.Intn(4) + 109)
 		fmt.Println(ip)
@@ -104,7 +103,7 @@ func main() {
 			c := chat.NewChatServiceClient(conn)		
 			response,err := c.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
 			fmt.Println(response)
-			if err != nil {
+			if err == nil {
 				if response.Estado == 1 {
 					flag = false
 				}  
