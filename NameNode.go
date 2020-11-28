@@ -22,7 +22,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	var cantidad1 int64 = message.Cantidad1
 	var cantidad2 int64 = message.Cantidad2
 	var cantidad3 int64 = message.Cantidad3
-	fmt.Println("Se ha recibido la siguiente propuesta: [ DN1:"+message.Cantidad1+" | DN2:"+message.Cantidad2+" | DN3:"+message.Cantidad3)
+	fmt.Println("Se ha recibido la siguiente propuesta: [ DN1:"+strconv.Itoa(message.Cantidad1)+" | DN2:"+strconv.Itoa(message.Cantidad2)+" | DN3:"+strconv.Itoa(message.Cantidad3))
 
 	if(message.Cantidad1 != 0){
 		var conn *grpc.ClientConn
@@ -98,9 +98,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	if(flag3 == 0){
 		cantidad3 += cantidad_error		
 		cantidad_error = 0	
-	}
-	fmt.Println("Propuesta Modificada: [ DN1:"+message.Cantidad1+" | DN2:"+message.Cantidad2+" | DN3:"+message.Cantidad3)
-
+	}	
+	fmt.Println("Propuesta Modificada: [ DN1:"+strconv.Itoa(cantidad1)+" | DN2:"+strconv.Itoa(cantidad2)+" | DN3:"+strconv.Itoa(cantidad3))
 	return &nodos.ResponseNode{Cantidad1: cantidad1, Cantidad2: cantidad2, Cantidad3: cantidad3},nil
 }
 
