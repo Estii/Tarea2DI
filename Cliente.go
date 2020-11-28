@@ -16,7 +16,7 @@ import (
 
 
 
-func Subir_Centralizado(tipo int){
+func Cargar_Libro(tipo int){
 	var flag bool
 	rand.Seed(time.Now().UnixNano())
 	//var conn *grpc.ClientConn
