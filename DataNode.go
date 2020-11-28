@@ -32,7 +32,8 @@ func Propuesta(prop *nodos.MessageNode){
 	}   
 	ConexionNameNode := nodos.NewChatService2Client(conn2)
 	message := nodos.MessageNode{ Pruebai:"HOLA_datanode" }
-	ConexionNameNode.Propuesta(context.Background(), &message)  // Enviamos propuesta
+	_ , _ := ConexionNameNode.Propuesta(context.Background(), &message)  // Enviamos propuesta
+
 }
 
 
