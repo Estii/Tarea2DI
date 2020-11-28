@@ -122,7 +122,6 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 				log.Fatal(err)
 			}  
 		}
-
 		return &nodos.ResponseNode{Cantidad1: message.Cantidad1, Cantidad2: message.Cantidad2, Cantidad3: message.Cantidad3},nil
 	}
 	if(flag1 == 0){
@@ -137,6 +136,28 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		cantidad3 += cantidad_error		
 		cantidad_error = 0	
 	}	
+	var k int64
+	for k=0;k<message.Cantidad1;k++{
+		b := []byte(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist109\n")
+		err := ioutil.WriteFile("Log/log.txt", b, 0644)
+		if err != nil {
+			log.Fatal(err)
+		}  
+	}
+	for k=0;k<message.Cantidad2;k++{
+		b := []byte(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist110\n")
+		err := ioutil.WriteFile("Log/log.txt", b, 0644)
+		if err != nil {
+			log.Fatal(err)
+		}  
+	}	
+	for k=0;k<message.Cantidad3;k++{
+		b := []byte(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist111\n")
+		err := ioutil.WriteFile("Log/log.txt", b, 0644)
+		if err != nil {
+			log.Fatal(err)
+		}  
+	}
 	fmt.Println("Propuesta Modificada: [ DN1:"+strconv.FormatInt(cantidad1,10)+" | DN2:"+strconv.FormatInt(cantidad2,10)+" | DN3:"+strconv.FormatInt(cantidad3,10)+" ]")
 
 	return &nodos.ResponseNode{Cantidad1: cantidad1, Cantidad2: cantidad2, Cantidad3: cantidad3},nil
