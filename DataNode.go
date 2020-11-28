@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 	"net"
-	"./chat"
-	nodos "./chat2"
+	"Tarea2DI/chat"
+	nodos "Tarea2DI/chat2"
 	"google.golang.org/grpc"
 )
 

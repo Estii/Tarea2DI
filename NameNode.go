@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"net"
-	"./chat2"
+	"Tarea2DI/chat2"
 	"google.golang.org/grpc"
 )
 
