@@ -20,7 +20,7 @@ type Server struct {}
 var IDNODE int64 = 2 // Conflicto LOG
 var id int64 = 0 // Conflicto clientes simultaneos
 var nombre_libro string
-var listachunks []byte
+var listachunks [][]byte
 
 func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cliente.EstadoS,error){
 	return &cliente.EstadoS{Estado:1},nil
@@ -62,7 +62,7 @@ func Propuesta(msj *nodos.MessageNode){
 
 }
 
-func printSlice(listachunks [][]byte) {
+func printSlice(listachunks []byte) {
 	fmt.Printf("len=%d cap=%d %v\n", len(listachunks), cap(listachunks), listachunks)
 }
 
