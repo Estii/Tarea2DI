@@ -101,21 +101,21 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	if(flag==0){	
 		fmt.Println("Propuesta aceptada")
 
-		for k:=1;k<message.Cantidad1;k++{
+		for k:=1 ;k<int(message.Cantidad1);k++{
 			b := []byte(message.NombreLibro+"_"+strconv.Itoa(k)+" dist109\n")
 			err := ioutil.WriteFile("Log/log.txt", b, 0644)
 			if err != nil {
 				log.Fatal(err)
 			}  
 		}
-		for k:=1;k<message.Cantidad2;k++{
+		for k:=1 ;k<int(message.Cantidad2);k++{
 			b := []byte(message.NombreLibro+"_"+strconv.Itoa(k)+" dist110\n")
 			err := ioutil.WriteFile("Log/log.txt", b, 0644)
 			if err != nil {
 				log.Fatal(err)
 			}  
 		}		
-		for k:=1;k<message.Cantidad3;k++{
+		for k:=1 ;k<int(message.Cantidad3);k++{
 			b := []byte(message.NombreLibro+"_"+strconv.Itoa(k)+" dist111\n")
 			err := ioutil.WriteFile("Log/log.txt", b, 0644)
 			if err != nil {
