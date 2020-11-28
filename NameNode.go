@@ -34,8 +34,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad1 = 0
 			cantidad_error += message.Cantidad1
 		}   
-		_,err := nodos.NewChatService2Client(conn)
-		fmt.Println(err)
+		aaaa := nodos.NewChatService2Client(conn)
+		fmt.Println(aaaa)
 	}	
 	if(message.Cantidad2 != 0){
 		var conn *grpc.ClientConn
@@ -46,8 +46,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad2 = 0
 			cantidad_error += message.Cantidad2
 		}   
-		_,err := nodos.NewChatService2Client(conn)
-		fmt.Println(err)
+		aaaa := nodos.NewChatService2Client(conn)
+		fmt.Println(aaaa)
 	}	
 	if(message.Cantidad2 != 0){
 		var conn *grpc.ClientConn
@@ -59,8 +59,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad3 = 0
 			cantidad_error += message.Cantidad3
 		}   		
-		_,err := nodos.NewChatService2Client(conn)
-		fmt.Println(err)
+		aaaa := nodos.NewChatService2Client(conn)
+		fmt.Println(aaaa)
 	}
 
 	fmt.Println(flag)
