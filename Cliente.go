@@ -88,12 +88,14 @@ func main() {
 	}*/
 	var flag bool
 	rand.Seed(time.Now().UnixNano())
+	
+	var conn *grpc.ClientConn
 	flag = true
 	for;flag;{
-		var conn *grpc.ClientConn
 		var ip string
 		ip = "dist"
 		ip += strconv.Itoa(rand.Intn(4) + 109)
+		fmt.println(ip)
 		conn, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
 		if err != nil {
 			log.Fatalf("Error al conectar con el servidor: %s", err)
