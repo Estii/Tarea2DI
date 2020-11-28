@@ -23,7 +23,6 @@ var id int64 = 0
 
 
 func Propuesta(prop *nodos.MessageNode){
-	fmt.Println(prop.Pruebai)
 	// Conectamos con el DataNode
 	var conn2 *grpc.ClientConn
 	conn2, err := grpc.Dial("dist112:9005", grpc.WithInsecure())
@@ -48,7 +47,6 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 		cantidad_uniforme := cantidad/3
 		cantidad_resto := cantidad%3
 		cantidades := [3]int64{cantidad_uniforme + cantidad_resto, cantidad_uniforme, cantidad_uniforme}
-		fmt.Println(cantidades)
 		message := nodos.MessageNode{ Pruebai:"HOLA" }
 		Propuesta(&message)
 		return &cliente.ResponseCliente{},nil
