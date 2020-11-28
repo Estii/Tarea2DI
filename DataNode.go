@@ -25,10 +25,10 @@ func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cl
 
 func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 	fmt.Println(message)
-	return &cliente.ResponseCliente{Estado:1},nil
+	return &cliente.ResponseCliente{},nil
 }
 
-func Propuesta(msj *nodos.MessageNode, listachunks bytes){
+func Propuesta(msj *nodos.MessageNode){
 	// Conectamos con el DataNode
 	var conn2 *grpc.ClientConn
 	conn2, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
@@ -44,14 +44,14 @@ func Propuesta(msj *nodos.MessageNode, listachunks bytes){
 	var k int64
 	var indice int64
 	indice = 0
-	for k=0;k<cantidad1;k++{
+	for k=0;k<response.Cantidad1;k++{
 		var conn2 *grpc.ClientConn
 		conn2, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
 		if err != nil {
 			log.Fatalf("Error al conectar con el servidor: %s", err)
 		}   
-		Conexion := nodos.NewChatServiceClient(conn2)
-		message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.FormatInt(indice,10) }
+		Conexion := cliente.NewChatServiceClient(conn2)
+		message := cliente.MessageCliente{ NombreLibro:libro+"_"+strconv.FormatInt(indice,10) }
 		response , _ := Conexion.SubirChunk(context.Background(), msj)  // Enviamos propuesta	
 	}
 
