@@ -43,7 +43,7 @@ func Subir_Centralizado(conn *grpc.ClientConn){
     case 5:
      	return
 	}
-	
+
 	fmt.Println("Subiendo libro "+libro)
 	fileToBeChunked := "./Libros/"+libro+".pdf"
 	file, err := os.Open(fileToBeChunked)

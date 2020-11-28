@@ -16,10 +16,22 @@ import (
 type Server struct {}
 
 // Propuesta Version Centralizada.
-
+var semaforo int64 = 0 // Conflicto ingresos simultaneos
 func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode,error){
 
+	if(semaforo == 0){ // Node disponible.
+		semaforo = message.ID
+	}
 
+	for semaforo != message.ID { // Si no esta disponible, esperara hasta que pueda.
+		fmt.Println("DataNode Ocupado porfavor espere un momento...")
+		time.Sleep(5 * time.Second)	
+		if( semaforo ==0 ){
+			semaforo = message.ID
+		}				
+	}
+	
+	fmt.Println("DataNode " + message.ID +" ha enviando una solicitud [ Centralizada ]")
 	var flag int64 = 0
 	var flag1 int64 = 0
 	var flag2 int64 = 0
@@ -91,6 +103,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	}
 	if(flag1 == 1 && flag2 == 1 && flag3 == 1){ // Si todos los DataNodes se caen, rechaza propuesta.
 		fmt.Println("Propuesta rechazada, no hay DataNodes disponibles")
+		semaforo = 0
 		return &nodos.ResponseNode{Cantidad1: -1, Cantidad2: -1, Cantidad3:-1},nil
 	}
 
@@ -142,6 +155,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			file.Close() 
 		}
 		fmt.Println("Añadido al log correctamente.\n")
+		semaforo = 0
 		return &nodos.ResponseNode{Cantidad1: message.Cantidad1, Cantidad2: message.Cantidad2, Cantidad3: message.Cantidad3},nil
 	}
 
@@ -200,6 +214,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	}
 	fmt.Println("Propuesta Modificada: [ DN1:"+strconv.FormatInt(cantidad1,10)+" | DN2:"+strconv.FormatInt(cantidad2,10)+" | DN3:"+strconv.FormatInt(cantidad3,10)+" ]")
 	fmt.Println("Añadido al log correctamente.\n")
+	semaforo = 0
 	return &nodos.ResponseNode{Cantidad1: cantidad1, Cantidad2: cantidad2, Cantidad3: cantidad3},nil
 }
 
