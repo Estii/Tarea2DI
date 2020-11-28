@@ -10,7 +10,9 @@ import (
 	"golang.org/x/net/context"
 	"strconv"
 	"path/filepath"
-	"os"
+	"os"    
+	"io/ioutil"
+    
 )
 
 
@@ -85,7 +87,16 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			}  
 		}
 	}
-
+	if(flag1 == 1 && flag2 == 1 && flag3 == 1){
+		fmt.Println("Propuesta rechazada, no hay DataNodes disponibles")
+		return &nodos.ResponseNode{Cantidad1: -1, Cantidad2: -1, Cantidad3:-1},nil
+	}
+    b := []byte("Hola mundo!\n")
+    err := ioutil.WriteFile("Log/log.txt", b, 0644)
+    if err != nil {
+        log.Fatal(err)
+	}
+	
 	if(flag==0){	
 		fmt.Println("Propuesta aceptada")
 		return &nodos.ResponseNode{Cantidad1: message.Cantidad1, Cantidad2: message.Cantidad2, Cantidad3: message.Cantidad3},nil
