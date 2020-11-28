@@ -11,10 +11,7 @@ import (
 	"strconv"
 	"path/filepath"
 	"os"    
-	//"io/ioutil"
-    
 )
-
 
 type Server struct {}
 
@@ -30,7 +27,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	var cantidadT int64 = message.Cantidad1 + message.Cantidad2 + message.Cantidad3
 	fmt.Println("Se ha recibido el libro "+message.NombreLibro+" con la siguiente propuesta: [ DN1:"+strconv.FormatInt(message.Cantidad1,10)+" | DN2:"+strconv.FormatInt(message.Cantidad2,10)+" | DN3:"+strconv.FormatInt(message.Cantidad3,10)+" ]")
 
-	if(message.Cantidad1 != 0){
+	if(message.Cantidad1 != 0){ // Si es distinto de cero, debemos comprobar que el DataNode esta disponible.
 		var conn *grpc.ClientConn
 		conn, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
 		if err != nil {
@@ -49,7 +46,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			}  
 		}
 	}	
-	if(message.Cantidad2 != 0){
+	if(message.Cantidad2 != 0){ // Si es distinto de cero, debemos comprobar que el DataNode esta disponible.
 		var conn2 *grpc.ClientConn
 		conn2, err2 := grpc.Dial("dist110:9000", grpc.WithInsecure())		
 		Conexion := cliente.NewChatServiceClient(conn2)
@@ -69,7 +66,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			}  
 		}
 	}	
-	if(message.Cantidad3 != 0){
+	if(message.Cantidad3 != 0){ // Si es distinto de cero, debemos comprobar que el DataNode esta disponible.
 		var conn3 *grpc.ClientConn
 		conn3, err3 := grpc.Dial("dist111:9000", grpc.WithInsecure())
 		if err3 != nil {
@@ -88,11 +85,12 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			}  
 		}
 	}
-	if(flag1 == 1 && flag2 == 1 && flag3 == 1){
+	if(flag1 == 1 && flag2 == 1 && flag3 == 1){ // Si todos los DataNodes se caen, rechaza propuesta.
 		fmt.Println("Propuesta rechazada, no hay DataNodes disponibles")
 		return &nodos.ResponseNode{Cantidad1: -1, Cantidad2: -1, Cantidad3:-1},nil
 	}
 
+	// Si existe almenos 1 DataNode disponible, procedemos a escribir en el log.
 	file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
 		log.Println(err)
@@ -102,10 +100,11 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	}
 	file.Close()
 
-
+	// En caso de que no exista problema, acepta la propuesta
 	if(flag==0){	
 		fmt.Println("Propuesta aceptada")
 		var k int64
+		// Escribimos log de chunks DataNode 1
 		for k=0;k<message.Cantidad1;k++{
 			file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
@@ -116,6 +115,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			}
 			file.Close()
 		}
+		// Escribimos log de chunks DataNode 2
 		for k=0;k<message.Cantidad2;k++{
 			file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
@@ -126,12 +126,12 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			}
 			file.Close()
 		}	
+		// Escribimos log de chunks DataNode 3
 		for k=0;k<message.Cantidad3;k++{
 			file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
 				log.Println(err)
 			}
-			//defer file.Close()
 			if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist111\n"); err!=nil{
 				log.Fatal(err)
 			}
@@ -140,6 +140,9 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		fmt.Println("Añadido al log correctamente.\n")
 		return &nodos.ResponseNode{Cantidad1: message.Cantidad1, Cantidad2: message.Cantidad2, Cantidad3: message.Cantidad3},nil
 	}
+
+	// Si no acepta la propuesta, es porque debemos reorganizar la reparticion
+	// En caso de que algun DataNode este disponible, se le asigna la cantidad de error de los nodos no disponibles
 	if(flag1 == 0){
 		cantidad1 += cantidad_error	
 		cantidad_error = 0	
@@ -154,7 +157,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	}	
 	var k int64
 	var indice int64
-	indice = 0
+	indice = 0 // Indice ayuda a enumerar chunks
+	// Escribimos log de chunks DataNode 1
 	for k=0;k<cantidad1;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
         if err != nil {
@@ -167,24 +171,24 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		indice+=1;
         file.Close()
 	}
+	// Escribimos log de chunks DataNode 2
 	for k=0;k<cantidad2;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
         if err != nil {
                 log.Println(err)
         }
-        //defer file.Close()
         if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(indice,10)+" dist110\n"); err!=nil{
                 log.Fatal(err)
 		}
 		indice+=1
         file.Close()
 	}	
+	// Escribimos log de chunks DataNode 3
 	for k=0;k<cantidad3;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
         if err != nil {
                 log.Println(err)
         }
-        //defer file.Close()
         if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(indice,10)+" dist111\n"); err!=nil{
                 log.Fatal(err)
 		}
@@ -193,11 +197,10 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	}
 	fmt.Println("Propuesta Modificada: [ DN1:"+strconv.FormatInt(cantidad1,10)+" | DN2:"+strconv.FormatInt(cantidad2,10)+" | DN3:"+strconv.FormatInt(cantidad3,10)+" ]")
 	fmt.Println("Añadido al log correctamente.\n")
-
 	return &nodos.ResponseNode{Cantidad1: cantidad1, Cantidad2: cantidad2, Cantidad3: cantidad3},nil
 }
 
-
+// Limpia archivo log al iniciar programa
 func LimpiarArchivo(){
     var files []string
     root := "./Log/"
@@ -212,8 +215,7 @@ func LimpiarArchivo(){
     	os.Remove(files[i])      
 	}
 	os.Create("./Log/log.txt")
-  }
-
+}
 
 // Conexion DataNode.
 func main() {

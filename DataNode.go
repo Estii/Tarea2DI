@@ -30,8 +30,8 @@ func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente
 	fileName := message.NombreLibro
 	_, err := os.Create("Fragmentos/"+fileName)
 	if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 	ioutil.WriteFile("Fragmentos/"+fileName, message.Chunks, os.ModeAppend)
 	fmt.Println("Fragmento: ", fileName)
@@ -70,8 +70,8 @@ func Propuesta(msj *nodos.MessageNode){
 		fileName := nombre_libro+"_"+strconv.FormatInt(indice,10)
 		_, err := os.Create("Fragmentos/"+fileName)
 		if err != nil {
-				fmt.Println(err)
-				os.Exit(1)
+			fmt.Println(err)
+			os.Exit(1)
 		}
 		ioutil.WriteFile("Fragmentos/"+fileName, listachunks[indice], os.ModeAppend)
 		indice+=1
@@ -142,12 +142,12 @@ func main() {
 	LimpiarArchivos()
 	lis, err := net.Listen("tcp", ":9000")
 	if err != nil {
-			log.Fatalf("Failed to listen on port 9000: %v", err)
+		log.Fatalf("Failed to listen on port 9000: %v", err)
 	}            
 	s := Server{}
 	grpcServer := grpc.NewServer()
 	cliente.RegisterChatServiceServer(grpcServer, &s)
 	if err := grpcServer.Serve(lis); err != nil {
-			log.Fatalf("Failed to serve gRPC server over port 9000: %v", err)
+		log.Fatalf("Failed to serve gRPC server over port 9000: %v", err)
 	}
 }
