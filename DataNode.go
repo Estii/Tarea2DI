@@ -56,16 +56,35 @@ func Propuesta(msj *nodos.MessageNode){
 		Conexion := cliente.NewChatServiceClient(conn2)
 		message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10) }
 		response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta	
+		indice+=1
+		fmt.Println(response)
+	}
+	for k=0;k<response.Cantidad2;k++{
+		fileName := nombre_libroo+"_"+strconv.FormatInt(indice,10)
+		_, err := os.Create("Fragmentos/"+fileName)
+		if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+		}
+		ioutil.WriteFile("Fragmentos/"+fileName, message.Chunks, os.ModeAppend)
+		indice+=1
+		fmt.Println("Fragmento: ", fileName)
+	}
+	for k=0;k<response.Cantidad3;k++{
+		var conn2 *grpc.ClientConn
+		conn2, err := grpc.Dial("dist111:9000", grpc.WithInsecure())
+		if err != nil {
+			log.Fatalf("Error al conectar con el servidor: %s", err)
+		}   
+		Conexion := cliente.NewChatServiceClient(conn2)
+		message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10) }
+		response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta	
+		indice+=1
 		fmt.Println(response)
 	}
 
-
-
 }
 
-func printSlice(listachunks [][]byte) {
-	fmt.Printf("len=%d cap=%d %v\n", len(listachunks))
-}
 
 func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 
@@ -75,7 +94,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 		nombre_libro = message.NombreLibro[0:len(message.NombreLibro)-2]
 	}
 	if(message.Termino == 1){ // Fin de recepcion de chunks de un libro, enviamos propuesta
-		printSlice(listachunks)
+
 		id = 0
 		cantidad := message.CantidadChunks
 		cantidad_uniforme := cantidad/3
