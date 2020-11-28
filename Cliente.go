@@ -16,7 +16,7 @@ import (
 
 
 
-func Subir_Centralizado(conn *grpc.ClientConn){
+func Subir_Centralizado(){
 	var flag bool
 	rand.Seed(time.Now().UnixNano())
 	
@@ -131,7 +131,7 @@ func main() {
 			case 1:
 				fmt.Println("Aun en implementacacion...")
 			case 2:
-				Subir_Centralizado(c)
+				Subir_Centralizado()
 			case 3:				
 				fmt.Println("Aun en implementacacion...")
 			case 4:				
