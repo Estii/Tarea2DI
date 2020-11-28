@@ -33,7 +33,7 @@ func Subir_Centralizado(){
 			return
 		}else{
 			ConexionSubida := chat.NewChatServiceClient(conn)		
-			response,err := c.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
+			response,err := ConexionSubida.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
 			fmt.Println(response)
 			if err == nil {
 				if response.Estado == 1 {
