@@ -17,10 +17,35 @@ import (
 
 
 func Subir_Centralizado(conn *grpc.ClientConn){
+	var flag bool
+	rand.Seed(time.Now().UnixNano())
 	
+	var conn *grpc.ClientConn
+	flag = true
+	var ip string
+	for;flag;{		
+		ip = "dist"
+		ip += strconv.Itoa(rand.Intn(3) + 109)
+		fmt.Println(ip)
+		conn, err := grpc.Dial(ip+":9000", grpc.WithInsecure())
+		if err != nil {
+			log.Fatalf("Error al conectar con el servidor: %s", err)
+			return
+		}else{
+			ConexionSubida := chat.NewChatServiceClient(conn)		
+			response,err := c.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
+			fmt.Println(response)
+			if err == nil {
+				if response.Estado == 1 {
+					flag = false
+				}  
+			}	
+		}
+	}
+
 	id := rand.Int63n(100000000000000000)
 	
-	ConexionSubida := chat.NewChatServiceClient(conn)
+	//ConexionSubida := chat.NewChatServiceClient(conn)
 	var seleccion int
 	var libro string
 	// Leemos el archivo a fragmentar.
@@ -86,30 +111,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error al conectar con el servidor: %s", err)
 	}*/
-	var flag bool
-	rand.Seed(time.Now().UnixNano())
-	
-	var conn *grpc.ClientConn
-	flag = true
-	var ip string
-	for;flag;{		
-		ip = "dist"
-		ip += strconv.Itoa(rand.Intn(4) + 109)
-		fmt.Println(ip)
-		conn, err := grpc.Dial(ip+":9000", grpc.WithInsecure())
-		if err != nil {
-			log.Fatalf("Error al conectar con el servidor: %s", err)
-		}else{
-			c := chat.NewChatServiceClient(conn)		
-			response,err := c.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
-			fmt.Println(response)
-			if err == nil {
-				if response.Estado == 1 {
-					flag = false
-				}  
-			}	
-		}
-	}
 
 
 	var seleccion int
