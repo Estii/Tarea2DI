@@ -25,7 +25,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	var cantidad3 int64 = message.Cantidad3
 
 	if(message.Cantidad1 != 0){
-		_, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
+		var conn *grpc.ClientConn
+		conn, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
 		fmt.Println(err)
 		if err != nil {
 			flag = 1
@@ -33,25 +34,33 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad1 = 0
 			cantidad_error += message.Cantidad1
 		}   
+		_,err := nodos.NewChatServiceClient(conn)
+		fmt.Println(err)
 	}	
 	if(message.Cantidad2 != 0){
-		_, err := grpc.Dial("dist110:9001", grpc.WithInsecure())
+		var conn *grpc.ClientConn
+		conn, err := grpc.Dial("dist110:9001", grpc.WithInsecure())
 		if err != nil {
 			flag = 1
 			flag2 = 1			
 			cantidad2 = 0
 			cantidad_error += message.Cantidad2
 		}   
+		_,err := nodos.NewChatServiceClient(conn)
+		fmt.Println(err)
 	}	
 	if(message.Cantidad2 != 0){
-		_, err := grpc.Dial("dist111:9002", grpc.WithInsecure())
+		var conn *grpc.ClientConn
+		conn, err := grpc.Dial("dist111:9002", grpc.WithInsecure())
 		fmt.Println(err)
 		if err != nil {
 			flag = 1
 			flag3 = 1
 			cantidad3 = 0
 			cantidad_error += message.Cantidad3
-		}   
+		}   		
+		_,err := nodos.NewChatServiceClient(conn)
+		fmt.Println(err)
 	}
 
 	fmt.Println(flag)
