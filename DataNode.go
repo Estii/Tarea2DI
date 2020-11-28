@@ -25,7 +25,10 @@ func Propuesta(msj *nodos.MessageNode){
 		log.Fatalf("Error al conectar con el servidor: %s", err)
 	}   
 	ConexionNameNode := nodos.NewChatService2Client(conn2)
+	fmt.Println("Inicio")
+	fmt.Println(msj)
 	response , _ := ConexionNameNode.Propuesta(context.Background(), msj)  // Enviamos propuesta
+	fmt.Println("Final")
 	fmt.Println(response)
 }
 
