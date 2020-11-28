@@ -101,7 +101,7 @@ func main() {
 			log.Fatalf("Error al conectar con el servidor: %s", err)
 		}else{
 			c := chat.NewChatServiceClient(conn)		
-			response,err := c.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
+			response,_ := c.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
 			if response.Estado == 1 {
 				flag = false
 			}  
