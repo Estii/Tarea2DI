@@ -29,6 +29,9 @@ func Propuesta(msj *nodos.MessageNode){
 	fmt.Println(response)
 }
 
+func (s *Server) CheckEstado(ctx context.Context, message *nodos.EstadoE) (*nodos.EstadoS,error){
+	return &nodos.EstadoS{estado:1},nil
+}
 
 func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 

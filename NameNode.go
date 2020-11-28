@@ -33,9 +33,18 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			flag1 = 1			
 			cantidad1 = 0
 			cantidad_error += message.Cantidad1
-		}   
-		aaaa := nodos.NewChatService2Client(conn)
-		fmt.Println(aaaa)
+		}else{
+			c := nodos.NewChatService2Client(conn)		
+			r,err := c.CheckEstado(nodos.EstadoE{estado:1})
+			fmt.Println(r)
+			fmt.Println(err)
+			if err != nil {
+				flag = 1
+				flag2 = 1			
+				cantidad2 = 0
+				cantidad_error += message.Cantidad2
+			}  
+		}
 	}	
 	if(message.Cantidad2 != 0){
 		var conn *grpc.ClientConn
@@ -45,9 +54,18 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			flag2 = 1			
 			cantidad2 = 0
 			cantidad_error += message.Cantidad2
-		}   
-		aaaa := nodos.NewChatService2Client(conn)
-		fmt.Println(aaaa)
+		}else{
+			c := nodos.NewChatService2Client(conn)		
+			r,err := c.CheckEstado(nodos.EstadoE{estado:1})
+			fmt.Println(r)
+			fmt.Println(err)
+			if err != nil {
+				flag = 1
+				flag2 = 1			
+				cantidad2 = 0
+				cantidad_error += message.Cantidad2
+			}  
+		}
 	}	
 	if(message.Cantidad2 != 0){
 		var conn *grpc.ClientConn
@@ -58,9 +76,18 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			flag3 = 1
 			cantidad3 = 0
 			cantidad_error += message.Cantidad3
-		}   		
-		aaaa := nodos.NewChatService2Client(conn)
-		fmt.Println(aaaa)
+		}else{
+			c := nodos.NewChatService2Client(conn)		
+			r,err := c.CheckEstado(nodos.EstadoE{estado:1})
+			fmt.Println(r)
+			fmt.Println(err)
+			if err != nil {
+				flag = 1
+				flag2 = 1			
+				cantidad2 = 0
+				cantidad_error += message.Cantidad2
+			}  
+		}
 	}
 
 	fmt.Println(flag)
