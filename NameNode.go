@@ -108,7 +108,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 }
 
 
-func remover(){
+func LimpiarArchivo(){
     var files []string
     root := "./Log/"
     err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
@@ -116,7 +116,6 @@ func remover(){
       return nil
     })
     if err != nil {
-      log.Printf("remover")
       panic(err)
     }
     for i:=1;i<len(files);i++{
@@ -128,7 +127,7 @@ func remover(){
 
 // Conexion DataNode.
 func main() {
-	remover()
+	LimpiarArchivo()
 	lis, err := net.Listen("tcp", ":9000")
 	if err != nil {
 			log.Fatalf("Failed to listen on port 9000: %v", err)

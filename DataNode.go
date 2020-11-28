@@ -36,19 +36,24 @@ func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cl
 	return &cliente.EstadoS{Estado:1},nil
 }
 
+
+var nombre_libro string
 func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 
 	if(id == 0){ // Node disponible
 		fmt.Println("Se ha recibido el libro "+ message.NombreLibro[0:len(message.NombreLibro)-2])
 		id = message.ID
+		nombre_libro = message.NombreLibro[0:len(message.NombreLibro)-2]
 	}
 	if(message.Termino == 1){ // Fin de recepcion de chunks de un libro, enviamos propuesta
 		id = 0
 		cantidad := message.CantidadChunks
 		cantidad_uniforme := cantidad/3
 		cantidad_resto := cantidad%3
-		message := nodos.MessageNode{ Cantidad1:cantidad_uniforme + cantidad_resto, Cantidad2:cantidad_uniforme,Cantidad3:cantidad_uniforme }
+		message := nodos.MessageNode{ Cantidad1:cantidad_uniforme + cantidad_resto, Cantidad2:cantidad_uniforme,Cantidad3:cantidad_uniforme,NombreLibro:nombre_libro }
 		Propuesta(&message)
+		
+		nombre_libro = " "
 		return &cliente.ResponseCliente{},nil
 	}
 
@@ -73,7 +78,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 	return &cliente.ResponseCliente{},nil	
 }
 
-func remover(){
+func LimpiarArchivos(){
     var files []string
     root := "./Fragmentos/"
     err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
@@ -81,7 +86,6 @@ func remover(){
       return nil
     })
     if err != nil {
-      log.Printf("remover")
       panic(err)
     }
     for i:=1;i<len(files);i++{
@@ -92,7 +96,7 @@ func remover(){
 
 // Conexion DataNode.
 func main() {
-	remover()
+	LimpiarArchivos()
 	lis, err := net.Listen("tcp", ":9000")
 	if err != nil {
 			log.Fatalf("Failed to listen on port 9000: %v", err)
