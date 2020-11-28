@@ -27,7 +27,6 @@ func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cl
 }
 
 func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
-	fmt.Println(message)
 	fileName := message.NombreLibro
 	_, err := os.Create("Fragmentos/"+fileName)
 	if err != nil {
