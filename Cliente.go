@@ -71,9 +71,9 @@ func main() {
 	}   
 	
 	var seleccion int
-	var flag bool
+	var finalizar bool
   
-	flag=true
+	finalizar=true
 	for;flag;{
 		fmt.Println("")
 		fmt.Println("1-  Subir Libro  [ Distribuido ]")
@@ -94,7 +94,7 @@ func main() {
 			case 4:				
 				fmt.Println("Aun en implementacacion...")
 			case 5:
-				seleccion = false
+				finalizar = false
 		}
 	}
 
