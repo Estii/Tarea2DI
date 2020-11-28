@@ -14,18 +14,10 @@ import (
 	"time"
 )
 
-func main() {
-	rand.Seed(time.Now().UnixNano())
-	id := rand.Int63n(100000000000000000)
 
-	// Codigo ClienteUploader -----------------------------
 
-	// Conectamos con el DataNode.
-	var conn *grpc.ClientConn
-	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
-	if err != nil {
-		log.Fatalf("Error al conectar con el servidor: %s", err)
-	}   
+func Subir_Centralizado(conn *grpc.ClientConn){
+
 	ConexionSubida := chat.NewChatServiceClient(conn)
 
 	// Leemos el archivo a fragmentar.
@@ -59,9 +51,65 @@ func main() {
 	message := chat.MessageCliente{Termino: 1, CantidadChunks:Cantidad} // Se envia un mensaje de termino de envio.
 	ConexionSubida.EnviarLibro(context.Background(), &message)
 
-
-
 	file.Close()
+
+}
+
+
+
+
+func main() {
+	rand.Seed(time.Now().UnixNano())
+	id := rand.Int63n(100000000000000000)
+
+	// Codigo ClienteUploader -----------------------------
+	var conn *grpc.ClientConn
+	maquina:="dist"+strconv.Itoa(rand.Intn(3) + 93)
+	for;verificar_maquinas(maquina);{
+	  maquina="dist"+strconv.Itoa(rand.Intn(3) + 93)
+	}
+	conn, err := grpc.Dial(maquina+":9000", grpc.WithInsecure())
+	if err != nil {
+	  log.Fatalf("did not connect: %s", err)
+	}
+	defer conn.Close()
+  
+	var seleccion int
+	var flag bool
+  
+	flag=true
+	for;flag;{
+		fmt.Println("")
+		fmt.Println("1-  Subir Libro  [ Distribuido ]")
+		fmt.Println("2-  Subir Libro  [ Centralizado ]")
+		fmt.Println("3-  Descargar Libro")
+		fmt.Println("4-  Ver Libros Descargados")
+		fmt.Println("5-  Salir")
+		fmt.Println("")
+		fmt.Scanln(&seleccion)
+		//remover()
+		switch seleccion {
+			case 1:
+				fmt.Println("Aun en implementacacion...")
+			case 2:
+				Subir_Centralizado(conn)
+			case 3:				
+				fmt.Println("Aun en implementacacion...")
+			case 4:				
+				fmt.Println("Aun en implementacacion...")
+			case 5:
+				seleccion = false
+		}
+	}
+
+	
+	// Conectamos con el DataNode.
+	var conn *grpc.ClientConn
+	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Error al conectar con el servidor: %s", err)
+	}   
+
 }
 
 

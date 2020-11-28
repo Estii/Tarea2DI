@@ -18,6 +18,5 @@ message MessageNode{
 
 service ChatService2{
     rpc Propuesta(MessageNode) returns (ResponseNode){}
-
 }
 
