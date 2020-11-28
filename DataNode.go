@@ -64,7 +64,7 @@ func Propuesta(msj *nodos.MessageNode){
 }
 
 func printSlice(listachunks [][]byte) {
-	fmt.Printf("len=%d cap=%d %v\n", len(listachunks), cap(listachunks), listachunks)
+	fmt.Printf("len=%d cap=%d %v\n", len(listachunks))
 }
 
 func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
