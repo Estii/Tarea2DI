@@ -102,25 +102,37 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		fmt.Println("Propuesta aceptada")
 		var k int64
 		for k=0;k<message.Cantidad1;k++{
-			b := []byte(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist109\n")
-			err := ioutil.WriteFile("Log/log.txt", b, 0644)
+			file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
-				log.Fatal(err)
-			}  
+					log.Println(err)
+			}
+			//defer file.Close()
+			if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist109\n"); err!=nil{
+					log.Fatal(err)
+			}
+			file.Close()
 		}
 		for k=0;k<message.Cantidad2;k++{
-			b := []byte(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist110\n")
-			err := ioutil.WriteFile("Log/log.txt", b, 0644)
+			file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
-				log.Fatal(err)
-			}  
+					log.Println(err)
+			}
+			//defer file.Close()
+			if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist110\n"); err!=nil{
+					log.Fatal(err)
+			}
+			file.Close()
 		}	
 		for k=0;k<message.Cantidad3;k++{
-			b := []byte(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist111\n")
-			err := ioutil.WriteFile("Log/log.txt", b, 0644)
+			file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 			if err != nil {
-				log.Fatal(err)
-			}  
+					log.Println(err)
+			}
+			//defer file.Close()
+			if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist111\n"); err!=nil{
+					log.Fatal(err)
+			}
+			file.Close() 
 		}
 		return &nodos.ResponseNode{Cantidad1: message.Cantidad1, Cantidad2: message.Cantidad2, Cantidad3: message.Cantidad3},nil
 	}
@@ -137,7 +149,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		cantidad_error = 0	
 	}	
 	var k int64
-	for k=0;k<message.Cantidad1;k++{
+	for k=0;k<cantidad1;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
         if err != nil {
                 log.Println(err)
@@ -148,7 +160,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
         }
         file.Close()
 	}
-	for k=0;k<message.Cantidad2;k++{
+	for k=0;k<cantidad2;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
         if err != nil {
                 log.Println(err)
@@ -159,7 +171,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
         }
         file.Close()
 	}	
-	for k=0;k<message.Cantidad3;k++{
+	for k=0;k<cantidad3;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
         if err != nil {
                 log.Println(err)
