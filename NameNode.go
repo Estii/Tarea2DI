@@ -16,7 +16,10 @@ import (
 type Server struct {}
 
 // Propuesta Version Centralizada.
+
 func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode,error){
+
+
 	var flag int64 = 0
 	var flag1 int64 = 0
 	var flag2 int64 = 0

@@ -63,17 +63,15 @@ func main() {
 	id := rand.Int63n(100000000000000000)
 
 	// Codigo ClienteUploader -----------------------------
+
+	
+	// Conectamos con el DataNode.
 	var conn *grpc.ClientConn
-	maquina:="dist"+strconv.Itoa(rand.Intn(3) + 93)
-	for;verificar_maquinas(maquina);{
-	  maquina="dist"+strconv.Itoa(rand.Intn(3) + 93)
-	}
-	conn, err := grpc.Dial(maquina+":9000", grpc.WithInsecure())
+	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 	if err != nil {
-	  log.Fatalf("did not connect: %s", err)
-	}
-	defer conn.Close()
-  
+		log.Fatalf("Error al conectar con el servidor: %s", err)
+	}   
+	
 	var seleccion int
 	var flag bool
   
@@ -103,12 +101,6 @@ func main() {
 	}
 
 	
-	// Conectamos con el DataNode.
-	var conn *grpc.ClientConn
-	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
-	if err != nil {
-		log.Fatalf("Error al conectar con el servidor: %s", err)
-	}   
 
 }
 
