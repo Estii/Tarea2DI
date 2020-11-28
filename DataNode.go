@@ -22,7 +22,7 @@ var id int64 = 0
 
 
 
-func Propuesta(prop *nodos.MessageNode){
+func Propuesta(msj *nodos.MessageNode){
 	// Conectamos con el DataNode
 	var conn2 *grpc.ClientConn
 	conn2, err := grpc.Dial("dist112:9005", grpc.WithInsecure())
@@ -30,9 +30,7 @@ func Propuesta(prop *nodos.MessageNode){
 		log.Fatalf("Error al conectar con el servidor: %s", err)
 	}   
 	ConexionNameNode := nodos.NewChatService2Client(conn2)
-	message := nodos.MessageNode{ Pruebai:"HOLA_datanode" }
-	ConexionNameNode.Propuesta(context.Background(), &message)  // Enviamos propuesta
-
+	ConexionNameNode.Propuesta(context.Background(), &msj)  // Enviamos propuesta
 }
 
 
