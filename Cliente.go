@@ -16,7 +16,7 @@ import (
 
 
 
-func Cargar_Libro(tipo int){
+func Cargar_Libro(tipo int64){
 	var flag bool
 	rand.Seed(time.Now().UnixNano())
 	//var conn *grpc.ClientConn
@@ -75,25 +75,13 @@ func Cargar_Libro(tipo int){
 					for i := uint64(0); i < totalPartsNum; i++ { // Se envia chunk por chunk al datanode.
 						partSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
 						partBuffer := make([]byte, partSize)
-						file.Read(partBuffer)	
-						if(tipo==1){							
-							message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.Itoa(j), Chunks:partBuffer, ID:id, Termino:0, Tipo: 1 }
-							ConexionSubida.EnviarLibro(context.Background(), &message)
-						}
-						if(tipo==2){							
-							message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.Itoa(j), Chunks:partBuffer, ID:id, Termino:0 , Tipo: 2}
-							ConexionSubida.EnviarLibro(context.Background(), &message)
-						}
+						file.Read(partBuffer)										
+						message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.Itoa(j), Chunks:partBuffer, ID:id, Termino:0, Tipo: tipo }
+						ConexionSubida.EnviarLibro(context.Background(), &message)			
 						j+=1
-					}				
-					if(tipo==1){							
-						message := chat.MessageCliente{ Termino: 1, CantidadChunks:Cantidad, ID:id , Tipo: 1 }
-						ConexionSubida.EnviarLibro(context.Background(), &message)
-					}
-					if(tipo==2){							
-						message := chat.MessageCliente{ Termino: 1, CantidadChunks:Cantidad, ID:id , Tipo: 2}
-						ConexionSubida.EnviarLibro(context.Background(), &message)
-					}
+					}															
+					message := chat.MessageCliente{ Termino: 1, CantidadChunks:Cantidad, ID:id , Tipo: tipo }
+					ConexionSubida.EnviarLibro(context.Background(), &message)
 					file.Close()
 				}  
 			}	
