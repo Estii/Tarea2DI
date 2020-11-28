@@ -11,7 +11,7 @@ message MessageNode{
     string Pruebai = 2;
 }
 
-service ChatService{
+service ChatService2{
     rpc Propuesta(MessageNode) returns (ResponseNode){}
 }
 
