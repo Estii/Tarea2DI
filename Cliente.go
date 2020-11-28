@@ -17,7 +17,6 @@ import (
 func main() {
 	rand.Seed(time.Now().UnixNano())
 	id := rand.Int63n(100000000000000000)
-	//fmt.Printf("%d",id)
 
 	// Codigo ClienteUploader -----------------------------
 
@@ -32,7 +31,6 @@ func main() {
 	libro := "MobyDick"
 	fileToBeChunked := "./Libros/"+libro+".pdf" // change here!
 	file, err := os.Open(fileToBeChunked)
-
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
