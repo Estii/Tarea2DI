@@ -20,7 +20,7 @@ func Subir_Centralizado(){
 	var flag bool
 	rand.Seed(time.Now().UnixNano())
 	
-	var conn *grpc.ClientConn
+	//var conn *grpc.ClientConn
 	flag = true
 	var ip string
 	for;flag;{		
