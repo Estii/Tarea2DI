@@ -56,7 +56,9 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad_error += message.Cantidad2
 		}else{
 			c := nodos.NewChatService2Client(conn)		
-			_,err := c.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})
+			r,err := c.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})
+			fmt.Println(r)
+			fmt.Println(err)
 			if err != nil {
 				flag = 1
 				flag2 = 1			
