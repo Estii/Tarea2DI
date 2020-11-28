@@ -25,7 +25,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	var cantidad1 int64 = message.Cantidad1
 	var cantidad2 int64 = message.Cantidad2
 	var cantidad3 int64 = message.Cantidad3
-	fmt.Println("Se ha recibido la siguiente propuesta: [ DN1:"+strconv.FormatInt(message.Cantidad1,10)+" | DN2:"+strconv.FormatInt(message.Cantidad2,10)+" | DN3:"+strconv.FormatInt(message.Cantidad3,10)+" ]")
+	fmt.Println("Se ha recibido el libro "+message.NombreLibro+" con la siguiente propuesta: [ DN1:"+strconv.FormatInt(message.Cantidad1,10)+" | DN2:"+strconv.FormatInt(message.Cantidad2,10)+" | DN3:"+strconv.FormatInt(message.Cantidad3,10)+" ]")
 
 	if(message.Cantidad1 != 0){
 		var conn *grpc.ClientConn
