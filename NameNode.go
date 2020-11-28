@@ -15,14 +15,14 @@ type Server struct {}
 
 func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode,error){
 	fmt.Println(message)
-	flag := 0
-	flag1 := 0
-	flag2 := 0
-	flag3 := 0
+	var flag int64 = 0
+	var flag1 int64 = 0
+	var flag2 int64 = 0
+	var flag3 int64 = 0
 	var cantidad_error int64 = 0
 	var cantidad1 int64 = message.Cantidad1
-	var cantidad2 int64 =  message.Cantidad2
-	var cantidad3 int64 =  message.Cantidad3
+	var cantidad2 int64 = message.Cantidad2
+	var cantidad3 int64 = message.Cantidad3
 
 	if(message.Cantidad1 != 0){
 		_, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
