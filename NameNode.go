@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	nodos "Tarea2DI/chat2"
+	cliente "Tarea2DI/chat"
 	"google.golang.org/grpc"
 	"fmt"
 	"golang.org/x/net/context"
@@ -32,8 +33,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad1 = 0
 			cantidad_error += message.Cantidad1
 		}else{
-			c := nodos.NewChatService2Client(conn)		
-			r,err := c.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})
+			c := cliente.NewChatServiceClient(conn)		
+			r,err := c.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
 			fmt.Println(r)
 			fmt.Println(err)
 			if err != nil {
@@ -47,7 +48,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	if(message.Cantidad2 != 0){
 		var conn2 *grpc.ClientConn
 		conn2, err2 := grpc.Dial("dist110:9000", grpc.WithInsecure())		
-		Conexion := nodos.NewChatService2Client(conn2)
+		Conexion := cliente.NewChatServiceClient(conn2)
 		defer conn2.Close()
 		if err2 != nil {
 			flag = 1
@@ -55,7 +56,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad2 = 0
 			cantidad_error += message.Cantidad2
 		}else{		
-			r2,err2 := Conexion.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})
+			r2,err2 := Conexion.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
 			fmt.Println(r2)
 			fmt.Println(err2)
 			if err2 != nil {
@@ -75,8 +76,8 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad3 = 0
 			cantidad_error += message.Cantidad3
 		}else{
-			c3 := nodos.NewChatService2Client(conn3)		
-			r3,err3 := c3.CheckEstado(context.Background(),&nodos.EstadoE{Estado:1})			
+			c3 := cliente.NewChatServiceClient(conn3)		
+			r3,err3 := c3.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})			
 			fmt.Println(r3)
 			fmt.Println(err3)
 			if err3 != nil {
