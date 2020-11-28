@@ -100,7 +100,7 @@ func main() {
 		}else{
 			c := chat.NewChatServiceClient(conn)		
 			response,err := c.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
-			if response.EstadoS == 1 {
+			if response.Estado == 1 {
 				flag = false
 			}  
 		}
