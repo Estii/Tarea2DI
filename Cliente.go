@@ -38,67 +38,67 @@ func Subir_Centralizado(){
 			fmt.Println(response)
 			if err == nil {
 				if response.Estado == 1 {
-					flag = false
+					id := rand.Int63n(100000000000000000)
+	
+					//ConexionSubida := chat.NewChatServiceClient(conn)
+					var seleccion int
+					var libro string
+					// Leemos el archivo a fragmentar.
+					fmt.Println("Seleccione un libro:")
+					fmt.Println("1- MobyDick")
+					fmt.Println("1- Dracula")
+					fmt.Println("2- La vuelta al mundo en 80 dias")
+					fmt.Println("3- Orgullo y prejuicio")
+					fmt.Println("4 -Salir")
+					fmt.Scanln(&seleccion)
+					switch seleccion {
+					case 1:
+						libro = "MobyDick"
+					case 2:
+						libro = "Dracula"	
+					case 3:
+						libro = "La_vuelta_al_mundo_en_80_dias"
+					case 4:
+						libro = "Orgullo_y_prejuicio"
+					case 5:
+						 return
+					}
+				
+					fmt.Println("Subiendo libro "+libro)
+					fileToBeChunked := "./Libros/"+libro+".pdf"
+					file, err := os.Open(fileToBeChunked)
+					if err != nil {
+						fmt.Println(err)
+						os.Exit(1)
+					}
+					defer file.Close()
+				
+					// Se fragmenta el archivo en tamaño asignado.
+					fileInfo, _ := file.Stat()
+					var fileSize int64 = fileInfo.Size()
+					const fileChunk = 250000 
+					totalPartsNum := uint64(math.Ceil(float64(fileSize) / float64(fileChunk)))
+					
+					var j = 0
+					var Cantidad int64 = int64(totalPartsNum)
+					for i := uint64(0); i < totalPartsNum; i++ { // Se envia chunk por chunk al datanode.
+						partSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
+						partBuffer := make([]byte, partSize)
+						file.Read(partBuffer)	
+						message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.Itoa(j), Chunks:partBuffer, ID:id, Termino:0 }
+						ConexionSubida.EnviarLibro(context.Background(), &message)
+						j+=1
+					}
+				
+					message := chat.MessageCliente{Termino: 1, CantidadChunks:Cantidad} // Se envia un mensaje de termino de envio.
+					ConexionSubida.EnviarLibro(context.Background(), &message)
+					file.Close()
 				}  
 			}	
 		}
 	}
 
-	id := rand.Int63n(100000000000000000)
-	
-	//ConexionSubida := chat.NewChatServiceClient(conn)
-	var seleccion int
-	var libro string
-	// Leemos el archivo a fragmentar.
-	fmt.Println("Seleccione un libro:")
-	fmt.Println("1- MobyDick")
-    fmt.Println("1- Dracula")
-    fmt.Println("2- La vuelta al mundo en 80 dias")
-    fmt.Println("3- Orgullo y prejuicio")
-    fmt.Println("4 -Salir")
-    fmt.Scanln(&seleccion)
-	switch seleccion {
-    case 1:
-		libro = "MobyDick"
-    case 2:
-		libro = "Dracula"	
-    case 3:
-		libro = "La_vuelta_al_mundo_en_80_dias"
-    case 4:
-		libro = "Orgullo_y_prejuicio"
-    case 5:
-     	return
-	}
 
-	fmt.Println("Subiendo libro "+libro)
-	fileToBeChunked := "./Libros/"+libro+".pdf"
-	file, err := os.Open(fileToBeChunked)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	defer file.Close()
-
-	// Se fragmenta el archivo en tamaño asignado.
-	fileInfo, _ := file.Stat()
-	var fileSize int64 = fileInfo.Size()
-	const fileChunk = 250000 
-	totalPartsNum := uint64(math.Ceil(float64(fileSize) / float64(fileChunk)))
-	
-	var j = 0
-	var Cantidad int64 = int64(totalPartsNum)
-	for i := uint64(0); i < totalPartsNum; i++ { // Se envia chunk por chunk al datanode.
-		partSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
-		partBuffer := make([]byte, partSize)
-		file.Read(partBuffer)	
-		message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.Itoa(j), Chunks:partBuffer, ID:id, Termino:0 }
-		ConexionSubida.EnviarLibro(context.Background(), &message)
-		j+=1
-	}
-
-	message := chat.MessageCliente{Termino: 1, CantidadChunks:Cantidad} // Se envia un mensaje de termino de envio.
-	ConexionSubida.EnviarLibro(context.Background(), &message)
-	file.Close()
 }
 
 
