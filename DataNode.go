@@ -107,6 +107,9 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 		message := nodos.MessageNode{ Cantidad1:cantidad_uniforme + cantidad_resto, Cantidad2:cantidad_uniforme,Cantidad3:cantidad_uniforme,NombreLibro:nombre_libro }
 		Propuesta(&message)
 		nombre_libro = " "
+		fmt.Println("Antes"+listachunks)
+		listachunks = listachunks[:0]
+		fmt.Println("Despues"+listachunks)
 		return &cliente.ResponseCliente{},nil
 	}
 	for id != message.ID { // Si no esta disponible, esperara hasta que pueda.
@@ -116,7 +119,7 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 			id = message.ID
 		}				
 	}
-	listachunks = append(listachunks, message.Chunks)
+	listachunks = append(listachunks, message.Chunks) // Añadimos el chunk a la lista
 	return &cliente.ResponseCliente{},nil	
 }
 
