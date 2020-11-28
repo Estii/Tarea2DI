@@ -23,7 +23,6 @@ func Subir_Centralizado(){
 	var conn *grpc.ClientConn
 	flag = true
 	var ip string
-	var ConexionSubida *chat.ChatServiceClient
 	for;flag;{		
 		ip = "dist"
 		ip += strconv.Itoa(rand.Intn(3) + 109)
