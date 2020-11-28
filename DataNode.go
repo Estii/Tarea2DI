@@ -107,8 +107,12 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 		cantidad := message.CantidadChunks
 		cantidad_uniforme := cantidad/3
 		cantidad_resto := cantidad%3
-		message := nodos.MessageNode{ Cantidad1:cantidad_uniforme + cantidad_resto, Cantidad2:cantidad_uniforme,Cantidad3:cantidad_uniforme,NombreLibro:nombre_libro,ID: IDNODE}
-		Propuesta(&message)
+		
+		if(message.Tipo == 2){
+			message := nodos.MessageNode{ Cantidad1:cantidad_uniforme + cantidad_resto, Cantidad2:cantidad_uniforme,Cantidad3:cantidad_uniforme,NombreLibro:nombre_libro,ID: IDNODE}
+			Propuesta(&message)
+		}
+		
 		nombre_libro = " "
 		listachunks = listachunks[:0]
 		return &cliente.ResponseCliente{},nil
