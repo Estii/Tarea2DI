@@ -35,7 +35,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad_error += message.Cantidad1
 		}else{
 			c := cliente.NewChatServiceClient(conn)		
-			r,err := c.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
+			_,err := c.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
 			if err != nil {
 				flag = 1
 				flag1 = 1			
@@ -55,7 +55,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad2 = 0
 			cantidad_error += message.Cantidad2
 		}else{		
-			r2,err2 := Conexion.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
+			_,err2 := Conexion.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
 			if err2 != nil {
 				flag = 1
 				flag2 = 1			
@@ -74,7 +74,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 			cantidad_error += message.Cantidad3
 		}else{
 			c3 := cliente.NewChatServiceClient(conn3)		
-			r3,err3 := c3.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})			
+			_,err3 := c3.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})			
 			if err3 != nil {
 				flag = 1
 				flag3 = 1			
