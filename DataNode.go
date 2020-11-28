@@ -56,6 +56,7 @@ func Propuesta(msj *nodos.MessageNode){
 		Conexion := cliente.NewChatServiceClient(conn2)
 		message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10) }
 		response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta	
+		fmt.Println(response)
 	}
 
 
