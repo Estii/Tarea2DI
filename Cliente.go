@@ -194,9 +194,7 @@ func Cargar_Libro(tipo int64){
 		ip += strconv.Itoa(rand.Intn(3) + 109)
 		conn, err := grpc.Dial(ip+":9000", grpc.WithInsecure())
 		//conn, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
-		if err != nil {
-			log.Fatalf("Error al conectar con el servidor: %s", err)
-		}else{
+		if err == nil {
 			ConexionSubida := cliente.NewChatServiceClient(conn)		
 			response,err := ConexionSubida.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
 			if(err!=nil){
