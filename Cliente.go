@@ -104,7 +104,8 @@ func Descargar_Libro(){
 						fmt.Println(err)
 						os.Exit(1)
 				}
-				file, err = os.OpenFile( newFileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)	   
+
+				file, err := os.OpenFile( newFileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)	   
 				if err != nil {
 						fmt.Println(err)
 						os.Exit(1)
@@ -128,17 +129,17 @@ func Descargar_Libro(){
 							return 
 						}else{
 							fmt.Println(resdn)
-							writePosition+= resdn.CantidadChunks
 
+							writePosition+= resdn.CantidadChunks
 							n, err := file.Write(resdn.Chunks)
 							if err != nil {
 									fmt.Println(err)
 									os.Exit(1)
 							}
 							file.Sync() 
-							chunkBufferBytes = nil 
+
 							fmt.Println("Written ", n, " bytes")
-							fmt.Println("Recombining part [", j, "] into : ", newFileName)
+							fmt.Println("Recombining part [", z, "] into : ", newFileName)
 
 						}
 					}
