@@ -371,7 +371,6 @@ func Propuesta(msj *nodos.MessageNode) int64{
 		message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10),Chunks:listachunks[indice],ID:IDNODE }
 		response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta.
 		indice+=1
-		fmt.Println(response)
 	}
 	// Enviamos a DataNode ID = 3.
 	for k=0;k<response.Cantidad3;k++{
@@ -384,7 +383,6 @@ func Propuesta(msj *nodos.MessageNode) int64{
 		message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10),Chunks:listachunks[indice],ID:IDNODE }
 		response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta.	
 		indice+=1
-		fmt.Println(response)
 	}
 	return 1
 }
