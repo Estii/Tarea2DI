@@ -50,8 +50,11 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 	var indice int64 = 0
 	// Escribimos log de chunks DataNode 1.
 	
-	fmt.Println("DataNode 1:")
+
 	for k=0;k<cantidad1;k++{
+		if(k==0){
+			fmt.Println("DataNode 1:")
+		}
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 		if err != nil {
 			log.Println(err)
@@ -65,8 +68,10 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 	}
 	// Escribimos log de chunks DataNode 2.
 	
-	fmt.Println("DataNode 2:")
 	for k=0;k<cantidad2;k++{
+		if(k==0){
+			fmt.Println("DataNode 2:")
+		}
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 		if err != nil {
 			log.Println(err)
@@ -81,8 +86,10 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 	}	
 	// Escribimos log de chunks DataNode 3.
 	
-	fmt.Println("DataNode 3:")
 	for k=0;k<cantidad3;k++{
+		if(k==0){
+			fmt.Println("DataNode 3:")
+		}
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 		if err != nil {
 			log.Println(err)

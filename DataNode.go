@@ -132,12 +132,6 @@ func PropuestaD(msj *nodos.MessageNode){
 	if( respuesta2==1 && respuesta2c<tiempo){
 		flag2c = 1
 	}	
-	
-	fmt.Println(flag1)
-	fmt.Println(flag2)
-	fmt.Println(flag1c)
-	fmt.Println(flag2c)
-
 
 	if( flag1c==0 && flag2c ==0 ){
 		if(flag1==0 && flag2 == 0){
