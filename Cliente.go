@@ -33,7 +33,7 @@ func Ver_Catalogo(){
 		for k<len(respuesta){
 			fmt.Println(strconv.Itoa(k)+"-  "+respuseta[k]+"\n")
 		}
-
+		fmt.Println("--------------------------")
 	}
 }
 
