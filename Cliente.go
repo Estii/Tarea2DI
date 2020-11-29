@@ -7,7 +7,8 @@ import (
 	"os"
 	"log"
 	"strconv"
-	"Tarea2DI/chat"
+	cliente "Tarea2DI/chat"
+	nodo "Tarea2DI/chat2"
 	"google.golang.org/grpc"
 	"golang.org/x/net/context"
 	"math/rand"
@@ -15,6 +16,17 @@ import (
 )
 
 
+
+func Ver_Catalogo(){
+	conn, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Error al conectar con el servidor: %s", err)
+		return
+	}
+	c := nodo.NewChatService2Client(conn)	
+	message := 
+	c.MostrarCatalogo(context.Background(),&cliente.ResponseNameNode{Ok:1})
+}
 
 func Cargar_Libro(tipo int64){
 	var flag bool
@@ -31,8 +43,8 @@ func Cargar_Libro(tipo int64){
 			log.Fatalf("Error al conectar con el servidor: %s", err)
 			return
 		}else{
-			ConexionSubida := chat.NewChatServiceClient(conn)		
-			response,err := ConexionSubida.CheckEstado(context.Background(),&chat.EstadoE{Estado:1})
+			ConexionSubida := cliente.NewChatServiceClient(conn)		
+			response,err := ConexionSubida.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
 			if (err == nil && response.Estado==1) {		
 				id := rand.Int63n(100000000000000000)
 				var seleccion int
@@ -76,11 +88,11 @@ func Cargar_Libro(tipo int64){
 					partSize := int(math.Min(fileChunk, float64(fileSize-int64(i*fileChunk))))
 					partBuffer := make([]byte, partSize)
 					file.Read(partBuffer)										
-					message := chat.MessageCliente{ NombreLibro:libro+"_"+strconv.Itoa(j), Chunks:partBuffer, ID:id, Termino:0, Tipo: tipo }
+					message := cliente.MessageCliente{ NombreLibro:libro+"_"+strconv.Itoa(j), Chunks:partBuffer, ID:id, Termino:0, Tipo: tipo }
 					ConexionSubida.EnviarLibro(context.Background(), &message)			
 					j+=1
 				}															
-				message := chat.MessageCliente{ Termino: 1, CantidadChunks:Cantidad, ID:id , Tipo: tipo }
+				message := cliente.MessageCliente{ Termino: 1, CantidadChunks:Cantidad, ID:id , Tipo: tipo }
 				ConexionSubida.EnviarLibro(context.Background(), &message)
 				file.Close()
 				
@@ -102,7 +114,7 @@ func main() {
 		fmt.Println("1-  Subir Libro  [ Distribuido ]")
 		fmt.Println("2-  Subir Libro  [ Centralizado ]")
 		fmt.Println("3-  Descargar Libro")
-		fmt.Println("4-  Ver Libros Descargados")
+		fmt.Println("4-  Ver Libros Subidos")
 		fmt.Println("5-  Salir")
 		fmt.Println("")
 		fmt.Scanln(&seleccion)
@@ -115,7 +127,7 @@ func main() {
 			case 3:				
 				fmt.Println("Aun en implementacacion...")
 			case 4:				
-				fmt.Println("Aun en implementacacion...")
+				Ver_Catalogo()
 			case 5:
 				finalizar = false
 		}

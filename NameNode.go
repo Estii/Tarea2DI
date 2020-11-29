@@ -12,9 +12,38 @@ import (
 	"path/filepath"
 	"os"    
 	"time"
+	"bufio"
+	"strings"
 )
 
 type Server struct {}
+func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNameNode) (*nodos.ResponseCatalago,error){
+
+	var ListaLibros []string
+
+    file, err := os.Open("/Log/log.txt")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	var nombre string = ""
+    for scanner.Scan() {
+		fmt.Println(scanner.Text())
+		nombre = scanner.Text()
+		nombre = strings.Split(nombre, " ") 
+		fmt.Println(nombre)
+    }
+
+    if err := scanner.Err(); err != nil {
+        log.Fatal(err)
+    }
+
+	return &nodos.ResponseCatalago{},nil
+
+}
+
 
 func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta2) (*nodos.ResponseNameNode,error){
 
