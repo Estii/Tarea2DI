@@ -67,8 +67,7 @@ func PropuestaD(msj *nodos.MessageNode){
 	var flag1c int64
 	var flag2c int64
 
-	var conn *grpc.ClientConn
-	var conn2 *grpc.ClientConn
+	
 
 	flag1 = 0;
 	flag2 = 0;
@@ -82,6 +81,8 @@ func PropuestaD(msj *nodos.MessageNode){
 	var respuesta2c int64 = 0
 
 	if(cantidad2>0){
+		
+		var conn *grpc.ClientConn
 		conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 		if err != nil {
 			flag1 = 1	
@@ -103,6 +104,8 @@ func PropuestaD(msj *nodos.MessageNode){
 	}
 
 	if(cantidad3>0){
+		
+		var conn2 *grpc.ClientConn
 		conn2, err2 := grpc.Dial("dist111:9000", grpc.WithInsecure())
 		if err2 != nil {
 			flag2 = 1		
