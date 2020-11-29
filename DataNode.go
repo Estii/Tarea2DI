@@ -125,7 +125,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			//return &cliente.ResponseCliente{},nil 
 			return
 		}else{
-			c3 := nodo.NewChatService2Client(conn3)	
+			c3 := nodos.NewChatService2Client(conn3)	
 			response3,err3 := c3.PropuestaD(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
 			var k int64
 			var indice int64
