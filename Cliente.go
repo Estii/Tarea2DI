@@ -201,6 +201,7 @@ func Cargar_Libro(tipo int64){
 			if(err!=nil){
 				max_conn +=1
 				if(max_conn == 25){
+					fmt.Println("No se logro conectar con ningun DataNode")
 					return
 				}
 			}
