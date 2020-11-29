@@ -41,8 +41,8 @@ func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNam
 		nombre = scanner.Text()	
 		resultado = strings.Split(nombre, " ") 
 		if(len(resultado)==2){
-			ListaLibros = append(ListaLibros, nombre)
 			evitar,_ = strconv.Atoi(resultado[1])
+			ListaLibros = append(ListaLibros, resultado[0])
 			fmt.Println(resultado[0])
 		}
     }
