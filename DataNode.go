@@ -148,7 +148,6 @@ func PropuestaD(msj *nodos.MessageNode){
 				indice = 0
 				for k=0;k<cantidad1;k++{
 					fileName := nombre_libro+"_"+strconv.FormatInt(indice,10)
-					fmt.Println("Se ha guardado el fragmento: "+fileName)
 					_, err := os.Create("Fragmentos/"+fileName)
 					if err != nil {
 						fmt.Println(err)
@@ -156,7 +155,7 @@ func PropuestaD(msj *nodos.MessageNode){
 					}
 					ioutil.WriteFile("Fragmentos/"+fileName, listachunks[indice], os.ModeAppend)
 					indice+=1
-					fmt.Println("Fragmento Guardado: ", fileName)	
+					fmt.Println("ORIGEN:"+ strconv.FormatInt(IDNODE,10)+" | Fragmento Guardado: ", fileName)	
 				}
 				// Escribimos en el DataNode ID = 2.
 				for k=0;k<cantidad2;k++{
