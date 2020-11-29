@@ -34,9 +34,9 @@ func (s *Server) CheckNameNodeUse(ctx context.Context, message *cliente.EstadoE)
 	return &cliente.EstadoS{Estado:NameNodeUse},nil
 }
 
-func (s *Server) BorrarArchivos(ctx context.Context, message *nodos.EstadoE) (*nodos.EstadoS,error){
+func (s *Server) BorrarArchivos(ctx context.Context, message *cliente.EstadoE) (*cliente.EstadoS,error){
 	LimpiarArchivos()
-	return &nodos.EstadoS{Estado:1},nil
+	return &cliente.EstadoS{Estado:1},nil
 }
 
 
