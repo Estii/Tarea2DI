@@ -132,7 +132,7 @@ func Cargar_Libro(tipo int64){
 						var k int = 0
 						for k = 0 ; k<len(respuesta.ListaLibros) ; k++{
 							if(libro == respuesta.ListaLibros[k]){
-								fmt.Println("Ese libro ya se encuentra subido.")
+								fmt.Println("\nEse libro ya se encuentra subido.")
 								return
 							}
 						}		
