@@ -106,8 +106,8 @@ func Cargar_Libro(tipo int64){
 				}
 				fmt.Scanln(&seleccion)
 				if(seleccion>0 && seleccion < len(files)){
-					libro = strings.ReplaceAll(files[seleccion], "Libros/", ""))
-					libro = strings.ReplaceAll(libro, ".pdf", ""))
+					libro = strings.ReplaceAll(files[seleccion], "Libros/", "")
+					libro = strings.ReplaceAll(libro, ".pdf", "")
 				}
 
 
