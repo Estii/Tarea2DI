@@ -29,7 +29,7 @@ func Ver_Catalogo(){
 		
 		fmt.Println("--------------------------")
 		fmt.Println("El catalogo disponible es:")
-		for indice, valor := range respuesta {
+		for indice, valor := range respuesta.ListaLibros {
 			fmt.Printf("Estamos en el índice %d, y su valor es %d\n", indice, valor)
 		}
 		
