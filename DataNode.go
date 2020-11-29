@@ -220,7 +220,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			m := cliente.EstadoE{ Estado: 1}
 			var bandera bool = true
 			for;bandera;{
-				r ,e := c.CheckNameNodeUse(m)
+				r ,e := c.CheckNameNodeUse(context.Background(), m)
 				if(r.Estado == 0){
 					bandera = false
 				}
@@ -239,7 +239,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			m := cliente.EstadoE{ Estado: 1}
 			var bandera bool = true
 			for;bandera;{
-				r ,e := c.CheckNameNodeUse(m)
+				r ,e := c.CheckNameNodeUse(context.Background(), m)
 				if(r.Estado == 0){
 					bandera = false
 				}
@@ -260,7 +260,7 @@ func PropuestaD(msj *nodos.MessageNode){
 				m := cliente.EstadoE{ Estado: 1}
 				var bandera bool = true
 				for;bandera;{
-					r ,e := c.CheckNameNodeUse(m)
+					r ,e := c.CheckNameNodeUse(context.Background(), m)
 					if(r.Estado == 0){
 						bandera = false
 					}
@@ -279,7 +279,7 @@ func PropuestaD(msj *nodos.MessageNode){
 				m := cliente.EstadoE{ Estado: 1}
 				var bandera bool = true
 				for;bandera;{
-					r ,e := c.CheckNameNodeUse(m)
+					r ,e := c.CheckNameNodeUse(context.Background(), m)
 					if(r.Estado == 0){
 						bandera = false
 					}
