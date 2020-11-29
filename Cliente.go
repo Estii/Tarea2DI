@@ -107,8 +107,25 @@ func Cargar_Libro(tipo int64){
 				fmt.Scanln(&seleccion)
 				if(seleccion>0 && seleccion < len(files)){
 					libro = strings.ReplaceAll(files[seleccion], "Libros/", "")
-					fmt.Println(libro)
+
+					conn, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
+					if err != nil {
+						log.Fatalf("Error al conectar con el servidor: %s", err)
+						return
+					}
+					c := nodo.NewChatService2Client(conn)	
+					respuesta , err := c.MostrarCatalogo(context.Background(),&nodo.ResponseNameNode{Ok:1})
+					if(err==nil){
+						var k int = 0
+						for k = 0 ; k<len(respuesta.ListaLibros) ; k++{
+							if(libro == respuesta.ListaLibros[k]){
+								fmt.Println("Libro Ya Subido")
+								return
+							}
+						}		
+					}
 				}
+
 
 
 				fmt.Println("Subiendo libro "+libro)
