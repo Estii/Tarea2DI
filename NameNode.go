@@ -37,13 +37,12 @@ func (s *Server) BuscarChunks(ctx context.Context, message *nodos.MessageNode) (
 	var resultado []string
 	var largo int
 
-	fmt.Println("Se ha solicitado el lbiro: "+message.NombreLibro)
+	fmt.Println("\nSe ha solicitado el libro: "+message.NombreLibro)
     for scanner.Scan() {
 		nombre = scanner.Text()	
 		resultado = strings.Split(nombre, " ") 
 		if(len(resultado)==2 && resultado[0]==message.NombreLibro){
 			largo,_ = strconv.Atoi(resultado[1])
-			fmt.Println(largo)
 			break
 		}
 	}

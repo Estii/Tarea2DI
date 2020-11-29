@@ -49,7 +49,6 @@ func (s *Server) EnviarPropuesta(ctx context.Context, message *cliente.MessagePr
 
 }
 
-
 // Crea el chunk respectivo en la carpeta Fragmentos.
 func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 	fileName := message.NombreLibro

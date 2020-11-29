@@ -29,7 +29,6 @@ func BorrarBiblioteca(){
 	if(err1!=nil){
 		fmt.Println("Error Borrando Archivos de NameNode")
 	}
-
 	conn2, err2 := grpc.Dial("dist109:9000", grpc.WithInsecure())
 	if err2 != nil {
 		log.Fatalf("Error al conectar con el servidor: %s", err2)
@@ -40,7 +39,6 @@ func BorrarBiblioteca(){
 	if(err22!=nil){
 		fmt.Println("Error Borrando Archivos de DataNode1")
 	}
-
 	conn3, err3 := grpc.Dial("dist110:9000", grpc.WithInsecure())
 	if err3 != nil {
 		log.Fatalf("Error al conectar con el servidor: %s", err3)
@@ -51,7 +49,6 @@ func BorrarBiblioteca(){
 	if(err33!=nil){
 		fmt.Println("Error Borrando Archivos de DataNode2")
 	}
-
 	conn4, err4 := grpc.Dial("dist111:9000", grpc.WithInsecure())
 	if err4 != nil {
 		log.Fatalf("Error al conectar con el servidor: %s", err4)
@@ -61,11 +58,8 @@ func BorrarBiblioteca(){
 	_ , err44 := c4.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
 	if(err44!=nil){
 		fmt.Println("Error Borrando Archivos de DataNode3")
-	}
-		
+	}		
 	fmt.Println("Limpieza Finalizada.")
-	
-
 }
 
 
@@ -107,12 +101,8 @@ func Descargar_Libro(){
 				}	
 				if(err!=nil){
 					fmt.Println("Error obteniendo Ips de los chunks")
-				}
-				
+				}				
 			}
-
-
-
 		}
 	}else{			
 		fmt.Println("--------------------------")
