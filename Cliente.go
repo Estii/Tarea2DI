@@ -112,7 +112,6 @@ func Descargar_Libro(){
 
 				response , err := c.BuscarChunks(context.Background(),&message)				
 				if(err==nil){
-					fmt.Println(response.ListaIPS)
 					for z = 0 ; z<len(response.ListaIPS) ; z++{
 						conn, err := grpc.Dial(response.ListaIPS[z]+":9000", grpc.WithInsecure())
 						if err != nil {
@@ -123,7 +122,7 @@ func Descargar_Libro(){
 						message := cliente.MessageCliente{NombreLibro:nombre_libro+"_"+strconv.Itoa(z)}
 						resdn, errdn := c.EnviarChunks(context.Background(),&message)
 						if(errdn != nil){
-							fmt.Println("No se pudo acceder a la ip:" + response.ListaIPS[z] + ":9000")
+							fmt.Println("\nNo se pudo acceder a la ip:" + response.ListaIPS[z] + ":9000")
 							fmt.Println("Descarga Cancelada")
 							file.Close()
 							os.Remove(newFileName)
@@ -140,7 +139,8 @@ func Descargar_Libro(){
 				}
 				if(err!=nil){
 					fmt.Println("Error obteniendo Ips de los chunks")
-				}		
+				}	
+				fmt.Println("\nDescarga Completada")	
 				file.Close()		
 			}
 		}
