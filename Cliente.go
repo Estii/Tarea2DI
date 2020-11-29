@@ -38,7 +38,7 @@ func BorrarBiblioteca(){
 		return
 	}
 	c2 := cliente.NewChatServiceClient(conn2)	
-	_ , err22 := c.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
+	_ , err22 := c2.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
 	if(err22!=nil){
 		fmt.Println("Error Borrando Archivos de NameNode")
 	}
@@ -49,7 +49,7 @@ func BorrarBiblioteca(){
 		return
 	}
 	c3 := cliente.NewChatServiceClient(conn3)	
-	_ , err33 := c.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
+	_ , err33 := c3.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
 	if(err33!=nil){
 		fmt.Println("Error Borrando Archivos de NameNode")
 	}
@@ -60,7 +60,7 @@ func BorrarBiblioteca(){
 		return
 	}
 	c4 := cliente.NewChatServiceClient(conn4)	
-	_ , err44 := c.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
+	_ , err44 := c4.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
 	if(err44!=nil){
 		fmt.Println("Error Borrando Archivos de NameNode")
 	}
@@ -71,7 +71,7 @@ func BorrarBiblioteca(){
 		return
 	}
 	c5 := cliente.NewChatServiceClient(conn5)	
-	_ , err55 := c.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
+	_ , err55 := c5.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
 	if(err55!=nil){
 		fmt.Println("Error Borrando Archivos de NameNode")
 	}
