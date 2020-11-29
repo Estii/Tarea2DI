@@ -141,7 +141,7 @@ func Cargar_Libro(tipo int64){
 
 
 
-				fmt.Println("Subiendo libro "+libro)
+				fmt.Println("\n\nSubiendo libro "+libro)
 				fileToBeChunked := "./Libros/"+libro
 				file, err := os.Open(fileToBeChunked)
 				if err != nil {
@@ -166,6 +166,9 @@ func Cargar_Libro(tipo int64){
 				}															
 				message := cliente.MessageCliente{ Termino: 1, CantidadChunks:Cantidad, ID:id , Tipo: tipo }
 				ConexionSubida.EnviarLibro(context.Background(), &message)
+				
+
+				fmt.Println("\n\nSubida completada "+libro)
 				file.Close()
 				
 			}	
