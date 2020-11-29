@@ -117,12 +117,16 @@ func PropuestaD(msj *nodos.MessageNode){
 	fmt.Println(respuesta2c)
 
 
-	if( respuesta1==1 && respuesta1c>tiempo){
-		flag1c = 0
+	if( respuesta1==1 && respuesta1c<tiempo){
+		flag1c = 1
 	}	
-	if( respuesta2==1 && respuesta2c>tiempo){
-		flag2c = 0
-	}
+	if( respuesta2==1 && respuesta2c<tiempo){
+		flag2c = 1
+	}	
+	
+	fmt.Println(respuesta2)	
+	fmt.Println(respuesta2c)
+
 	if(flag1==0 && flag2 ==0 && flag1c==0 && flag2c ==0){
 		conn3, err3 := grpc.Dial("dist112:9000", grpc.WithInsecure())
 		if err3 != nil {
