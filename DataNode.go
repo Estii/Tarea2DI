@@ -79,7 +79,7 @@ func PropuestaD(msj *nodos.MessageNode){
 		flag1 = 1		
 	}else{
 		c := cliente.NewChatServiceClient(conn)		
-		response1,err := c.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:mjs.NombreLibro})
+		response1,err := c.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
 		if err != nil {
 			flag1 = 1	
 		}  
@@ -89,7 +89,7 @@ func PropuestaD(msj *nodos.MessageNode){
 		flag2 = 1		
 	}else{
 		c2 := cliente.NewChatServiceClient(conn2)	
-		response2,err2 := c2.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:mjs.NombreLibro})
+		response2,err2 := c2.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
 		if err2 != nil {
 			flag2 = 1	
 		}  
