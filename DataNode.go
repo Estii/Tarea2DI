@@ -135,8 +135,9 @@ func PropuestaD(msj *nodos.MessageNode){
 			return
 		}else{
 			c3 := nodos.NewChatService2Client(conn3)	
-			c3.PropuestaD(context.Background(),&nodos.MessagePropuesta2{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
-			var k int64
+			res , err := c3.PropuestaD(context.Background(),&nodos.MessagePropuesta2{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
+			fmt.Println(res)	
+			fmt.Println(err)
 			var indice int64
 			indice = 0
 			for k=0;k<cantidad1;k++{
