@@ -56,7 +56,7 @@ func (s *Server) EnviarChunks(ctx context.Context, message *cliente.MessageClien
 	partSize := fileSize
 	partBuffer := make([]byte, partSize)
 	file.Read(partBuffer)
-	return &cliente.MessageCliente{ Chunks:partBuffer, ID:IDNODE  },nil
+	return &cliente.MessageCliente{ Chunks:partBuffer, ID:IDNODE,CantidadChunks: fileSize },nil
 }
 
 

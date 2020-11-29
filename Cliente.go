@@ -63,6 +63,7 @@ func BorrarBiblioteca(){
 }
 
 
+var listachunks [][]byte
 func Descargar_Libro(){
 	conn, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
 	if err != nil {
@@ -96,7 +97,21 @@ func Descargar_Libro(){
 				var nombre_libro string
 				nombre_libro = respuesta.ListaLibros[seleccion-1]
 				message := nodo.MessageNode{NombreLibro:nombre_libro}
-				response , err := c.BuscarChunks(context.Background(),&message)
+
+				newFileName := "Descargas/"+nombre_libro
+				_, err = os.Create(newFileName)	   
+				if err != nil {
+						fmt.Println(err)
+						os.Exit(1)
+				}
+				file, err = os.OpenFile( newFileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)	   
+				if err != nil {
+						fmt.Println(err)
+						os.Exit(1)
+				}
+				var writePosition int64 = 0
+
+				response , err := c.BuscarChunks(context.Background(),&message)				
 				if(err==nil){
 					fmt.Println(response.ListaIPS)
 					for z = 0 ; z<len(response.ListaIPS) ; z++{
@@ -110,11 +125,27 @@ func Descargar_Libro(){
 						resdn, errdn := c.EnviarChunks(context.Background(),&message)
 						if(errdn != nil){
 							fmt.Println("No se pudo acceder a la ip:" + response.ListaIPS[z] + ":9000")
+							return 
 						}else{
 							fmt.Println(resdn)
+							writePosition+= resdn.CantidadChunks
+
+							n, err := file.Write(resdn.Chunks)
+							if err != nil {
+									fmt.Println(err)
+									os.Exit(1)
+							}
+							file.Sync() 
+							chunkBufferBytes = nil 
+							fmt.Println("Written ", n, " bytes")
+							fmt.Println("Recombining part [", j, "] into : ", newFileName)
+
 						}
 					}
-				}	
+				}
+				
+				
+
 				if(err!=nil){
 					fmt.Println("Error obteniendo Ips de los chunks")
 				}				
@@ -241,6 +272,7 @@ func Cargar_Libro(tipo int64){
 					fmt.Println("Error seleccion invalida")
 					return 
 				}
+
 				defer file.Close()				
 				// Se fragmenta el archivo en tamaño asignado.
 				fileInfo, _ := file.Stat()
