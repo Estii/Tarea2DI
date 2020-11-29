@@ -112,6 +112,7 @@ func Propuesta(msj *nodos.MessageNode){
 	indice = 0
 	for k=0;k<response.Cantidad1;k++{
 		fileName := nombre_libro+"_"+strconv.FormatInt(indice,10)
+		fmt.Prinln("Se ha guardado el fragmento: "+fileName)
 		_, err := os.Create("Fragmentos/"+fileName)
 		if err != nil {
 			fmt.Println(err)
