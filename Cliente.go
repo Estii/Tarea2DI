@@ -68,7 +68,8 @@ func Cargar_Libro(tipo int64){
 			response,err := ConexionSubida.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
 			if(err!=nil){
 				fmt.Println("Error conectando a la ip "+ip)
-				time.Sleep(time.Second()*5)
+				time.Sleep(5 * time.Second)	
+				return
 			}
 			if (err == nil && response.Estado==1) {		
 				id := rand.Int63n(100000000000000000)
