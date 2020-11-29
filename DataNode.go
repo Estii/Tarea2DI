@@ -74,8 +74,8 @@ func PropuestaD(msj *nodos.MessageNode){
 	flag2c = 1;
 	tiempo := time.Now().Unix()
 
-	var respuesta1 int64
-	var respuesta2 int64 
+	var respuesta1 int64 = 0
+	var respuesta2 int64 = 0
 
 
 	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
