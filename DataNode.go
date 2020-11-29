@@ -41,9 +41,10 @@ func (s *Server) BorrarArchivos(ctx context.Context, message *cliente.EstadoE) (
 
 
 func (s *Server) EnviarChunks(ctx context.Context, message *cliente.MessageCliente) (*cliente.MessageCliente,error){
-	fmt.Println(message)
+	
 	var nombre_libro string = message.NombreLibro
 	fileToBeChunked := "./Fragmentos/"+nombre_libro
+	fmt.Println("Se ha solicitado el chunk "+nombre_libro)
 	file, err := os.Open(fileToBeChunked)
 	if err != nil {
 		fmt.Println("Error seleccion invalida")

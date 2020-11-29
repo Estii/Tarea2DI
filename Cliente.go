@@ -62,8 +62,6 @@ func BorrarBiblioteca(){
 	fmt.Println("Limpieza Finalizada.")
 }
 
-
-var listachunks [][]byte
 func Descargar_Libro(){
 	conn, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
 	if err != nil {
@@ -134,8 +132,7 @@ func Descargar_Libro(){
 							writePosition+= resdn.CantidadChunks
 							n, err := file.Write(resdn.Chunks)
 							if err != nil {
-									fmt.Println(err)
-									os.Exit(1)
+								return 
 							}
 							file.Sync() 
 						}
