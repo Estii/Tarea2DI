@@ -366,12 +366,17 @@ func LimpiarArchivo(){
     for i:=1;i<len(files);i++{
     	os.Remove(files[i])      
 	}
-	os.Create("./Log/log.txt")
 }
 
 // Conexion DataNode.
 func main() {
 	//LimpiarArchivo()
+
+	f, err := os.OpenFile("Log/log.txt", os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	fmt.Println("NameNode escuchando...")
 	lis, err := net.Listen("tcp", ":9000")
 	if err != nil {
