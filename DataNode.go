@@ -52,7 +52,8 @@ func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente
 }
 
 // Propuesta Version Descentralizada.
-func PropuestaD(msj *nodos.MessageNode){
+func (s *Server) PropuestaD(ctx context.Context, msj *nodos.MessageNode) (*cliente.ResponseCliente,error){
+//func PropuestaD(msj *nodos.MessageNode){
 
 	NameNodeUse = 1;
 	fmt.Println("Propuesta inicial: [ DN1:"+strconv.FormatInt(msj.Cantidad1,10)+" | DN2:"+strconv.FormatInt(msj.Cantidad2,10)+" | DN3:"+strconv.FormatInt(msj.Cantidad3,10)+" ]")
@@ -171,6 +172,8 @@ func PropuestaD(msj *nodos.MessageNode){
 	}
 
 	NameNodeUse = 0;
+	
+	return &cliente.ResponseCliente{},nil
 }
 
 
