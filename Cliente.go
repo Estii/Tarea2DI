@@ -106,19 +106,15 @@ func Descargar_Libro(){
 							log.Fatalf("Error al conectar con el servidor: %s", err)
 							return
 						}
-
 						c := cliente.NewChatServiceClient(conn)	
 						message := cliente.MessageCliente{NombreLibro:nombre_libro+"_"+strconv.Itoa(z)}
 						resdn, errdn := c.EnviarChunks(context.Background(),&message)
 						if(errdn != nil){
 							fmt.Println("No se pudo acceder a la ip:" + response.ListaIPS[z] + ":9000")
-						}
-						else{
+						}else{
 							fmt.Println(resdn)
 						}
 					}
-
-
 				}	
 				if(err!=nil){
 					fmt.Println("Error obteniendo Ips de los chunks")
