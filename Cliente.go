@@ -28,8 +28,6 @@ func BorrarBiblioteca(){
 	_ , err1 := c.BorrarArchivos2(context.Background(),&nodo.EstadoE2{Estado:1})
 	if(err1!=nil){
 		fmt.Println("Error Borrando Archivos de NameNode")
-	}else{
-		fmt.Println("Archivos de NameNode Borrandos")
 	}
 
 	conn2, err2 := grpc.Dial("dist109:9000", grpc.WithInsecure())
@@ -64,6 +62,9 @@ func BorrarBiblioteca(){
 	if(err44!=nil){
 		fmt.Println("Error Borrando Archivos de DataNode3")
 	}
+		
+	fmt.Println("Limpieza Finalizada.")
+	
 
 }
 
