@@ -40,6 +40,13 @@ func (s *Server) BorrarArchivos(ctx context.Context, message *cliente.EstadoE) (
 }
 
 
+func (s *Server) EnviarChunks(ctx context.Context, message *cliente.MessageCliente) (*cliente.MessageCliente,error){
+	fmt.Println(message)
+	return &cliente.MessageCliente{},nil
+}
+
+
+
 // Utilizada para saber si el DataNode esta disponible para usar.
 func (s *Server) EnviarPropuesta(ctx context.Context, message *cliente.MessagePropuesta) (*cliente.ResponsePropuesta,error){
 	fmt.Println("Propuesta: del Nodo:" + strconv.FormatInt(message.ID,10)+" [ DN1:"+strconv.FormatInt(message.Cantidad1,10) +"  DN2:"+ strconv.FormatInt(message.Cantidad2,10) + "  DN3:"+ strconv.FormatInt(message.Cantidad3,10) + " ]" )

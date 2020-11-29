@@ -80,6 +80,7 @@ func Descargar_Libro(){
 			fmt.Println("--------------------------")
 			fmt.Println("El catalogo disponible es:")
 			var k int = 0
+			var z int = 0
 			var seleccion int
 			for k = 0 ; k<len(respuesta.ListaLibros) ; k++{
 				fmt.Println(strconv.Itoa(k+1)+"-  "+respuesta.ListaLibros[k])
@@ -98,6 +99,20 @@ func Descargar_Libro(){
 				response , err := c.BuscarChunks(context.Background(),&message)
 				if(err==nil){
 					fmt.Println(response.ListaIPS)
+					for z = 0 ; z<len(response.ListaIPS) ; z++{
+						fmt.Println(response.ListaIPS[z])
+						conn, err := grpc.Dial(response.ListaIPS[z]+":9000", grpc.WithInsecure())
+						if err != nil {
+							log.Fatalf("Error al conectar con el servidor: %s", err)
+							return
+						}
+
+						c := cliente.NewChatServiceClient(conn)	
+						message := cliente.MessageCliente{NombreLibro:nombre_libro+"_"+strconv.Itoa(z)}
+						c.EnviarChunks(context.Background(),&message)
+					}
+
+
 				}	
 				if(err!=nil){
 					fmt.Println("Error obteniendo Ips de los chunks")
