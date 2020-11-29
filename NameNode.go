@@ -46,7 +46,7 @@ func (s *Server) BuscarChunks(ctx context.Context, message *nodos.MessageNode) (
 		}
 	}
 
-	var i int = 0	
+	var i int64 = 0	
 	for i<largo{
 		scanner.Scan()
 		nombre = scanner.Text()
