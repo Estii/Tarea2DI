@@ -53,6 +53,7 @@ func (s *Server) BuscarChunks(ctx context.Context, message *nodos.MessageNode) (
 	for i<largo{
 		scanner.Scan()
 		nombre = scanner.Text()
+		fmt.Println(nombre)
 		resultado = strings.Split(nombre, " ") 
 		ListaIps = append(ListaIps , resultado[1])
 	}
