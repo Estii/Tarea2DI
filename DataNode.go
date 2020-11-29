@@ -141,8 +141,11 @@ func PropuestaD(msj *nodos.MessageNode) int64{
 				return 0
 			}else{
 				c3 := nodos.NewChatService2Client(conn3)	
-				c3.PropuestaD(context.Background(),&nodos.MessagePropuesta2{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
-
+				_, err := c3.PropuestaD(context.Background(),&nodos.MessagePropuesta2{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
+				if(err != nil){
+					fmt.Println("Error conectando con NameNode")
+					return 0
+				}
 				var k int64
 				var indice int64
 				indice = 0
