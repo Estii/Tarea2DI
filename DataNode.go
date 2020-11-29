@@ -107,14 +107,6 @@ func PropuestaD(msj *nodos.MessageNode){
 			respuesta2c = response2.Tiempo
 		}
 	}
-	
-	fmt.Println(flag1)	
-	fmt.Println(flag2)
-	fmt.Println(tiempo)	
-	fmt.Println(respuesta1)	
-	fmt.Println(respuesta1c)
-	fmt.Println(respuesta2)	
-	fmt.Println(respuesta2c)
 
 
 	if( respuesta1==1 && respuesta1c<tiempo){
@@ -124,9 +116,7 @@ func PropuestaD(msj *nodos.MessageNode){
 		flag2c = 1
 	}	
 	
-	fmt.Println(flag1c)	
-	fmt.Println(flag2c)
-
+	
 	if(flag1==0 && flag2 ==0 && flag1c==0 && flag2c ==0){
 		conn3, err3 := grpc.Dial("dist112:9000", grpc.WithInsecure())
 		if err3 != nil {
@@ -135,9 +125,8 @@ func PropuestaD(msj *nodos.MessageNode){
 			return
 		}else{
 			c3 := nodos.NewChatService2Client(conn3)	
-			res , err := c3.PropuestaD(context.Background(),&nodos.MessagePropuesta2{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
-			fmt.Println(res)	
-			fmt.Println(err)
+			c3.PropuestaD(context.Background(),&nodos.MessagePropuesta2{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
+
 			var k int64
 			var indice int64
 			indice = 0
@@ -164,7 +153,6 @@ func PropuestaD(msj *nodos.MessageNode){
 				message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10),Chunks:listachunks[indice],ID:IDNODE }
 				response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta.
 				indice+=1
-				fmt.Println(response)
 			}
 			// Enviamos a DataNode ID = 3.
 			for k=0;k<cantidad3;k++{
@@ -177,7 +165,6 @@ func PropuestaD(msj *nodos.MessageNode){
 				message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10),Chunks:listachunks[indice],ID:IDNODE }
 				response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta.	
 				indice+=1
-				fmt.Println(response)
 			}
 		}
 		fmt.Println("Propuesta Aceptada !")		
@@ -185,7 +172,6 @@ func PropuestaD(msj *nodos.MessageNode){
 
 	NameNodeUse = 0;
 	
-	//return &cliente.ResponseCliente{},nil
 	return
 }
 

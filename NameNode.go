@@ -45,8 +45,11 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 	file.Close()
 
 	fmt.Println("Propuesta aceptada")
+	fmt.Println("Se registraran "+strconv.FormatInt(cantidadT)+" chunks")
 	var k int64
 	// Escribimos log de chunks DataNode 1.
+	
+	fmt.Println("DataNode 1:")
 	for k=0;k<cantidad1;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 		if err != nil {
@@ -55,20 +58,27 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist109\n"); err!=nil{
 			log.Fatal(err)
 		}
+		fmt.Println("Fragmento: ", message.NombreLibro)
 		file.Close()
 	}
 	// Escribimos log de chunks DataNode 2.
+	
+	fmt.Println("DataNode 2:")
 	for k=0;k<cantidad2;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 		if err != nil {
 			log.Println(err)
 		}
 		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist110\n"); err!=nil{
+		
 			log.Fatal(err)
 		}
+		fmt.Println("Fragmento: ", message.NombreLibro)
 		file.Close()
 	}	
 	// Escribimos log de chunks DataNode 3.
+	
+	fmt.Println("DataNode 3:")
 	for k=0;k<cantidad3;k++{
 		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 		if err != nil {
@@ -77,6 +87,7 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist111\n"); err!=nil{
 			log.Fatal(err)
 		}
+		fmt.Println("Fragmento: ", message.NombreLibro)
 		file.Close() 
 	}
 	fmt.Println("Añadido al log correctamente.\n")
