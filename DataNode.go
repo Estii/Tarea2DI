@@ -90,8 +90,7 @@ func PropuestaD(msj *nodos.MessageNode){
 		response1,err := c.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
 		if err != nil {
 			flag1 = 1	
-			respuesta1 = 0
-			respuesta1c = 9999999999999999
+			flag1c = 1
 		}else{	
 			respuesta1 = response1.NameNodeUsed
 			respuesta1c = response1.Tiempo
@@ -105,8 +104,7 @@ func PropuestaD(msj *nodos.MessageNode){
 		response2,err2 := c2.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
 		if err2 != nil {
 			flag2 = 1	
-			respuesta2 = 0
-			respuesta2c = 9999999999999999
+			flag2c = 1
 		}else{	
 			respuesta2 = response2.NameNodeUsed
 			respuesta2c = response2.Tiempo
