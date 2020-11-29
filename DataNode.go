@@ -209,7 +209,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			msjn := nodos.MessageNode{ Cantidad1:cantidad1+extra1, Cantidad2:cantidad2+extra2,Cantidad3:0,NombreLibro:nombre_libro,ID: msj.ID}
 			PropuestaD(&msjn)
 		}		
-		if(flag1==0 && flag2 == 0){
+		if(flag1==1 && flag2 == 1){
 			cantidad_error = cantidad2 + cantidad3
 			msjn := nodos.MessageNode{ Cantidad1:cantidad1+cantidad_error, Cantidad2:0,Cantidad3:0,NombreLibro:nombre_libro,ID: msj.ID}
 			PropuestaD(&msjn)
