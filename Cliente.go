@@ -51,7 +51,7 @@ func BorrarBiblioteca(){
 	c3 := cliente.NewChatServiceClient(conn3)	
 	_ , err33 := c3.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
 	if(err33!=nil){
-		fmt.Println("Error Borrando Archivos de NameNode")
+		fmt.Println("Error Borrando Archivos de DataNode1")
 	}
 
 	conn4, err4 := grpc.Dial("dist110:9000", grpc.WithInsecure())
@@ -62,7 +62,7 @@ func BorrarBiblioteca(){
 	c4 := cliente.NewChatServiceClient(conn4)	
 	_ , err44 := c4.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
 	if(err44!=nil){
-		fmt.Println("Error Borrando Archivos de NameNode")
+		fmt.Println("Error Borrando Archivos de DataNode2")
 	}
 
 	conn5, err5 := grpc.Dial("dist111:9000", grpc.WithInsecure())
@@ -73,7 +73,7 @@ func BorrarBiblioteca(){
 	c5 := cliente.NewChatServiceClient(conn5)	
 	_ , err55 := c5.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
 	if(err55!=nil){
-		fmt.Println("Error Borrando Archivos de NameNode")
+		fmt.Println("Error Borrando Archivos de DataNode3")
 	}
 
 }
