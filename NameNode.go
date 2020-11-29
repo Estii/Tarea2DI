@@ -47,6 +47,7 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 	fmt.Println("Propuesta aceptada")
 	fmt.Println("Se registraran "+strconv.FormatInt(cantidadT,10)+" chunks")
 	var k int64
+	var indice int64 = 0
 	// Escribimos log de chunks DataNode 1.
 	
 	fmt.Println("DataNode 1:")
@@ -55,10 +56,11 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 		if err != nil {
 			log.Println(err)
 		}
-		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist109\n"); err!=nil{
+		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(indice,10)+" dist109\n"); err!=nil{
 			log.Fatal(err)
 		}
-		fmt.Println("Fragmento: ", message.NombreLibro+"_"+strconv.FormatInt(k,10))
+		fmt.Println("Fragmento: ", message.NombreLibro+"_"+strconv.FormatInt(indice,10))
+		indice += 1
 		file.Close()
 	}
 	// Escribimos log de chunks DataNode 2.
@@ -69,11 +71,12 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 		if err != nil {
 			log.Println(err)
 		}
-		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist110\n"); err!=nil{
+		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(indice,10)+" dist110\n"); err!=nil{
 		
 			log.Fatal(err)
 		}
-		fmt.Println("Fragmento: ", message.NombreLibro+"_"+strconv.FormatInt(k,10))
+		fmt.Println("Fragmento: ", message.NombreLibro+"_"+strconv.FormatInt(indice,10))
+		indice += 1
 		file.Close()
 	}	
 	// Escribimos log de chunks DataNode 3.
@@ -84,10 +87,11 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 		if err != nil {
 			log.Println(err)
 		}
-		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist111\n"); err!=nil{
+		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(indice,10)+" dist111\n"); err!=nil{
 			log.Fatal(err)
 		}
-		fmt.Println("Fragmento: ", message.NombreLibro+"_"+strconv.FormatInt(k,10))
+		fmt.Println("Fragmento: ", message.NombreLibro+"_"+strconv.FormatInt(indice,10))
+		indice += 1
 		file.Close() 
 	}
 	fmt.Println("Añadido al log correctamente.\n")
