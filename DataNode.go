@@ -57,7 +57,7 @@ func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente
 
 // Propuesta Version Descentralizada.
 //func (s *Server) PropuestaD(ctx context.Context, msj *cliente.MessagePropuesta) (*cliente.ResponseCliente,error){
-func PropuestaD(msj *nodos.MessageNode){
+func PropuestaD(msj *nodos.MessageNode) int64{
 
 	NameNodeUse = 1;
 	fmt.Println("Propuesta Descentralizada: [ DN1:"+strconv.FormatInt(msj.Cantidad1,10)+" | DN2:"+strconv.FormatInt(msj.Cantidad2,10)+" | DN3:"+strconv.FormatInt(msj.Cantidad3,10)+" ]")
@@ -138,7 +138,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			if err3 != nil {
 				fmt.Println("Error con NameNode")
 				//return &cliente.ResponseCliente{},nil 
-				return
+				return 0
 			}else{
 				c3 := nodos.NewChatService2Client(conn3)	
 				c3.PropuestaD(context.Background(),&nodos.MessagePropuesta2{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
@@ -150,8 +150,8 @@ func PropuestaD(msj *nodos.MessageNode){
 					fileName := nombre_libro+"_"+strconv.FormatInt(indice,10)
 					_, err := os.Create("Fragmentos/"+fileName)
 					if err != nil {
-						fmt.Println(err)
-						os.Exit(1)
+						fmt.Println("Error al crear el archivo")
+						return 0
 					}
 					ioutil.WriteFile("Fragmentos/"+fileName, listachunks[indice], os.ModeAppend)
 					indice+=1
@@ -185,7 +185,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			fmt.Println("Propuesta Descentralizada Aceptada !")		
 			timestart = 0		
 			NameNodeUse = 0
-			return 
+			return 1
 		}
 
 		if(flag1==1 && flag2 == 0){
@@ -193,19 +193,19 @@ func PropuestaD(msj *nodos.MessageNode){
 			var extra1 int64 = cantidad_error/2 + cantidad_error%2
 			var extra2 int64 = cantidad_error/2
 			msjn := nodos.MessageNode{ Cantidad1:cantidad1+extra1, Cantidad2:0,Cantidad3:cantidad3+extra2,NombreLibro:nombre_libro,ID: msj.ID}
-			PropuestaD(&msjn)
+			return PropuestaD(&msjn)
 		}
 		if(flag1==0 && flag2 == 1){
 			cantidad_error = cantidad3
 			var extra1 int64 = cantidad_error/2 + cantidad_error%2
 			var extra2 int64 = cantidad_error/2
 			msjn := nodos.MessageNode{ Cantidad1:cantidad1+extra1, Cantidad2:cantidad2+extra2,Cantidad3:0,NombreLibro:nombre_libro,ID: msj.ID}
-			PropuestaD(&msjn)
+			return PropuestaD(&msjn)
 		}		
 		if(flag1==1 && flag2 == 1){
 			cantidad_error = cantidad2 + cantidad3
 			msjn := nodos.MessageNode{ Cantidad1:cantidad1+cantidad_error, Cantidad2:0,Cantidad3:0,NombreLibro:nombre_libro,ID: msj.ID}
-			PropuestaD(&msjn)
+			return PropuestaD(&msjn)
 		}
 	}
 	if( flag1c==1 && flag2c ==0 ){
@@ -224,7 +224,7 @@ func PropuestaD(msj *nodos.MessageNode){
 					bandera = false
 				}
 			}
-			PropuestaD(msj)
+			return PropuestaD(msj)
 		}
 	}
 	if( flag1c==0 && flag2c ==1 ){
@@ -243,7 +243,7 @@ func PropuestaD(msj *nodos.MessageNode){
 					bandera = false
 				}
 			}
-			PropuestaD(msj)
+			return PropuestaD(msj)
 		}
 	}
 	if( flag1c==1 && flag2c ==1 ){
@@ -264,7 +264,7 @@ func PropuestaD(msj *nodos.MessageNode){
 						bandera = false
 					}
 				}
-				PropuestaD(msj)
+				return PropuestaD(msj)
 			}
 		}		
 		if(respuesta1c < respuesta2c){
@@ -283,31 +283,31 @@ func PropuestaD(msj *nodos.MessageNode){
 						bandera = false
 					}
 				}
-				PropuestaD(msj)
+				return PropuestaD(msj)
 			}
 		}
 	}
-	NameNodeUse = 0;	
-	return
+	NameNodeUse = 0	
+	return 1
 }
 
 
 
 // Propuesta Version Centralizada.
-func Propuesta(msj *nodos.MessageNode){
+func Propuesta(msj *nodos.MessageNode) int64{
 	// Conectamos con el DataNode.
 	var conn2 *grpc.ClientConn
 	conn2, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Error al conectar con el servidor: %s", err)
-		return
+		return 0
 	}   
 	ConexionNameNode := nodos.NewChatService2Client(conn2)
 	fmt.Println("Propuesta inicial: [ DN1:"+strconv.FormatInt(msj.Cantidad1,10)+" | DN2:"+strconv.FormatInt(msj.Cantidad2,10)+" | DN3:"+strconv.FormatInt(msj.Cantidad3,10)+" ]")
 	response , err := ConexionNameNode.Propuesta(context.Background(), msj)  // Enviamos propuesta.
 	if(err!=nil){
 		fmt.Println("Error al conectar con NameNode, asegurese de que esta encendido")
-		return
+		return 0
 	}
 	fmt.Println("Respuesta NameNode: [ DN1:"+strconv.FormatInt(response.Cantidad1,10)+" | DN2:"+strconv.FormatInt(response.Cantidad2,10)+" | DN3:"+strconv.FormatInt(response.Cantidad3,10)+" ]")
 	// Enviamos a DataNode ID = 1. ---- esto cambiar al duplicar segun sea
@@ -318,8 +318,8 @@ func Propuesta(msj *nodos.MessageNode){
 		fileName := nombre_libro+"_"+strconv.FormatInt(indice,10)
 		_, err := os.Create("Fragmentos/"+fileName)
 		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+			fmt.Println("Error al crear el archivo.")
+			return 0
 		}
 		ioutil.WriteFile("Fragmentos/"+fileName, listachunks[indice], os.ModeAppend)
 		indice+=1
@@ -351,10 +351,13 @@ func Propuesta(msj *nodos.MessageNode){
 		indice+=1
 		fmt.Println(response)
 	}
+	return 1
 }
 
 
 func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
+	var resultado int64
+
 	if(id == 0){ // Node disponible.
 		fmt.Println("\nSe ha solicitado subir el libro "+ message.NombreLibro[0:len(message.NombreLibro)-2])
 		id = message.ID
@@ -368,17 +371,18 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 			fmt.Println("Distribucion Descentralizada")			
 			timestart = time.Now().Unix()
 			message := nodos.MessageNode{ Cantidad1:cantidad_uniforme + cantidad_resto, Cantidad2:cantidad_uniforme,Cantidad3:cantidad_uniforme,NombreLibro:nombre_libro,ID: IDNODE}
-			PropuestaD(&message)
+			resultado = PropuestaD(&message)
 		}
 		if(message.Tipo == 2){
 			fmt.Println("Distribucion Centralizada")
 			message := nodos.MessageNode{ Cantidad1:cantidad_uniforme + cantidad_resto, Cantidad2:cantidad_uniforme,Cantidad3:cantidad_uniforme,NombreLibro:nombre_libro,ID: IDNODE}
-			Propuesta(&message)
+			
+			resultado = Propuesta(&message)
 		}
 		nombre_libro = " "
 		listachunks = listachunks[:0]
 		id = 0
-		return &cliente.ResponseCliente{},nil
+		return &cliente.ResponseCliente{Retorno:resultado},nil
 	}
 	for id != message.ID { // Si no esta disponible, esperara hasta que pueda.
 		fmt.Println("DataNode Ocupado porfavor espere un momento...")
