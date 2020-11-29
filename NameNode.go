@@ -16,7 +16,7 @@ import (
 
 type Server struct {}
 
-func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode2,error){
+func (s *Server) PropuestaD(ctx context.Context, message *cliente.MessagePropuesta) (*cliente.ResponseCliente,error){
 
 	if(semaforo == 0){ // Node disponible.
 		semaforo = message.ID
@@ -81,7 +81,7 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessageNode) (*n
 	}
 	fmt.Println("Añadido al log correctamente.\n")
 	semaforo = 0
-	return &nodos.ResponseNode2{Ok:1},nil
+	return &cliente.ResponseCliente{Ok:1},nil
 }
 
 // Propuesta Version Centralizada.

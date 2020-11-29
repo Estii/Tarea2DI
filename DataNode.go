@@ -111,7 +111,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			fmt.Println("Error con NameNode")
 			return 
 		}else{
-			c3 := nodos.NewChatService2Client(conn2)	
+			c3 := cliente.NewChatServiceClient(conn3)	
 			response3,err3 := c3.PropuestaD(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
 			var k int64
 			var indice int64
