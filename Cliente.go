@@ -18,6 +18,66 @@ import (
 )
 
 
+func BorrarBiblioteca(){
+	conn, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Error al conectar con el servidor: %s", err)
+		return
+	}
+	c := nodo.NewChatService2Client(conn)	
+	_ , err := c.BorrarArchivos2(context.Background(),&nodo.EstadoE2{Estado:1})
+	if(err!=nil){
+		fmt.Println("Error Borrando Archivos de NameNode")
+	}else{
+		fmt.Println("Archivos de NameNode Borrandos")
+	}
+
+	conn, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Error al conectar con el servidor: %s", err)
+		return
+	}
+	c := nodo.NewChatServiceClient(conn)	
+	_ , err := c.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
+	if(err!=nil){
+		fmt.Println("Error Borrando Archivos de NameNode")
+	}
+
+	conn, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Error al conectar con el servidor: %s", err)
+		return
+	}
+	c := nodo.NewChatServiceClient(conn)	
+	_ , err := c.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
+	if(err!=nil){
+		fmt.Println("Error Borrando Archivos de NameNode")
+	}
+
+	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Error al conectar con el servidor: %s", err)
+		return
+	}
+	c := nodo.NewChatServiceClient(conn)	
+	_ , err := c.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
+	if(err!=nil){
+		fmt.Println("Error Borrando Archivos de NameNode")
+	}
+
+	conn, err := grpc.Dial("dist111:9000", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Error al conectar con el servidor: %s", err)
+		return
+	}
+	c := nodo.NewChatServiceClient(conn)	
+	_ , err := c.BorrarArchivos(context.Background(),&cliente.EstadoE{Estado:1})
+	if(err!=nil){
+		fmt.Println("Error Borrando Archivos de NameNode")
+	}
+
+}
+
 
 func Ver_Catalogo(){
 	conn, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
@@ -76,27 +136,6 @@ func Cargar_Libro(tipo int64){
 				var libro string
 				// Leemos el archivo a fragmentar.
 				fmt.Println("Seleccione un libro:")
-
-				/*fmt.Println("1-  MobyDick")
-				fmt.Println("2-  Dracula")
-				fmt.Println("3-  La vuelta al mundo en 80 dias")
-				fmt.Println("4-  Orgullo y prejuicio")
-				fmt.Println("5-  Salir")
-				fmt.Scanln(&seleccion)
-				switch seleccion {
-					case 1:
-						libro = "MobyDick"
-					case 2:
-						libro = "Dracula"	
-					case 3:
-						libro = "La_vuelta_al_mundo_en_80_dias"
-					case 4:
-						libro = "Orgullo_y_prejuicio"
-					case 5:
-						return
-				}		
-				*/		
-
 				var files []string
 				root := "./Libros/"
 				err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
@@ -145,8 +184,6 @@ func Cargar_Libro(tipo int64){
 					}
 				}
 
-
-
 				fmt.Println("\n\nSubiendo libro "+libro)
 				fileToBeChunked := "./Libros/"+libro
 				file, err := os.Open(fileToBeChunked)
@@ -177,10 +214,7 @@ func Cargar_Libro(tipo int64){
 				}else{
 					fmt.Println("Subida Completada\n")
 				}
-				
-
 				file.Close()
-				
 			}	
 		}
 	}
@@ -199,8 +233,9 @@ func main() {
 		fmt.Println("1-  Subir Libro  [ Distribuido ]")
 		fmt.Println("2-  Subir Libro  [ Centralizado ]")
 		fmt.Println("3-  Descargar Libro")
-		fmt.Println("4-  Ver Libros Subidos")
-		fmt.Println("5-  Salir")
+		fmt.Println("4-  Ver Libros Subidos")		
+		fmt.Println("5-  Limpiar Biblioteca")
+		fmt.Println("6-  Salir")
 		fmt.Println("")
 		fmt.Scanln(&seleccion)
 		//remover()
@@ -213,7 +248,9 @@ func main() {
 				fmt.Println("Aun en implementacacion...")
 			case 4:				
 				Ver_Catalogo()
-			case 5:
+			case 5:				
+				BorrarBiblioteca()
+			case 6:
 				finalizar = false
 		}
 	}

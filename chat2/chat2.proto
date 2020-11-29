@@ -30,11 +30,19 @@ message ResponseNameNode{
 message ResponseCatalago{
     repeated string ListaLibros = 1;
 }
+message EstadoE2{
+    int64 Estado = 1;   
+}
+message EstadoS2{
+    int64 Estado = 1;
 
+}
 service ChatService2{
     rpc Propuesta(MessageNode) returns (ResponseNode){}
     rpc PropuestaD(MessagePropuesta2) returns (ResponseNameNode){}
     rpc MostrarCatalogo(ResponseNameNode) returns (ResponseCatalago){}
+    
+    rpc BorrarArchivos2(EstadoE2) returns (EstadoS2) {}
 
 }
 

@@ -17,6 +17,12 @@ import (
 )
 
 type Server struct {}
+
+func (s *Server) BorrarArchivos2(ctx context.Context, message *nodos.EstadoE2) (*nodos.EstadoS2,error){
+	LimpiarArchivo()
+	return &nodos.EstadoS2{Estado:1},nil
+}
+
 func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNameNode) (*nodos.ResponseCatalago,error){
 
 	var ListaLibros []string

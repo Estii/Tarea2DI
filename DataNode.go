@@ -34,6 +34,12 @@ func (s *Server) CheckNameNodeUse(ctx context.Context, message *cliente.EstadoE)
 	return &cliente.EstadoS{Estado:NameNodeUse},nil
 }
 
+func (s *Server) BorrarArchivos(ctx context.Context, message *nodos.EstadoE2) (*nodos.EstadoS2,error){
+	LimpiarArchivos()
+	return &nodos.EstadoS2{Estado:1},nil
+}
+
+
 // Utilizada para saber si el DataNode esta disponible para usar.
 func (s *Server) EnviarPropuesta(ctx context.Context, message *cliente.MessagePropuesta) (*cliente.ResponsePropuesta,error){
 	fmt.Println("Propuesta: del Nodo:" + strconv.FormatInt(message.ID,10)+" [ DN1:"+strconv.FormatInt(message.Cantidad1,10) +"  DN2:"+ strconv.FormatInt(message.Cantidad2,10) + "  DN3:"+ strconv.FormatInt(message.Cantidad3,10) + " ]" )

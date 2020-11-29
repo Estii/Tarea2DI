@@ -42,6 +42,7 @@ service ChatService{
     rpc CheckEstado(EstadoE) returns (EstadoS) {}
     rpc SubirChunk(MessageCliente) returns (ResponseCliente) {}    
     rpc EnviarPropuesta(MessagePropuesta) returns (ResponsePropuesta) {}
-    rpc CheckNameNodeUse(EstadoE) returns (EstadoS) {}
+    rpc CheckNameNodeUse(EstadoE) returns (EstadoS) {} 
+    rpc BorrarArchivos(EstadoE) returns (EstadoS) {}
 }
 
