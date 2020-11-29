@@ -124,8 +124,8 @@ func PropuestaD(msj *nodos.MessageNode){
 		flag2c = 1
 	}	
 	
-	fmt.Println(respuesta2)	
-	fmt.Println(respuesta2c)
+	fmt.Println(flag1c)	
+	fmt.Println(flag2c)
 
 	if(flag1==0 && flag2 ==0 && flag1c==0 && flag2c ==0){
 		conn3, err3 := grpc.Dial("dist112:9000", grpc.WithInsecure())
