@@ -26,7 +26,14 @@ func Ver_Catalogo(){
 	c := nodo.NewChatService2Client(conn)	
 	respuesta , err := c.MostrarCatalogo(context.Background(),&nodo.ResponseNameNode{Ok:1})
 	if(err==nil){
-		fmt.Println(respuesta)
+		
+		fmt.Println("--------------------------")
+		fmt.Println("El catalogo disponible es:")
+		var k int = 0
+		for k<len(respuesta){
+			fmt.Println(strconv.Itoa(k)+"-  "+respuseta[k]+"\n")
+		}
+
 	}
 }
 
