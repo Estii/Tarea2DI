@@ -103,7 +103,7 @@ func Descargar_Libro(){
 				message := nodo.MessageNode{NombreLibro:nombre_libro}
 				response , err := c.BuscarChunks(&message)
 				if(err!=nil){
-					fmt.Println(response)
+					fmt.Println(response.ListaLibros)
 				}
 			}
 
