@@ -14,7 +14,6 @@ import (
 	"time"
 	"bufio"
 	"strings"
-	"io"
 )
 
 type Server struct {}
