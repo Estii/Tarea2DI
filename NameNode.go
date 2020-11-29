@@ -51,7 +51,7 @@ func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNam
         log.Fatal(err)
     }
 	fmt.Println(ListaLibros)
-	return &nodos.ResponseCatalago{},nil
+	return &nodos.ResponseCatalago{ListaLibros:ListaLibros},nil
 
 }
 
