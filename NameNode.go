@@ -66,7 +66,7 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 	var cantidad3 int64 = message.Cantidad3
 	var cantidadT int64 = message.Cantidad1 + message.Cantidad2 + message.Cantidad3	
 	// Si existe almenos 1 DataNode disponible, procedemos a escribir en el log.
-	file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
+	file, err := os.OpenFile("./Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
 		log.Println(err)
 	}
