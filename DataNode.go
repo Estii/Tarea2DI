@@ -126,7 +126,7 @@ func PropuestaD(msj *nodos.MessageNode){
 	fmt.Println(flag1c)
 	fmt.Println(flag2c)
 
-	
+
 	if( flag1c==0 && flag2c ==0 ){
 		if(flag1==0 && flag2 == 0){
 			conn3, err3 := grpc.Dial("dist112:9000", grpc.WithInsecure())
@@ -190,7 +190,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			msjn := nodos.MessageNode{ Cantidad1:cantidad1+extra1, Cantidad2:0,Cantidad3:cantidad3+extra2,NombreLibro:nombre_libro,ID: msj.ID}
 			PropuestaD(&msjn)
 		}
-		if(flag1==1 && flag2 == 0){
+		if(flag1==0 && flag2 == 1){
 			cantidad_error = cantidad3
 			var extra1 int64 = cantidad_error/2 + cantidad_error%2
 			var extra2 int64 = cantidad_error/2
