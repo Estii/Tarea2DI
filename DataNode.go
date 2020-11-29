@@ -33,7 +33,7 @@ func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cl
 func (s *Server) EnviarPropuesta(ctx context.Context, message *cliente.MessagePropuesta) (*cliente.ResponsePropuesta,error){
 	fmt.Println("Ha llegado el siguiente libro: "+message.NombreLibro +" del Nodo:" + strconv.FormatInt(message.ID,10))
 	fmt.Println("Con la siguiente propuesta: [ DN1:"+strconv.FormatInt(message.Cantidad1,10) +"  DN2:"+ strconv.FormatInt(message.Cantidad2,10) + "  DN3:"+ strconv.FormatInt(message.Cantidad3,10) + " ]" )
-	return &cliente.ResponsePropuesta{Tiempo:time.Unix(),NameNodeUsed:NameNodeUse},nil
+	return &cliente.ResponsePropuesta{Tiempo:time.Now().Unix(),NameNodeUsed:NameNodeUse},nil
 }
 
 
@@ -72,7 +72,7 @@ func PropuestaD(msj *nodos.MessageNode){
 	flag2 = 0;
 	flag1c = 1;
 	flag2c = 1;
-	tiempo := time.Unix()
+	tiempo := time.Now().Unix()
 
 	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 	if err != nil {
