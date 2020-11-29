@@ -98,11 +98,10 @@ func Cargar_Libro(tipo int64){
 				saltar = 0
 				for indice, file := range files {
 					//fmt.Println(file)
-					if (saltar == 0){
-						saltar = 1
-					}else{
+					if saltar != 0{						
 						fmt.Println(strconv.Itoa(indice+1)+"-  "+file.ReplaceAll(file, "Libros/", ""))
 					}
+					saltar = 1
 				}
 				fmt.Scanln(&seleccion)
 				if(seleccion>0 && seleccion < len(files)){
