@@ -71,8 +71,8 @@ func PropuestaD(msj *nodos.MessageNode){
 
 	flag1 = 0;
 	flag2 = 0;
-	flag1c = 1;
-	flag2c = 1;
+	flag1c = 0;
+	flag2c = 0;
 	tiempo := time.Now().Unix()
 
 	var respuesta1 int64 = 0
