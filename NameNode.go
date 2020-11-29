@@ -30,7 +30,7 @@ func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNam
 	scanner := bufio.NewScanner(file)
 	var nombre string = ""
 	var resultado []string
-	var evitar int64 = 0
+	var evitar int = 0
 	var k int = 0
     for scanner.Scan() {
 		for;k<evitar;{
