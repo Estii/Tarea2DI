@@ -60,7 +60,7 @@ func PropuestaD(msj *nodos.MessageNode){
 	var cantidad1 int64 = msj.Cantidad1
 	var cantidad2 int64 = msj.Cantidad2
 	var cantidad3 int64 = msj.Cantidad3
-	var cantidadT int64 = msj.Cantidad1 + msj.Cantidad2 + msj.Cantidad3
+	//var cantidadT int64 = msj.Cantidad1 + msj.Cantidad2 + msj.Cantidad3
 	var flag1 int64
 	var flag2 int64	
 	var flag1c int64
@@ -126,7 +126,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			return
 		}else{
 			c3 := nodos.NewChatService2Client(conn3)	
-			response3,err3 := c3.PropuestaD(context.Background(),&nodos.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
+			_,_ := c3.PropuestaD(context.Background(),&nodos.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
 			var k int64
 			var indice int64
 			indice = 0
