@@ -109,16 +109,16 @@ func PropuestaD(msj *nodos.MessageNode){
 		conn3, err3 := grpc.Dial("dist112:9000", grpc.WithInsecure())
 		if err3 != nil {
 			fmt.Println("Error con NameNode")
-			return err3	
+			return 
 		}else{
 			c3 := nodos.NewChatService2Client(conn2)	
-			response3,err3 := c3.PropuestaD(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:mjs.NombreLibro})
+			response3,err3 := c3.PropuestaD(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
 			var k int64
 			var indice int64
 			indice = 0
 			for k=0;k<cantidad1;k++{
 				fileName := nombre_libro+"_"+strconv.FormatInt(indice,10)
-				fmt.Prinln("Se ha guardado el fragmento: "+fileName)
+				fmt.Println("Se ha guardado el fragmento: "+fileName)
 				_, err := os.Create("Fragmentos/"+fileName)
 				if err != nil {
 					fmt.Println(err)
