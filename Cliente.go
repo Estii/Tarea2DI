@@ -102,9 +102,13 @@ func Descargar_Libro(){
 				nombre_libro = respuesta.ListaLibros[seleccion-1]
 				message := nodo.MessageNode{NombreLibro:nombre_libro}
 				response , err := c.BuscarChunks(context.Background(),&message)
-				if(err!=nil){
+				if(err==nil){
 					fmt.Println(response.ListaIPS)
+				}	
+				if(err!=nil){
+					fmt.Println("Error obteniendo Ips de los chunks")
 				}
+				
 			}
 
 
