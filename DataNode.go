@@ -62,7 +62,7 @@ func PropuestaD(msj *nodos.MessageNode){
 	var conn *grpc.ClientConn
 	flag1 = 0;
 	flag2 = 0;
-	var tiempo := time.Now()
+	tiempo := time.Now()
 	fmt.Println(tiempo)
 	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 	if err != nil {
