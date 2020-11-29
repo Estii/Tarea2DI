@@ -51,7 +51,7 @@ func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente
 		os.Exit(1)
 	}
 	ioutil.WriteFile("Fragmentos/"+fileName, message.Chunks, os.ModeAppend)
-	fmt.Println("Fragmento: ", fileName)
+	fmt.Println("Fragmento Guardado: ", fileName)
 	return &cliente.ResponseCliente{},nil
 }
 
@@ -312,7 +312,6 @@ func Propuesta(msj *nodos.MessageNode){
 	indice = 0
 	for k=0;k<response.Cantidad1;k++{
 		fileName := nombre_libro+"_"+strconv.FormatInt(indice,10)
-		fmt.Println("Se ha guardado el fragmento: "+fileName)
 		_, err := os.Create("Fragmentos/"+fileName)
 		if err != nil {
 			fmt.Println(err)
@@ -320,7 +319,7 @@ func Propuesta(msj *nodos.MessageNode){
 		}
 		ioutil.WriteFile("Fragmentos/"+fileName, listachunks[indice], os.ModeAppend)
 		indice+=1
-		fmt.Println("Fragmento: ", fileName)	
+		fmt.Println("Fragmento Guardado: ", fileName)	
 	}
 	// Escribimos en el DataNode ID = 2.
 	for k=0;k<response.Cantidad2;k++{
