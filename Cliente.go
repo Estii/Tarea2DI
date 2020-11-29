@@ -25,10 +25,7 @@ func Ver_Catalogo(){
 	}
 	c := nodo.NewChatService2Client(conn)	
 	respuesta , err := c.MostrarCatalogo(context.Background(),&nodo.ResponseNameNode{Ok:1})
-	
-	fmt.Println(respuesta)
-	fmt.Println(err)
-	if(err!=nil){
+	if(err==nil){
 		fmt.Println(respuesta)
 	}
 }
