@@ -30,6 +30,7 @@ message ResponsePropuesta{
 
 service ChatService2{
     rpc Propuesta(MessageNode) returns (ResponseNode){}
+    rpc PropuestaD(MessagePropuesta) returns (ResponsePropuesta){}
 
 }
 
