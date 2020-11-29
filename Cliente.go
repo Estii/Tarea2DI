@@ -100,13 +100,13 @@ func Cargar_Libro(tipo int64){
 				for indice, file := range files {
 					//fmt.Println(file)
 					if saltar != 0{						
-						fmt.Println(strconv.Itoa(indice+1)+"-  "+strings.ReplaceAll(file, "Libros/", ""))
+						fmt.Println(strconv.Itoa(indice)+"-  "+strings.ReplaceAll(file, "Libros/", ""))
 					}
 					saltar = 1
 				}
 				fmt.Scanln(&seleccion)
 				if(seleccion>0 && seleccion < len(files)){
-					libro = files[seleccion-1]
+					libro = files[seleccion]
 				}
 
 
