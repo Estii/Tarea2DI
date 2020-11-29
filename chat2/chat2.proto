@@ -35,14 +35,17 @@ message EstadoE2{
 }
 message EstadoS2{
     int64 Estado = 1;
-
 }
+message ResponseChunks{
+    repeated string ListaIPS = 1;
+}
+
 service ChatService2{
     rpc Propuesta(MessageNode) returns (ResponseNode){}
     rpc PropuestaD(MessagePropuesta2) returns (ResponseNameNode){}
-    rpc MostrarCatalogo(ResponseNameNode) returns (ResponseCatalago){}
-    
+    rpc MostrarCatalogo(ResponseNameNode) returns (ResponseCatalago){}    
     rpc BorrarArchivos2(EstadoE2) returns (EstadoS2) {}
+    rpc BuscarChunks(MessageNode) returns (ResponseChunks) {}
 
 }
 

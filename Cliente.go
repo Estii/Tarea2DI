@@ -101,7 +101,7 @@ func Descargar_Libro(){
 				var nombre_libro string
 				nombre_libro = respuesta.ListaLibros[seleccion-1]
 				message := nodo.MessageNode{NombreLibro:nombre_libro}
-				response , err := c.BuscarChunks(&message)
+				response , err := c.BuscarChunks(context.Background(),&message)
 				if(err!=nil){
 					fmt.Println(response.ListaIPS)
 				}

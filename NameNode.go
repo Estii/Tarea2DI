@@ -59,7 +59,7 @@ func (s *Server) BuscarChunks(ctx context.Context, message *nodos.MessageNode) (
         log.Fatal(err)
 	}
 	fmt.Println(ListaIps)
-	return &nodos.ResponseCatalago{ListaLibros:ListaLibros},nil
+	return &nodos.ResponseChunks{ListaIPS:ListaIps},nil
 		
 }
 
