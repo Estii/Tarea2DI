@@ -218,6 +218,7 @@ func PropuestaD(msj *nodos.MessageNode){
 		}else{
 			c := cliente.NewChatServiceClient(conn)		
 			m := cliente.EstadoE{ Estado: 1}
+			var bandera bool = true
 			for;bandera;{
 				r ,e := c.CheckNameNodeUse(m)
 				if(r == 0){
@@ -236,6 +237,7 @@ func PropuestaD(msj *nodos.MessageNode){
 		}else{
 			c := cliente.NewChatServiceClient(conn)		
 			m := cliente.EstadoE{ Estado: 1}
+			var bandera bool = true
 			for;bandera;{
 				r ,e := c.CheckNameNodeUse(m)
 				if(r == 0){
@@ -256,6 +258,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			}else{
 				c := cliente.NewChatServiceClient(conn)		
 				m := cliente.EstadoE{ Estado: 1}
+				var bandera bool = true
 				for;bandera;{
 					r ,e := c.CheckNameNodeUse(m)
 					if(r == 0){
@@ -274,6 +277,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			}else{
 				c := cliente.NewChatServiceClient(conn)		
 				m := cliente.EstadoE{ Estado: 1}
+				var bandera bool = true
 				for;bandera;{
 					r ,e := c.CheckNameNodeUse(m)
 					if(r == 0){
