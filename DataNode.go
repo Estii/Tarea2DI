@@ -300,10 +300,11 @@ func Propuesta(msj *nodos.MessageNode){
 	conn2, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Error al conectar con el servidor: %s", err)
+		return
 	}   
 	ConexionNameNode := nodos.NewChatService2Client(conn2)
 	fmt.Println("Propuesta inicial: [ DN1:"+strconv.FormatInt(msj.Cantidad1,10)+" | DN2:"+strconv.FormatInt(msj.Cantidad2,10)+" | DN3:"+strconv.FormatInt(msj.Cantidad3,10)+" ]")
-	response , _ := ConexionNameNode.Propuesta(context.Background(), msj)  // Enviamos propuesta.
+	response , err := ConexionNameNode.Propuesta(context.Background(), msj)  // Enviamos propuesta.
 	fmt.Println("Respuesta NameNode: [ DN1:"+strconv.FormatInt(response.Cantidad1,10)+" | DN2:"+strconv.FormatInt(response.Cantidad2,10)+" | DN3:"+strconv.FormatInt(response.Cantidad3,10)+" ]")
 	// Enviamos a DataNode ID = 1. ---- esto cambiar al duplicar segun sea
 	var k int64
