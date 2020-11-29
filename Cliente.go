@@ -112,7 +112,7 @@ func Cargar_Libro(tipo int64){
 
 
 				fmt.Println("Subiendo libro "+libro)
-				fileToBeChunked := "./Libros/"+libro+".pdf"
+				fileToBeChunked := "./Libros/"+libro
 				file, err := os.Open(fileToBeChunked)
 				if err != nil {
 					fmt.Println(err)
