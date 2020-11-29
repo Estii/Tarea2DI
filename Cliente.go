@@ -32,14 +32,15 @@ func Ver_Catalogo(){
 			fmt.Println("--------------------------")
 			fmt.Println("El catalogo aun no posee libros disponibles")
 			fmt.Println("--------------------------")
+		}else{
+			fmt.Println("--------------------------")
+			fmt.Println("El catalogo disponible es:")
+			var k int = 0
+			for k = 0 ; k<len(respuesta.ListaLibros) ; k++{
+				fmt.Println(strconv.Itoa(k)+"-  "+respuesta.ListaLibros[k])
+			}		
+			fmt.Println("--------------------------")
 		}
-		fmt.Println("--------------------------")
-		fmt.Println("El catalogo disponible es:")
-		var k int = 0
-		for k = 0 ; k<len(respuesta.ListaLibros) ; k++{
-			fmt.Println(strconv.Itoa(k)+"-  "+respuesta.ListaLibros[k])
-		}		
-		fmt.Println("--------------------------")
 	}
 }
 
