@@ -97,7 +97,7 @@ func Cargar_Libro(tipo int64){
 				var saltar int = 0
 				for indice, file := range files {
 					//fmt.Println(file)
-					if (saltar =0){
+					if (saltar == 0){
 						saltar = 1
 					}
 					else{
