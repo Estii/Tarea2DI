@@ -74,23 +74,6 @@ func PropuestaD(msj *nodos.MessageNode){
 			flag2 = 1	
 		}  
 	}
-	
-
-	if(flag1==0 && flag2 ==0){
-
-	}
-	if(flag1==1 && flag2 ==0){
-		
-	}
-	if(flag1==0 && flag2 ==1){
-		
-	}
-	if(flag1==1 && flag2 ==1){
-		
-	}
-
-
-	
 
 }
 

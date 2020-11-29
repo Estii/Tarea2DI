@@ -1,5 +1,6 @@
 syntax = "proto3";
 package chat;
+import "google/protobuf/timestamp.proto";
 
 message ResponseCliente{
     int64 Retorno = 1;
@@ -14,11 +15,23 @@ message MessageCliente{
     int64 Tipo = 6;
 }
 
+message MessagePropuesta{
+    int64 Cantidad1 = 1;
+    int64 Cantidad2 = 2;
+    int64 Cantidad3 = 3;
+}
+
+message ResponsePropuesta{
+    int64 NameNodeUsed = 1;
+    google.protobuf.Timestamp time_name = 1; 
+}
+
 message EstadoE{
-    int64 Estado = 1;
+    int64 Estado = 1;   
 }
 message EstadoS{
     int64 Estado = 1;
+
 }
 
 service ChatService{
