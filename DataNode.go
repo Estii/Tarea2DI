@@ -177,19 +177,19 @@ func PropuestaD(msj *nodos.MessageNode){
 			var extra1 int64 = cantidad_error/2 + cantidad_error%2
 			var extra2 int64 = cantidad_error/2
 			msjn := nodos.MessageNode{ Cantidad1:cantidad1+extra1, Cantidad2:0,Cantidad3:cantidad3+extra2,NombreLibro:nombre_libro,ID: message.ID}
-			PropuestaD(msjn)
+			PropuestaD(&msjn)
 		}
 		if(flag1==1 && flag2 == 0){
 			cantidad_error = cantidad3
 			var extra1 int64 = cantidad_error/2 + cantidad_error%2
 			var extra2 int64 = cantidad_error/2
 			msjn := nodos.MessageNode{ Cantidad1:cantidad1+extra1, Cantidad2:cantidad2+extra2,Cantidad3:0,NombreLibro:nombre_libro,ID: message.ID}
-			PropuestaD(msjn)
+			PropuestaD(&msjn)
 		}		
 		if(flag1==0 && flag2 == 0){
 			cantidad_error = cantidad2 + cantidad3
 			msjn := nodos.MessageNode{ Cantidad1:cantidad1+cantidad_error, Cantidad2:0,Cantidad3:0,NombreLibro:nombre_libro,ID: message.ID}
-			PropuestaD(msjn)
+			PropuestaD(&msjn)
 		}
 
 	}
