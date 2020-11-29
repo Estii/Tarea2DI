@@ -42,7 +42,7 @@ func (s *Server) BuscarChunks(ctx context.Context, message *nodos.MessageNode) (
 		resultado = strings.Split(nombre, " ") 
 		fmt.Println(message.NombreLibro)
 		if(len(resultado)==2 && resultado[0]==message.NombreLibro){
-			largo,err2 = strconv.Atoi(resultado[1])
+			largo,err2 := strconv.Atoi(resultado[1])
 			if(err2!=nil){
 				fmt.Println("Error al separar string")
 			}
