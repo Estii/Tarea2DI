@@ -31,7 +31,7 @@ func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNam
 	var nombre string = ""
 	var resultado []string
 	var evitar int64 = 0
-	var k int64 = 0
+	var k int = 0
     for scanner.Scan() {
 		for;k<evitar;{
 			scanner.Scan()
