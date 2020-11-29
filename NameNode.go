@@ -43,14 +43,11 @@ func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNam
 		if(len(resultado)==2){
 			evitar,_ = strconv.Atoi(resultado[1])
 			ListaLibros = append(ListaLibros, resultado[0])
-			fmt.Println(resultado[0])
 		}
     }
-
     if err := scanner.Err(); err != nil {
         log.Fatal(err)
     }
-	fmt.Println(ListaLibros)
 	return &nodos.ResponseCatalago{ListaLibros:ListaLibros},nil
 
 }

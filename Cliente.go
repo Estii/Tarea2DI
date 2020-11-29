@@ -24,7 +24,11 @@ func Ver_Catalogo(){
 		return
 	}
 	c := nodo.NewChatService2Client(conn)	
-	c.MostrarCatalogo(context.Background(),&nodo.ResponseNameNode{Ok:1})
+	respuesta , err := c.MostrarCatalogo(context.Background(),&nodo.ResponseNameNode{Ok:1})
+	if(err!=nil){
+		fmt.Println(respuesta)
+
+	}
 }
 
 func Cargar_Libro(tipo int64){
