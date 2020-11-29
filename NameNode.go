@@ -29,11 +29,12 @@ func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNam
 
 	scanner := bufio.NewScanner(file)
 	var nombre string = ""
+	var resultado []string
     for scanner.Scan() {
 		fmt.Println(scanner.Text())
 		nombre = scanner.Text()
-		nombre = strings.Split(nombre, " ") 
-		fmt.Println(nombre)
+		resultado = strings.Split(nombre, " ") 
+		fmt.Println(resultado)
     }
 
     if err := scanner.Err(); err != nil {
