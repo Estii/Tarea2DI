@@ -33,7 +33,7 @@ func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cl
 func (s *Server) EnviarPropuesta(ctx context.Context, message *cliente.MessagePropuesta) (*cliente.ResponsePropuesta,error){
 	fmt.Println("Ha llegado el siguiente libro: "+message.NombreLibro +" del Nodo:" + strconv.FormatInt(message.ID,10))
 	fmt.Println("Con la siguiente propuesta: [ DN1:"+strconv.FormatInt(message.Cantidad1,10) +"  DN2:"+ strconv.FormatInt(message.Cantidad2,10) + "  DN3:"+ strconv.FormatInt(message.Cantidad3,10) + " ]" )
-	return &cliente.ResponsePropuesta{tiempo:time.Now(),NameNodeUsed:NameNodeUse},nil
+	return &cliente.ResponsePropuesta{Tiempo:time.Now(),NameNodeUsed:NameNodeUse},nil
 }
 
 
