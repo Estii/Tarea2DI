@@ -288,8 +288,6 @@ func PropuestaD(msj *nodos.MessageNode){
 			}
 		}
 	}
-
-
 	NameNodeUse = 0;	
 	return
 }

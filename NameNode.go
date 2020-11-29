@@ -35,7 +35,9 @@ func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNam
     for scanner.Scan() {
 		for;k<evitar;{
 			scanner.Scan()
+			k+=1
 		}
+		k=0
 		fmt.Println(scanner.Text())
 		nombre = scanner.Text()
 		resultado = strings.Split(nombre, " ") 
