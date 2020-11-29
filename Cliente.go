@@ -94,13 +94,13 @@ func Cargar_Libro(tipo int64){
 				if err != nil {
 					panic(err)
 				}
-				var saltar int = 0
+				var saltar int
+				saltar = 0
 				for indice, file := range files {
 					//fmt.Println(file)
 					if (saltar == 0){
 						saltar = 1
-					}
-					else{
+					}else{
 						fmt.Println(strconv.Itoa(indice+1)+"-  "+file.ReplaceAll(file, "Libros/", ""))
 					}
 				}
