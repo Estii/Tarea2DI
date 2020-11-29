@@ -32,13 +32,15 @@ func Ver_Catalogo(){
 		var k int = 0
 		for k = 0 ; k<len(respuesta.ListaLibros) ; k++{
 			fmt.Println(strconv.Itoa(k)+"-  "+respuesta.ListaLibros[k])
-		}
-		
+		}		
 		fmt.Println("--------------------------")
 	}
 }
 
 func Cargar_Libro(tipo int64){
+
+	
+
 	var flag bool
 	rand.Seed(time.Now().UnixNano())
 	//var conn *grpc.ClientConn
@@ -61,24 +63,46 @@ func Cargar_Libro(tipo int64){
 				var libro string
 				// Leemos el archivo a fragmentar.
 				fmt.Println("Seleccione un libro:")
-				fmt.Println("1-  MobyDick")
+
+				/*fmt.Println("1-  MobyDick")
 				fmt.Println("2-  Dracula")
 				fmt.Println("3-  La vuelta al mundo en 80 dias")
 				fmt.Println("4-  Orgullo y prejuicio")
 				fmt.Println("5-  Salir")
 				fmt.Scanln(&seleccion)
 				switch seleccion {
-				case 1:
-					libro = "MobyDick"
-				case 2:
-					libro = "Dracula"	
-				case 3:
-					libro = "La_vuelta_al_mundo_en_80_dias"
-				case 4:
-					libro = "Orgullo_y_prejuicio"
-				case 5:
-					return
-				}				
+					case 1:
+						libro = "MobyDick"
+					case 2:
+						libro = "Dracula"	
+					case 3:
+						libro = "La_vuelta_al_mundo_en_80_dias"
+					case 4:
+						libro = "Orgullo_y_prejuicio"
+					case 5:
+						return
+				}		
+				*/		
+
+				var files []string
+				root := "./Libros"
+				err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+					files = append(files, path)
+					return nil
+				})
+				if err != nil {
+					panic(err)
+				}
+				for indice, file := range files {
+					fmt.Println(file)
+					fmt.Println(strconv.Itoa(indice+1)+"-  "+file)
+				}
+				fmt.Scanln(&seleccion)
+				if(seleccion>0 && seleccion < len(files)){
+					libro = file[seleccion-1]
+				}
+
+
 				fmt.Println("Subiendo libro "+libro)
 				fileToBeChunked := "./Libros/"+libro+".pdf"
 				file, err := os.Open(fileToBeChunked)
