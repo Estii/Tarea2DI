@@ -40,10 +40,12 @@ func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNam
 		k=0
 		fmt.Println(scanner.Text())
 		nombre = scanner.Text()
-		resultado = strings.Split(nombre, " ") 
-		ListaLibros = append(ListaLibros, nombre)
-		evitar,_ = strconv.Atoi(resultado[1])
-		fmt.Println(resultado[0])
+		if(nombre!= "EOF" ){
+			resultado = strings.Split(nombre, " ") 
+			ListaLibros = append(ListaLibros, nombre)
+			evitar,_ = strconv.Atoi(resultado[1])
+			fmt.Println(resultado[0])
+		}
     }
 
     if err := scanner.Err(); err != nil {
