@@ -13,6 +13,7 @@ import (
 	"golang.org/x/net/context"
 	"math/rand"
 	"time"
+	"strings"
     "path/filepath"
 )
 
@@ -99,7 +100,7 @@ func Cargar_Libro(tipo int64){
 				for indice, file := range files {
 					//fmt.Println(file)
 					if saltar != 0{						
-						fmt.Println(strconv.Itoa(indice+1)+"-  "+file.ReplaceAll(file, "Libros/", ""))
+						fmt.Println(strconv.Itoa(indice+1)+"-  "+strings.ReplaceAll(file, "Libros/", ""))
 					}
 					saltar = 1
 				}
