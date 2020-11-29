@@ -52,8 +52,8 @@ func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente
 }
 
 // Propuesta Version Descentralizada.
-func (s *Server) PropuestaD(ctx context.Context, msj *cliente.MessagePropuesta) (*cliente.ResponseCliente,error){
-//func PropuestaD(msj *nodos.MessageNode){
+//func (s *Server) PropuestaD(ctx context.Context, msj *cliente.MessagePropuesta) (*cliente.ResponseCliente,error){
+func PropuestaD(msj *nodos.MessageNode){
 
 	NameNodeUse = 1;
 	fmt.Println("Propuesta inicial: [ DN1:"+strconv.FormatInt(msj.Cantidad1,10)+" | DN2:"+strconv.FormatInt(msj.Cantidad2,10)+" | DN3:"+strconv.FormatInt(msj.Cantidad3,10)+" ]")
@@ -122,9 +122,10 @@ func (s *Server) PropuestaD(ctx context.Context, msj *cliente.MessagePropuesta) 
 		conn3, err3 := grpc.Dial("dist112:9000", grpc.WithInsecure())
 		if err3 != nil {
 			fmt.Println("Error con NameNode")
-			return &cliente.ResponseCliente{},nil 
+			//return &cliente.ResponseCliente{},nil 
+			return
 		}else{
-			c3 := cliente.NewChatServiceClient(conn3)	
+			c3 := cliente.NewChatService2Client(conn3)	
 			response3,err3 := c3.PropuestaD(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
 			var k int64
 			var indice int64
@@ -173,7 +174,8 @@ func (s *Server) PropuestaD(ctx context.Context, msj *cliente.MessagePropuesta) 
 
 	NameNodeUse = 0;
 	
-	return &cliente.ResponseCliente{},nil
+	//return &cliente.ResponseCliente{},nil
+	return
 }
 
 

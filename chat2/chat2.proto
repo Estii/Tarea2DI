@@ -16,7 +16,17 @@ message MessageNode{
     string NombreLibro = 4;
     int64 ID = 5;
 }
-
+message MessagePropuesta{
+    int64 Cantidad1 = 1;
+    int64 Cantidad2 = 2;
+    int64 Cantidad3 = 3;
+    string NombreLibro = 4;
+    int64 ID = 5;
+}
+message ResponsePropuesta{
+    int64 NameNodeUsed = 1;
+    int64 tiempo = 2;
+}
 
 service ChatService2{
     rpc Propuesta(MessageNode) returns (ResponseNode){}

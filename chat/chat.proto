@@ -41,6 +41,5 @@ service ChatService{
     rpc CheckEstado(EstadoE) returns (EstadoS) {}
     rpc SubirChunk(MessageCliente) returns (ResponseCliente) {}    
     rpc EnviarPropuesta(MessagePropuesta) returns (ResponsePropuesta) {}
-    rpc PropuestaD(MessagePropuesta) returns (ResponseCliente){}
 }
 
