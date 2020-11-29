@@ -99,7 +99,7 @@ func Descargar_Libro(){
 					return
 				}
 				var nombre_libro string
-				nombre_libro = respuesta.ListaLibros[seleccion-1])
+				nombre_libro = respuesta.ListaLibros[seleccion-1]
 				message := nodo.MessageNode{NombreLibro:nombre_libro}
 				response , err := c.BuscarChunks(&message)
 				if(err!=nil){
