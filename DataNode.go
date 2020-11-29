@@ -421,7 +421,7 @@ func LimpiarArchivos(){
 
 // Conexion DataNode.
 func main() {
-	LimpiarArchivos()
+	//LimpiarArchivos()
 	fmt.Println("DataNode escuchando...")
 	lis, err := net.Listen("tcp", ":9000")
 	if err != nil {
