@@ -126,6 +126,7 @@ func Descargar_Libro(){
 						resdn, errdn := c.EnviarChunks(context.Background(),&message)
 						if(errdn != nil){
 							fmt.Println("No se pudo acceder a la ip:" + response.ListaIPS[z] + ":9000")
+							fmt.Println("Descarga Cancelada")
 							file.Close()
 							os.Remove(newFileName)
 							return 
@@ -142,7 +143,8 @@ func Descargar_Libro(){
 				}
 				if(err!=nil){
 					fmt.Println("Error obteniendo Ips de los chunks")
-				}				
+				}		
+				file.Close()		
 			}
 		}
 	}else{			
