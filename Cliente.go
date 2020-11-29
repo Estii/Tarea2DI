@@ -29,8 +29,9 @@ func Ver_Catalogo(){
 		
 		fmt.Println("--------------------------")
 		fmt.Println("El catalogo disponible es:")
-		for _, valor := range respuesta.ListaLibros {
-			fmt.Printf(valor)
+		var k int = 0
+		for k = 0 ; k<len(respuesta.ListaLibros) ; k++{
+			fmt.Printf(respuesta.ListaLibros[k])
 		}
 		
 		fmt.Println("--------------------------")
