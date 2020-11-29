@@ -86,6 +86,7 @@ func Descargar_Libro(){
 			fmt.Println("--------------------------")
 			fmt.Println("El catalogo disponible es:")
 			var k int = 0
+			var seleccion int
 			for k = 0 ; k<len(respuesta.ListaLibros) ; k++{
 				fmt.Println(strconv.Itoa(k+1)+"-  "+respuesta.ListaLibros[k])
 			}		
