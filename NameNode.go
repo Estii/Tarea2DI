@@ -406,6 +406,7 @@ func LimpiarArchivo(){
     for i:=1;i<len(files);i++{
     	os.Remove(files[i])      
 	}
+	_, err := os.OpenFile("Log/log.txt", os.O_CREATE|os.O_WRONLY, 0644)
 }
 
 // Conexion DataNode.
