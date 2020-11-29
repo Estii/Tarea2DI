@@ -224,7 +224,7 @@ func PropuestaD(msj *nodos.MessageNode) int64{
 			cantidad_error = cantidad1
 			var extra1 int64 = cantidad_error/2 + cantidad_error%2
 			var extra2 int64 = cantidad_error/2
-			msjn := nodos.MessageNode{ Cantidad1:0, Cantidad2:cantidad2+extra2,Cantidad3:cantidad3+extra2,NombreLibro:nombre_libro,ID: msj.ID}
+			msjn := nodos.MessageNode{ Cantidad1:0, Cantidad2:cantidad2+extra1,Cantidad3:cantidad3+extra2,NombreLibro:nombre_libro,ID: msj.ID}
 			fmt.Println("Propuesta Rechazada")
 			return PropuestaD(&msjn)
 		}
@@ -232,7 +232,7 @@ func PropuestaD(msj *nodos.MessageNode) int64{
 			cantidad_error = cantidad3
 			var extra1 int64 = cantidad_error/2 + cantidad_error%2
 			var extra2 int64 = cantidad_error/2
-			msjn := nodos.MessageNode{ Cantidad1:cantidad1+extra1, Cantidad2:cantidad2+extra2,Cantidad3:0,NombreLibro:nombre_libro,ID: msj.ID}
+			msjn := nodos.MessageNode{ Cantidad1:cantidad1+extra2, Cantidad2:cantidad2+extra1,Cantidad3:0,NombreLibro:nombre_libro,ID: msj.ID}
 			fmt.Println("Propuesta Rechazada")
 			return PropuestaD(&msjn)
 		}		
