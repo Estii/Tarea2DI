@@ -67,8 +67,7 @@ func Cargar_Libro(tipo int64){
 			ConexionSubida := cliente.NewChatServiceClient(conn)		
 			response,err := ConexionSubida.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
 			if(err!=nil){
-				fmt.Println("Error conectando a la ip "+ip)
-				time.Sleep(5 * time.Second)	
+				fmt.Println("Error conectando al DataNode | IP:"+ip)
 				return
 			}
 			if (err == nil && response.Estado==1) {		
