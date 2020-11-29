@@ -197,9 +197,6 @@ func Cargar_Libro(tipo int64){
 		if err == nil {
 			ConexionSubida := cliente.NewChatServiceClient(conn)		
 			response,err := ConexionSubida.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
-			if(err!=nil){
-				fmt.Println("Error conectando al DataNode | IP:"+ip)
-			}
 			if (err == nil && response.Estado==1) {		
 				id := rand.Int63n(100000000000000000)
 				var seleccion int
