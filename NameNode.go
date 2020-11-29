@@ -50,12 +50,13 @@ func (s *Server) BuscarChunks(ctx context.Context, message *nodos.MessageNode) (
 	}
 	fmt.Println(largo)
 	var i int = 0	
-	for i<largo-1{
+	for i<largo{
 		scanner.Scan()
 		nombre = scanner.Text()
 		fmt.Println(nombre)
 		resultado = strings.Split(nombre, " ") 
 		ListaIps = append(ListaIps , resultado[1])
+		i+=1
 	}
 
 
