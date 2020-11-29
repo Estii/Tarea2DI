@@ -50,8 +50,6 @@ func Ver_Catalogo(){
 
 func Cargar_Libro(tipo int64){
 
-	
-
 	var flag bool
 	rand.Seed(time.Now().UnixNano())
 	//var conn *grpc.ClientConn
@@ -68,6 +66,10 @@ func Cargar_Libro(tipo int64){
 		}else{
 			ConexionSubida := cliente.NewChatServiceClient(conn)		
 			response,err := ConexionSubida.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
+			if(err!=nil){
+				fmt.Println("Error conectando a la ip "+ip)
+				time.Sleep(time.Second()*5)
+			}
 			if (err == nil && response.Estado==1) {		
 				id := rand.Int63n(100000000000000000)
 				var seleccion int
