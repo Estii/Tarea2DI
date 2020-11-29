@@ -16,6 +16,74 @@ import (
 
 type Server struct {}
 
+func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode2,error){
+
+	if(semaforo == 0){ // Node disponible.
+		semaforo = message.ID
+	}
+
+	for semaforo != message.ID { // Si no esta disponible, esperara hasta que pueda.
+		fmt.Println("NameNode Ocupado porfavor espere un momento...")
+		time.Sleep(5 * time.Second)	
+		if( semaforo ==0 ){
+			semaforo = message.ID
+		}				
+	}
+
+	var cantidad1 int64 = message.Cantidad1
+	var cantidad2 int64 = message.Cantidad2
+	var cantidad3 int64 = message.Cantidad3
+	var cantidadT int64 = message.Cantidad1 + message.Cantidad2 + message.Cantidad3	
+	// Si existe almenos 1 DataNode disponible, procedemos a escribir en el log.
+	file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
+	if err != nil {
+		log.Println(err)
+	}
+	if _, err := file.WriteString(message.NombreLibro+" "+strconv.FormatInt(cantidadT,10)+"\n"); err!=nil{
+		log.Fatal(err)
+	}
+	file.Close()
+
+	fmt.Println("Propuesta aceptada")
+	var k int64
+	// Escribimos log de chunks DataNode 1.
+	for k=0;k<message.Cantidad1;k++{
+		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
+		if err != nil {
+			log.Println(err)
+		}
+		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist109\n"); err!=nil{
+			log.Fatal(err)
+		}
+		file.Close()
+	}
+	// Escribimos log de chunks DataNode 2.
+	for k=0;k<message.Cantidad2;k++{
+		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
+		if err != nil {
+			log.Println(err)
+		}
+		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist110\n"); err!=nil{
+			log.Fatal(err)
+		}
+		file.Close()
+	}	
+	// Escribimos log de chunks DataNode 3.
+	for k=0;k<message.Cantidad3;k++{
+		file, err := os.OpenFile("Log/log.txt", os.O_APPEND|os.O_WRONLY, 0600)
+		if err != nil {
+			log.Println(err)
+		}
+		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist111\n"); err!=nil{
+			log.Fatal(err)
+		}
+		file.Close() 
+	}
+	fmt.Println("Añadido al log correctamente.\n")
+	semaforo = 0
+	return &nodos.ResponseNode2{Ok:1},nil
+}
+
 // Propuesta Version Centralizada.
 var semaforo int64 = 0 // Conflicto ingresos simultaneos
 func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseNode,error){

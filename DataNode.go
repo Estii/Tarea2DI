@@ -21,6 +21,7 @@ var id int64 = 0 // Conflicto clientes simultaneos
 var nombre_libro string
 var listachunks [][]byte
 
+var NameNodeUse = 0;
 
 
 // Utilizada para saber si el DataNode esta disponible para usar.
@@ -30,8 +31,9 @@ func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cl
 
 // Utilizada para saber si el DataNode esta disponible para usar.
 func (s *Server) EnviarPropuesta(ctx context.Context, message *cliente.MessagePropuesta) (*cliente.ResponsePropuesta,error){
-	fmt.Println(message)
-	return &cliente.ResponsePropuesta{},nil
+	fmt.Println("Ha llegado el siguiente libro: "+message.NombreLibro +" del Nodo:" + strconv.FormatInt(message.ID,10))
+	fmt.Println("Con la siguiente propuesta: [ DN1:"+message.Cantidad1 +"  DN2:"+message.Cantidad2 + "  DN3:"+menssage.Cantidad3 + " ]" )
+	return &cliente.ResponsePropuesta{tiempo:time.Now(),NameNodeUsed:NameNodeUse},nil
 }
 
 
@@ -51,28 +53,33 @@ func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente
 
 // Propuesta Version Descentralizada.
 func PropuestaD(msj *nodos.MessageNode){
+
+	NameNodeUse = 1;
 	fmt.Println("Propuesta inicial: [ DN1:"+strconv.FormatInt(msj.Cantidad1,10)+" | DN2:"+strconv.FormatInt(msj.Cantidad2,10)+" | DN3:"+strconv.FormatInt(msj.Cantidad3,10)+" ]")
 	var cantidad1 int64 = msj.Cantidad1
 	var cantidad2 int64 = msj.Cantidad2
 	var cantidad3 int64 = msj.Cantidad3
 	var cantidadT int64 = msj.Cantidad1 + msj.Cantidad2 + msj.Cantidad3
-	fmt.Println(cantidadT)
 	var flag1 int64
-	var flag2 int64
+	var flag2 int64	
+	var flag1c int64
+	var flag2c int64
 
 	var conn *grpc.ClientConn
 	var conn2 *grpc.ClientConn
 
 	flag1 = 0;
 	flag2 = 0;
+	flag1c = 1;
+	flag2c = 1;
 	tiempo := time.Now()
-	fmt.Println(tiempo)
+
 	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 	if err != nil {
 		flag1 = 1		
 	}else{
 		c := cliente.NewChatServiceClient(conn)		
-		_,err := c.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3})
+		response1,err := c.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:mjs.NombreLibro})
 		if err != nil {
 			flag1 = 1	
 		}  
@@ -82,14 +89,76 @@ func PropuestaD(msj *nodos.MessageNode){
 		flag2 = 1		
 	}else{
 		c2 := cliente.NewChatServiceClient(conn2)	
-		_,err2 := c2.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3})
+		response2,err2 := c2.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:mjs.NombreLibro})
 		if err2 != nil {
 			flag2 = 1	
 		}  
 	}
+	
 	fmt.Println(flag1)	
 	fmt.Println(flag2)
 
+
+	if( response1.NameNodeUse==1 && response1.Tiempo>tiempo){
+		flag1c = 0
+	}	
+	if( response2.NameNodeUse==1 && response2.Tiempo>tiempo){
+		flag2c = 0
+	}
+	if(flag1==0 && flag2 ==0 && flag1c==0 && flag2c ==0){
+		conn3, err3 := grpc.Dial("dist112:9000", grpc.WithInsecure())
+		if err3 != nil {
+			fmt.Println("Error con NameNode")
+			return err3	
+		}else{
+			c3 := nodos.NewChatService2Client(conn2)	
+			response3,err3 := c3.PropuestaD(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:mjs.NombreLibro})
+			var k int64
+			var indice int64
+			indice = 0
+			for k=0;k<cantidad1;k++{
+				fileName := nombre_libro+"_"+strconv.FormatInt(indice,10)
+				fmt.Prinln("Se ha guardado el fragmento: "+fileName)
+				_, err := os.Create("Fragmentos/"+fileName)
+				if err != nil {
+					fmt.Println(err)
+					os.Exit(1)
+				}
+				ioutil.WriteFile("Fragmentos/"+fileName, listachunks[indice], os.ModeAppend)
+				indice+=1
+				fmt.Println("Fragmento: ", fileName)	
+			}
+			// Escribimos en el DataNode ID = 2.
+			for k=0;k<cantidad2;k++{
+				var conn2 *grpc.ClientConn
+				conn2, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
+				if err != nil {
+					log.Fatalf("Error al conectar con el servidor: %s", err)
+				}   
+				Conexion := cliente.NewChatServiceClient(conn2)
+				message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10),Chunks:listachunks[indice],ID:IDNODE }
+				response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta.
+				indice+=1
+				fmt.Println(response)
+			}
+			// Enviamos a DataNode ID = 3.
+			for k=0;k<cantidad3;k++{
+				var conn2 *grpc.ClientConn
+				conn2, err := grpc.Dial("dist111:9000", grpc.WithInsecure())
+				if err != nil {
+					log.Fatalf("Error al conectar con el servidor: %s", err)
+				}   
+				Conexion := cliente.NewChatServiceClient(conn2)
+				message := cliente.MessageCliente{ NombreLibro:nombre_libro+"_"+strconv.FormatInt(indice,10),Chunks:listachunks[indice],ID:IDNODE }
+				response , _ := Conexion.SubirChunk(context.Background(), &message)  // Enviamos propuesta.	
+				indice+=1
+				fmt.Println(response)
+			}
+		}
+		fmt.Prinln("Propuesta Aceptada !")		
+	}
+
+	NameNodeUse = 0;
 }
 
 

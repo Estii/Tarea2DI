@@ -25,8 +25,8 @@ func Cargar_Libro(tipo int64){
 	for;flag;{		
 		ip = "dist"
 		ip += strconv.Itoa(rand.Intn(3) + 109)
-		conn, err := grpc.Dial(ip+":9000", grpc.WithInsecure())
-		//conn, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
+		//conn, err := grpc.Dial(ip+":9000", grpc.WithInsecure())
+		conn, err := grpc.Dial("dist109:9000", grpc.WithInsecure())
 		if err != nil {
 			log.Fatalf("Error al conectar con el servidor: %s", err)
 			return

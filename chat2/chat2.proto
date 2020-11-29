@@ -8,6 +8,10 @@ message ResponseNode{
     string NombreLibro = 4;
 }
 
+message ResponseNode2{
+    int64 Ok = 1;
+}
+
 message MessageNode{
     int64 Cantidad1 = 1;
     int64 Cantidad2 = 2;
@@ -19,5 +23,7 @@ message MessageNode{
 
 service ChatService2{
     rpc Propuesta(MessageNode) returns (ResponseNode){}
+    rpc PropuestaD(MessageNode) returns (ResponseNode2){}
+
 }
 
