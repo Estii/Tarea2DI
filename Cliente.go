@@ -41,8 +41,7 @@ func Ver_Catalogo(){
 			}		
 			fmt.Println("--------------------------")
 		}
-	}
-	else{			
+	}else{			
 		fmt.Println("--------------------------")
 		fmt.Println("No se pudo acceder al catalogo")
 		fmt.Println("--------------------------")
