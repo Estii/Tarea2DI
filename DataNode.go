@@ -74,6 +74,10 @@ func PropuestaD(msj *nodos.MessageNode){
 	flag2c = 1;
 	tiempo := time.Now().Unix()
 
+	var respuesta1 int64
+	var respuesta2 int64 
+
+
 	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 	if err != nil {
 		flag1 = 1		
@@ -82,7 +86,9 @@ func PropuestaD(msj *nodos.MessageNode){
 		response1,err := c.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
 		if err != nil {
 			flag1 = 1	
-		}  
+		}else{	
+			respuesta1 = response1.Tiempo
+		}
 	}
 	conn2, err2 := grpc.Dial("dist111:9000", grpc.WithInsecure())
 	if err2 != nil {
@@ -92,17 +98,19 @@ func PropuestaD(msj *nodos.MessageNode){
 		response2,err2 := c2.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
 		if err2 != nil {
 			flag2 = 1	
-		}  
+		}else{	
+			respuesta2 = response2.Tiempo
+		}
 	}
 	
 	fmt.Println(flag1)	
 	fmt.Println(flag2)
 
 
-	if( response1.NameNodeUse==1 && response1.Tiempo>tiempo){
+	if( respuesta1.NameNodeUse==1 && respuesta1.Tiempo>tiempo){
 		flag1c = 0
 	}	
-	if( response2.NameNodeUse==1 && response2.Tiempo>tiempo){
+	if( respuesta2.NameNodeUse==1 && respuesta2.Tiempo>tiempo){
 		flag2c = 0
 	}
 	if(flag1==0 && flag2 ==0 && flag1c==0 && flag2c ==0){
