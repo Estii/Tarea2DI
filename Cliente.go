@@ -42,6 +42,11 @@ func Ver_Catalogo(){
 			fmt.Println("--------------------------")
 		}
 	}
+	else{			
+		fmt.Println("--------------------------")
+		fmt.Println("No se pudo acceder al catalogo")
+		fmt.Println("--------------------------")
+	}
 }
 
 func Cargar_Libro(tipo int64){
