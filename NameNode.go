@@ -23,6 +23,47 @@ func (s *Server) BorrarArchivos2(ctx context.Context, message *nodos.EstadoE2) (
 	return &nodos.EstadoS2{Estado:1},nil
 }
 
+func (s *Server) BuscarChunks(ctx context.Context, message *nodos.MessageNode) (*nodos.ResponseChunks,error){
+	var ListaIps []string
+
+    file, err := os.Open("Log/log.txt")
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	var nombre string = ""
+	var resultado []string
+	var largo int64
+
+    for scanner.Scan() {
+		nombre = scanner.Text()	
+		resultado = strings.Split(nombre, " ") 
+		if(len(resultado)==2 && resultado[0]==message.NombreLibro){
+			largo,_ = strconv.Atoi(resultado[1])
+			break
+		}
+	}
+
+	var i int = 0	
+	for i<largo{
+		scanner.Scan()
+		nombre = scanner.Text()
+		resultado = strings.Split(nombre, " ") 
+		ListaIps = append(ListaIps , resultado[1])
+	}
+
+
+    if err := scanner.Err(); err != nil {
+        log.Fatal(err)
+	}
+	fmt.Println(ListaIps)
+	return &nodos.ResponseCatalago{ListaLibros:ListaLibros},nil
+		
+}
+
+
 func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNameNode) (*nodos.ResponseCatalago,error){
 
 	var ListaLibros []string

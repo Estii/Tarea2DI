@@ -98,7 +98,8 @@ func Descargar_Libro(){
 				if(seleccion == k+1){
 					return
 				}
-				fmt.Println(respuesta.ListaLibros[seleccion-1])
+				var nombre_libro string
+				nombre_libro = respuesta.ListaLibros[seleccion-1])
 
 			}
 
