@@ -56,7 +56,7 @@ func PropuestaD(msj *nodos.MessageNode){
 	var cantidad2 int64 = msj.Cantidad2
 	var cantidad3 int64 = msj.Cantidad3
 	var cantidadT int64 = msj.Cantidad1 + msj.Cantidad2 + msj.Cantidad3
-
+	fmt.Println(cantidadT)
 	var flag1 int64
 	var flag2 int64
 
