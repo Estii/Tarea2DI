@@ -29,10 +29,10 @@ func Ver_Catalogo(){
 		
 		fmt.Println("--------------------------")
 		fmt.Println("El catalogo disponible es:")
-		var k int = 0
-		for k<len(respuesta){
-			fmt.Println(strconv.Itoa(k)+"-  "+respuesta.k+"\n")
+		for indice, valor := range respuesta {
+			fmt.Printf("Estamos en el índice %d, y su valor es %d\n", indice, valor)
 		}
+		
 		fmt.Println("--------------------------")
 	}
 }
