@@ -49,7 +49,7 @@ func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNam
     if err := scanner.Err(); err != nil {
         log.Fatal(err)
     }
-	fmt.Println(ListaLibros)
+	//fmt.Println(ListaLibros)
 	return &nodos.ResponseCatalago{},nil
 
 }
