@@ -109,7 +109,13 @@ func Cargar_Libro(tipo int64){
 					}
 					saltar = 1
 				}
+				fmt.Println(strconv.Itoa(indice+1)+"-  Salir")
+				
 				fmt.Scanln(&seleccion)
+				if(seleccion ==indice+1 ){
+					return
+				}
+
 				if(seleccion>0 && seleccion < len(files)){
 					libro = strings.ReplaceAll(files[seleccion], "Libros/", "")
 
