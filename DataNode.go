@@ -32,7 +32,7 @@ func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cl
 // Utilizada para saber si el DataNode esta disponible para usar.
 func (s *Server) EnviarPropuesta(ctx context.Context, message *cliente.MessagePropuesta) (*cliente.ResponsePropuesta,error){
 	fmt.Println("Ha llegado el siguiente libro: "+message.NombreLibro +" del Nodo:" + strconv.FormatInt(message.ID,10))
-	fmt.Println("Con la siguiente propuesta: [ DN1:"+message.Cantidad1 +"  DN2:"+message.Cantidad2 + "  DN3:"+menssage.Cantidad3 + " ]" )
+	fmt.Println("Con la siguiente propuesta: [ DN1:"+strconv.FormatInt(message.Cantidad1) +"  DN2:"+ strconv.FormatInt(message.Cantidad2) + "  DN3:"+ strconv.FormatInt(menssage.Cantidad3) + " ]" )
 	return &cliente.ResponsePropuesta{tiempo:time.Now(),NameNodeUsed:NameNodeUse},nil
 }
 
