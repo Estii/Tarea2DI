@@ -21,7 +21,7 @@ func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNam
 
 	var ListaLibros []string
 
-    file, err := os.Open("/Log/log.txt")
+    file, err := os.Open("Log/log.txt")
     if err != nil {
         log.Fatal(err)
     }
