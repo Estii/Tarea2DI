@@ -60,7 +60,7 @@ func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente
 func PropuestaD(msj *nodos.MessageNode){
 
 	NameNodeUse = 1;
-	fmt.Println("Propuesta inicial: [ DN1:"+strconv.FormatInt(msj.Cantidad1,10)+" | DN2:"+strconv.FormatInt(msj.Cantidad2,10)+" | DN3:"+strconv.FormatInt(msj.Cantidad3,10)+" ]")
+	fmt.Println("Propuesta Descentralizada: [ DN1:"+strconv.FormatInt(msj.Cantidad1,10)+" | DN2:"+strconv.FormatInt(msj.Cantidad2,10)+" | DN3:"+strconv.FormatInt(msj.Cantidad3,10)+" ]")
 	var cantidad1 int64 = msj.Cantidad1
 	var cantidad2 int64 = msj.Cantidad2
 	var cantidad3 int64 = msj.Cantidad3
@@ -156,7 +156,7 @@ func PropuestaD(msj *nodos.MessageNode){
 					}
 					ioutil.WriteFile("Fragmentos/"+fileName, listachunks[indice], os.ModeAppend)
 					indice+=1
-					fmt.Println("Fragmento: ", fileName)	
+					fmt.Println("Fragmento Guardado: ", fileName)	
 				}
 				// Escribimos en el DataNode ID = 2.
 				for k=0;k<cantidad2;k++{
@@ -183,7 +183,7 @@ func PropuestaD(msj *nodos.MessageNode){
 					indice+=1
 				}
 			}
-			fmt.Println("Propuesta Aceptada !")		
+			fmt.Println("Propuesta Descentralizada Aceptada !")		
 			timestart = 0		
 			NameNodeUse = 0
 			return 
