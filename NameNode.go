@@ -48,7 +48,7 @@ func (s *Server) BuscarChunks(ctx context.Context, message *nodos.MessageNode) (
 		}
 	}
 	var i int = 0	
-	for i<largo-1{
+	for i<largo{
 		scanner.Scan()
 		nombre = scanner.Text()
 		resultado = strings.Split(nombre, " ") 
