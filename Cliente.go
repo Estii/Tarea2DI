@@ -69,6 +69,50 @@ func BorrarBiblioteca(){
 }
 
 
+func Descargar_Libro(){
+	conn, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Error al conectar con el servidor: %s", err)
+		return
+	}
+	c := nodo.NewChatService2Client(conn)	
+	respuesta , err := c.MostrarCatalogo(context.Background(),&nodo.ResponseNameNode{Ok:1})
+	if(err==nil){
+		if(len(respuesta.ListaLibros)==0){			
+			fmt.Println("--------------------------")
+			fmt.Println("El catalogo aun no posee libros disponibles")
+			fmt.Println("--------------------------")
+		}else{
+			fmt.Println("--------------------------")
+			fmt.Println("El catalogo disponible es:")
+			var k int = 0
+			for k = 0 ; k<len(respuesta.ListaLibros) ; k++{
+				fmt.Println(strconv.Itoa(k+1)+"-  "+respuesta.ListaLibros[k])
+			}		
+			fmt.Println(strconv.Itoa(k+1)+"-  Salir")
+			fmt.Println("--------------------------")
+			fmt.Scanln(&seleccion)
+
+			if(seleccion > 0 && seleccion <= k+1){
+				if(seleccion == k+1){
+					return
+				}
+				fmt.Println(respuesta.ListaLibros[seleccion])
+
+			}
+
+
+
+		}
+	}else{			
+		fmt.Println("--------------------------")
+		fmt.Println("No se pudo acceder al catalogo")
+		fmt.Println("--------------------------")
+	}
+}
+
+
+
 func Ver_Catalogo(){
 	conn, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
 	if err != nil {
@@ -178,8 +222,8 @@ func Cargar_Libro(tipo int64){
 				fileToBeChunked := "./Libros/"+libro
 				file, err := os.Open(fileToBeChunked)
 				if err != nil {
-					fmt.Println(err)
-					os.Exit(1)
+					fmt.Println("Error seleccion invalida")
+					return 
 				}
 				defer file.Close()				
 				// Se fragmenta el archivo en tamaño asignado.
@@ -235,7 +279,7 @@ func main() {
 			case 2:
 				Cargar_Libro(2)
 			case 3:				
-				fmt.Println("Aun en implementacacion...")
+				Descargar_Libro()
 			case 4:				
 				Ver_Catalogo()
 			case 5:				
