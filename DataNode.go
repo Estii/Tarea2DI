@@ -352,7 +352,7 @@ func Propuesta(msj *nodos.MessageNode){
 
 func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
 	if(id == 0){ // Node disponible.
-		fmt.Println("Se ha solicitado subir el libro "+ message.NombreLibro[0:len(message.NombreLibro)-2])
+		fmt.Println("\nSe ha solicitado subir el libro "+ message.NombreLibro[0:len(message.NombreLibro)-2])
 		id = message.ID
 		nombre_libro = message.NombreLibro[0:len(message.NombreLibro)-2]
 	}
