@@ -58,7 +58,7 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist109\n"); err!=nil{
 			log.Fatal(err)
 		}
-		fmt.Println("Fragmento: ", message.NombreLibro+"_"+strconv.FormatInt(k,10)
+		fmt.Println("Fragmento: ", message.NombreLibro+"_"+strconv.FormatInt(k,10))
 		file.Close()
 	}
 	// Escribimos log de chunks DataNode 2.
@@ -73,7 +73,7 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 		
 			log.Fatal(err)
 		}
-		fmt.Println("Fragmento: ", message.NombreLibro+"_"+strconv.FormatInt(k,10)
+		fmt.Println("Fragmento: ", message.NombreLibro+"_"+strconv.FormatInt(k,10))
 		file.Close()
 	}	
 	// Escribimos log de chunks DataNode 3.
@@ -87,7 +87,7 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 		if _, err := file.WriteString(message.NombreLibro+"_"+strconv.FormatInt(k,10)+" dist111\n"); err!=nil{
 			log.Fatal(err)
 		}
-		fmt.Println("Fragmento: ", message.NombreLibro+"_"+strconv.FormatInt(k,10)
+		fmt.Println("Fragmento: ", message.NombreLibro+"_"+strconv.FormatInt(k,10))
 		file.Close() 
 	}
 	fmt.Println("Añadido al log correctamente.\n")
