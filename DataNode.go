@@ -59,7 +59,7 @@ func PropuestaD(msj *nodos.MessageNode){
 
 	var flag1 int64
 	var flag2 int64
-	
+
 	var conn *grpc.ClientConn
 	var conn2 *grpc.ClientConn
 
@@ -77,13 +77,13 @@ func PropuestaD(msj *nodos.MessageNode){
 			flag1 = 1	
 		}  
 	}
-	conn2, err := grpc.Dial("dist111:9000", grpc.WithInsecure())
-	if err != nil {
+	conn2, err2 := grpc.Dial("dist111:9000", grpc.WithInsecure())
+	if err2 != nil {
 		flag2 = 1		
 	}else{
-		c := cliente.NewChatServiceClient(conn2)	
-		_,err := c.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3})
-		if err != nil {
+		c2 := cliente.NewChatServiceClient(conn2)	
+		_,err2 := c2.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3})
+		if err2 != nil {
 			flag2 = 1	
 		}  
 	}
