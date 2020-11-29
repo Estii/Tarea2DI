@@ -35,7 +35,7 @@ func (s *Server) BuscarChunks(ctx context.Context, message *nodos.MessageNode) (
 	scanner := bufio.NewScanner(file)
 	var nombre string = ""
 	var resultado []string
-	var largo int64
+	var largo int
 
     for scanner.Scan() {
 		nombre = scanner.Text()	
@@ -46,7 +46,7 @@ func (s *Server) BuscarChunks(ctx context.Context, message *nodos.MessageNode) (
 		}
 	}
 
-	var i int64 = 0	
+	var i int = 0	
 	for i<largo{
 		scanner.Scan()
 		nombre = scanner.Text()
