@@ -169,7 +169,9 @@ func PropuestaD(msj *nodos.MessageNode){
 					indice+=1
 				}
 			}
-			fmt.Println("Propuesta Aceptada !")		
+			fmt.Println("Propuesta Aceptada !")					
+			NameNodeUse = 0;
+			return 
 		}
 
 		if(flag1==1 && flag2 == 0){
