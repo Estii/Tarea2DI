@@ -86,7 +86,7 @@ func Cargar_Libro(tipo int64){
 				*/		
 
 				var files []string
-				root := "./Libros"
+				root := "./Libros/"
 				err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 					files = append(files, path)
 					return nil
@@ -95,7 +95,7 @@ func Cargar_Libro(tipo int64){
 					panic(err)
 				}
 				for indice, file := range files {
-					fmt.Println(file)
+					//fmt.Println(file)
 					fmt.Println(strconv.Itoa(indice+1)+"-  "+file)
 				}
 				fmt.Scanln(&seleccion)
