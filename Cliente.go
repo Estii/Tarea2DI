@@ -100,7 +100,6 @@ func Descargar_Libro(){
 				if(err==nil){
 					fmt.Println(response.ListaIPS)
 					for z = 0 ; z<len(response.ListaIPS) ; z++{
-						fmt.Println(response.ListaIPS[z])
 						conn, err := grpc.Dial(response.ListaIPS[z]+":9000", grpc.WithInsecure())
 						if err != nil {
 							log.Fatalf("Error al conectar con el servidor: %s", err)

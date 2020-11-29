@@ -42,7 +42,21 @@ func (s *Server) BorrarArchivos(ctx context.Context, message *cliente.EstadoE) (
 
 func (s *Server) EnviarChunks(ctx context.Context, message *cliente.MessageCliente) (*cliente.MessageCliente,error){
 	fmt.Println(message)
-	return &cliente.MessageCliente{},nil
+	var nombre_libro string = message.NombreLibro
+	fileToBeChunked := "./Fragmentos/"+nombre_libro
+	file, err := os.Open(fileToBeChunked)
+	if err != nil {
+		fmt.Println("Error seleccion invalida")
+		return &cliente.MessageCliente{},nil 
+	}
+	defer file.Close()				
+	// Se fragmenta el archivo en tamaño asignado.
+	fileInfo, _ := file.Stat()
+	var fileSize int64 = fileInfo.Size()
+	partSize := fileSize
+	partBuffer := make([]byte, partSize)
+	file.Read(partBuffer)
+	return &cliente.MessageCliente{ Chunks:partBuffer, ID:IDNODE  },nil
 }
 
 
