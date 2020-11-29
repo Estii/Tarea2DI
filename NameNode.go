@@ -40,7 +40,7 @@ func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNam
 		nombre = scanner.Text()
 		resultado = strings.Split(nombre, " ") 
 		ListaLibros = append(ListaLibros, nombre)
-		evitar = strconv.Atoi(resultado[1])
+		evitar,_ = strconv.Atoi(resultado[1])
 		fmt.Println(resultado[0])
     }
 
