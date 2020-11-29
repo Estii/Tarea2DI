@@ -138,6 +138,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			res , err := c3.PropuestaD(context.Background(),&nodos.MessagePropuesta2{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
 			fmt.Println(res)	
 			fmt.Println(err)
+			var k int64
 			var indice int64
 			indice = 0
 			for k=0;k<cantidad1;k++{
