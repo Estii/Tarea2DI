@@ -28,7 +28,11 @@ func Ver_Catalogo(){
 	c := nodo.NewChatService2Client(conn)	
 	respuesta , err := c.MostrarCatalogo(context.Background(),&nodo.ResponseNameNode{Ok:1})
 	if(err==nil){
-		
+		if(len(respuesta.ListaLibros)==0){			
+			fmt.Println("--------------------------")
+			fmt.Println("El catalogo aun no posee libros disponibles")
+			fmt.Println("--------------------------")
+		}
 		fmt.Println("--------------------------")
 		fmt.Println("El catalogo disponible es:")
 		var k int = 0
