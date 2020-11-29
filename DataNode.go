@@ -84,7 +84,8 @@ func PropuestaD(msj *nodos.MessageNode){
 
 	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 	if err != nil {
-		flag1 = 1		
+		flag1 = 1	
+		flag1c = 0	
 	}else{
 		c := cliente.NewChatServiceClient(conn)		
 		response1,err := c.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
@@ -99,6 +100,7 @@ func PropuestaD(msj *nodos.MessageNode){
 	conn2, err2 := grpc.Dial("dist111:9000", grpc.WithInsecure())
 	if err2 != nil {
 		flag2 = 1		
+		flag2c = 0
 	}else{
 		c2 := cliente.NewChatServiceClient(conn2)	
 		response2,err2 := c2.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
@@ -119,6 +121,11 @@ func PropuestaD(msj *nodos.MessageNode){
 		flag2c = 1
 	}	
 	
+	fmt.Println(flag1)
+	fmt.Println(flag2)
+	fmt.Println(flag1c)
+	fmt.Println(flag2c)
+
 	
 	if( flag1c==0 && flag2c ==0 ){
 		if(flag1==0 && flag2 == 0){
