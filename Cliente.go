@@ -168,7 +168,7 @@ func Cargar_Libro(tipo int64){
 				ConexionSubida.EnviarLibro(context.Background(), &message)
 				
 
-				fmt.Println("\n\nSubida completada "+libro)
+				fmt.Println("Subida completada\n")
 				file.Close()
 				
 			}	
