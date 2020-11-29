@@ -126,10 +126,10 @@ func Descargar_Libro(){
 						resdn, errdn := c.EnviarChunks(context.Background(),&message)
 						if(errdn != nil){
 							fmt.Println("No se pudo acceder a la ip:" + response.ListaIPS[z] + ":9000")
+							file.Close()
+							os.Remove(newFileName)
 							return 
 						}else{
-							fmt.Println(resdn)
-
 							writePosition+= resdn.CantidadChunks
 							n, err := file.Write(resdn.Chunks)
 							if err != nil {
@@ -137,16 +137,9 @@ func Descargar_Libro(){
 									os.Exit(1)
 							}
 							file.Sync() 
-
-							fmt.Println("Written ", n, " bytes")
-							fmt.Println("Recombining part [", z, "] into : ", newFileName)
-
 						}
 					}
 				}
-				
-				
-
 				if(err!=nil){
 					fmt.Println("Error obteniendo Ips de los chunks")
 				}				
