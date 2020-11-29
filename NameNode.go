@@ -34,13 +34,14 @@ func (s *Server) MostrarCatalogo(ctx context.Context, message *nodos.ResponseNam
 		fmt.Println(scanner.Text())
 		nombre = scanner.Text()
 		resultado = strings.Split(nombre, " ") 
+		ListaLibros = append(ListaLibros, nombre)
 		fmt.Println(resultado)
     }
 
     if err := scanner.Err(); err != nil {
         log.Fatal(err)
     }
-
+	fmt.Println(ListaLibros)
 	return &nodos.ResponseCatalago{},nil
 
 }
