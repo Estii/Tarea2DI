@@ -155,7 +155,7 @@ func PropuestaD(msj *nodos.MessageNode){
 				fmt.Println(response)
 			}
 		}
-		fmt.Prinln("Propuesta Aceptada !")		
+		fmt.Println("Propuesta Aceptada !")		
 	}
 
 	NameNodeUse = 0;
@@ -181,7 +181,7 @@ func Propuesta(msj *nodos.MessageNode){
 	indice = 0
 	for k=0;k<response.Cantidad1;k++{
 		fileName := nombre_libro+"_"+strconv.FormatInt(indice,10)
-		fmt.Prinln("Se ha guardado el fragmento: "+fileName)
+		fmt.Println("Se ha guardado el fragmento: "+fileName)
 		_, err := os.Create("Fragmentos/"+fileName)
 		if err != nil {
 			fmt.Println(err)
