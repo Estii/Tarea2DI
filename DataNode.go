@@ -36,9 +36,9 @@ func (s *Server) CheckNameNodeUse(ctx context.Context, message *cliente.EstadoE)
 
 // Utilizada para saber si el DataNode esta disponible para usar.
 func (s *Server) EnviarPropuesta(ctx context.Context, message *cliente.MessagePropuesta) (*cliente.ResponsePropuesta,error){
-	fmt.Println("Propuesta Validada por " + strconv.FormatInt(IDNODE) + " del Nodo:" + strconv.FormatInt(message.ID,10))
-	fmt.Println("Propuesta: [ DN1:"+strconv.FormatInt(message.Cantidad1,10) +"  DN2:"+ strconv.FormatInt(message.Cantidad2,10) + "  DN3:"+ strconv.FormatInt(message.Cantidad3,10) + " ]" )
+	fmt.Println("Propuesta: del Nodo:" + strconv.FormatInt(message.ID,10))+" [ DN1:"+strconv.FormatInt(message.Cantidad1,10) +"  DN2:"+ strconv.FormatInt(message.Cantidad2,10) + "  DN3:"+ strconv.FormatInt(message.Cantidad3,10) + " ]" )
 	fmt.Println("Libro: "+message.NombreLibro +"\n" )
+	fmt.Println("Propuesta Validada por " + strconv.FormatInt(IDNODE)  )
 	return &cliente.ResponsePropuesta{Tiempo:timestart,NameNodeUsed:NameNodeUse},nil
 
 }
