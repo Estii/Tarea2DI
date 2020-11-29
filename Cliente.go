@@ -31,7 +31,7 @@ func Ver_Catalogo(){
 		fmt.Println("El catalogo disponible es:")
 		var k int = 0
 		for k<len(respuesta){
-			fmt.Println(strconv.Itoa(k)+"-  "+respuseta[k]+"\n")
+			fmt.Println(strconv.Itoa(k)+"-  "+respuesta[k]+"\n")
 		}
 		fmt.Println("--------------------------")
 	}
