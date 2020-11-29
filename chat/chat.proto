@@ -23,7 +23,7 @@ message MessagePropuesta{
 
 message ResponsePropuesta{
     int64 NameNodeUsed = 1;
-    google.protobuf.Timestamp time_name = 1; 
+    google.protobuf.Timestamp time_name = 2;
 }
 
 message EstadoE{
@@ -37,6 +37,7 @@ message EstadoS{
 service ChatService{
     rpc EnviarLibro(MessageCliente) returns (ResponseCliente){}
     rpc CheckEstado(EstadoE) returns (EstadoS) {}
-    rpc SubirChunk(MessageCliente) returns (ResponseCliente) {}
+    rpc SubirChunk(MessageCliente) returns (ResponseCliente) {}    
+    rpc EnviarPropuesta(MessagePropuesta) returns (ResponsePropuesta) {}
 }
 

@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"os"
 	"io/ioutil"
+	"time"
 
 )
 
@@ -22,10 +23,19 @@ var id int64 = 0 // Conflicto clientes simultaneos
 var nombre_libro string
 var listachunks [][]byte
 
+
+
 // Utilizada para saber si el DataNode esta disponible para usar.
 func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cliente.EstadoS,error){
 	return &cliente.EstadoS{Estado:1},nil
 }
+
+// Utilizada para saber si el DataNode esta disponible para usar.
+func (s *Server) EnviarPropuesta(ctx context.Context, message *cliente.MessagePropuesta) (*cliente.ResponsePropuesta,error){
+	fmt.Println(message)
+	return &cliente.ResponsePropuesta{},nil
+}
+
 
 // Crea el chunk respectivo en la carpeta Fragmentos.
 func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
@@ -54,12 +64,14 @@ func PropuestaD(msj *nodos.MessageNode){
 	var conn *grpc.ClientConn
 	flag1 = 0;
 	flag2 = 0;
+	var tiempo := time.Now()
+	fmt.Println(tiempo)
 	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 	if err != nil {
 		flag1 = 1		
 	}else{
 		c := cliente.NewChatServiceClient(conn)		
-		_,err := c.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
+		_,err := c.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3})
 		if err != nil {
 			flag1 = 1	
 		}  
@@ -69,11 +81,13 @@ func PropuestaD(msj *nodos.MessageNode){
 		flag2 = 1		
 	}else{
 		c := cliente.NewChatServiceClient(conn)		
-		_,err := c.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
+		_,err := c.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3})
 		if err != nil {
 			flag2 = 1	
 		}  
 	}
+	fmt.Println(flag1)	
+	fmt.Println(flag2)
 
 }
 
@@ -147,9 +161,8 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 		cantidad_resto := cantidad%3	
 		if(message.Tipo == 1){
 			fmt.Println("Distribucion Descentralizada")
-			fmt.Println("Aun en implementacion")
-			//message := nodos.MessageNode{ Cantidad1:cantidad_uniforme + cantidad_resto, Cantidad2:cantidad_uniforme,Cantidad3:cantidad_uniforme,NombreLibro:nombre_libro,ID: IDNODE}
-			//Propuesta(&message)
+			message := nodos.MessageNode{ Cantidad1:cantidad_uniforme + cantidad_resto, Cantidad2:cantidad_uniforme,Cantidad3:cantidad_uniforme,NombreLibro:nombre_libro,ID: IDNODE}
+			PropuestaD(&message)
 		}
 		if(message.Tipo == 2){
 			fmt.Println("Distribucion Centralizada")
