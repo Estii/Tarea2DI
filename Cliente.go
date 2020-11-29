@@ -25,8 +25,8 @@ func BorrarBiblioteca(){
 		return
 	}
 	c := nodo.NewChatService2Client(conn)	
-	_ , err := c.BorrarArchivos2(context.Background(),&nodo.EstadoE2{Estado:1})
-	if(err!=nil){
+	_ , err1 := c.BorrarArchivos2(context.Background(),&nodo.EstadoE2{Estado:1})
+	if(err1!=nil){
 		fmt.Println("Error Borrando Archivos de NameNode")
 	}else{
 		fmt.Println("Archivos de NameNode Borrandos")
