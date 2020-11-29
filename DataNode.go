@@ -57,7 +57,7 @@ func PropuestaD(msj *nodos.MessageNode){
 	var cantidad3 int64 = msj.Cantidad3
 	var cantidadT int64 = msj.Cantidad1 + msj.Cantidad2 + msj.Cantidad3
 
-	var flag int64
+	var flag1 int64
 	var flag2 int64
 	var conn *grpc.ClientConn
 	flag1 = 0;
