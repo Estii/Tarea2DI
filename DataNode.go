@@ -21,7 +21,7 @@ var id int64 = 0 // Conflicto clientes simultaneos
 var nombre_libro string
 var listachunks [][]byte
 
-var NameNodeUse = 0;
+var NameNodeUse int64 = 0;
 
 
 // Utilizada para saber si el DataNode esta disponible para usar.
