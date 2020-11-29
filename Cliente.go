@@ -98,7 +98,7 @@ func Descargar_Libro(){
 				if(seleccion == k+1){
 					return
 				}
-				fmt.Println(respuesta.ListaLibros[seleccion])
+				fmt.Println(respuesta.ListaLibros[seleccion-1])
 
 			}
 
