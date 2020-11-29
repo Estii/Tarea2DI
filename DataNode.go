@@ -305,6 +305,10 @@ func Propuesta(msj *nodos.MessageNode){
 	ConexionNameNode := nodos.NewChatService2Client(conn2)
 	fmt.Println("Propuesta inicial: [ DN1:"+strconv.FormatInt(msj.Cantidad1,10)+" | DN2:"+strconv.FormatInt(msj.Cantidad2,10)+" | DN3:"+strconv.FormatInt(msj.Cantidad3,10)+" ]")
 	response , err := ConexionNameNode.Propuesta(context.Background(), msj)  // Enviamos propuesta.
+	if(err!=nil){
+		fmt.Println("Error al conectar con NameNode, asegurese de que esta encendido")
+		return
+	}
 	fmt.Println("Respuesta NameNode: [ DN1:"+strconv.FormatInt(response.Cantidad1,10)+" | DN2:"+strconv.FormatInt(response.Cantidad2,10)+" | DN3:"+strconv.FormatInt(response.Cantidad3,10)+" ]")
 	// Enviamos a DataNode ID = 1. ---- esto cambiar al duplicar segun sea
 	var k int64
