@@ -225,7 +225,7 @@ func PropuestaD(msj *nodos.MessageNode){
 					bandera = false
 				}
 			}
-			PropuestaD(&msj)
+			PropuestaD(msj)
 		}
 	}
 	if( flag1c==0 && flag2c ==1 ){
@@ -244,7 +244,7 @@ func PropuestaD(msj *nodos.MessageNode){
 					bandera = false
 				}
 			}
-			PropuestaD(&msj)
+			PropuestaD(msj)
 		}
 	}
 	if( flag1c==1 && flag2c ==1 ){
@@ -265,7 +265,7 @@ func PropuestaD(msj *nodos.MessageNode){
 						bandera = false
 					}
 				}
-				PropuestaD(&msj)
+				PropuestaD(msj)
 			}
 		}		
 		if(respuesta1c < respuesta2c){
@@ -284,7 +284,7 @@ func PropuestaD(msj *nodos.MessageNode){
 						bandera = false
 					}
 				}
-				PropuestaD(&msj)
+				PropuestaD(msj)
 			}
 		}
 	}
