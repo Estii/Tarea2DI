@@ -81,7 +81,7 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 	}
 	fmt.Println("Añadido al log correctamente.\n")
 	semaforo = 0
-	return &nodos.ResponsePropuesta2{Ok:1},nil
+	return &nodos.ResponseNameNode{Ok:1},nil
 }
 
 // Propuesta Version Centralizada.
