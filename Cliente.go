@@ -130,7 +130,7 @@ func Descargar_Libro(){
 							return 
 						}else{
 							writePosition+= resdn.CantidadChunks
-							n, err := file.Write(resdn.Chunks)
+							_, err := file.Write(resdn.Chunks)
 							if err != nil {
 								return 
 							}
