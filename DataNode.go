@@ -221,7 +221,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			var bandera bool = true
 			for;bandera;{
 				r ,e := c.CheckNameNodeUse(m)
-				if(r == 0){
+				if(r.Estado == 0){
 					bandera = false
 				}
 			}
@@ -240,7 +240,7 @@ func PropuestaD(msj *nodos.MessageNode){
 			var bandera bool = true
 			for;bandera;{
 				r ,e := c.CheckNameNodeUse(m)
-				if(r == 0){
+				if(r.Estado == 0){
 					bandera = false
 				}
 			}
@@ -261,7 +261,7 @@ func PropuestaD(msj *nodos.MessageNode){
 				var bandera bool = true
 				for;bandera;{
 					r ,e := c.CheckNameNodeUse(m)
-					if(r == 0){
+					if(r.Estado == 0){
 						bandera = false
 					}
 				}
@@ -280,7 +280,7 @@ func PropuestaD(msj *nodos.MessageNode){
 				var bandera bool = true
 				for;bandera;{
 					r ,e := c.CheckNameNodeUse(m)
-					if(r == 0){
+					if(r.Estado == 0){
 						bandera = false
 					}
 				}
