@@ -50,7 +50,7 @@ func (s *Server) BuscarChunks(ctx context.Context, message *nodos.MessageNode) (
 	}
 	fmt.Println(largo)
 	var i int = 0	
-	for i<largo{
+	for i<largo-1{
 		scanner.Scan()
 		nombre = scanner.Text()
 		fmt.Println(nombre)
