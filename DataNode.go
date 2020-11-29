@@ -51,7 +51,7 @@ func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente
 		os.Exit(1)
 	}
 	ioutil.WriteFile("Fragmentos/"+fileName, message.Chunks, os.ModeAppend)
-	fmt.Println("Fragmento Guardado: ", fileName)
+	fmt.Println( "Origen:"strconv.FormatInt(message.ID,10)+" | Fragmento Guardado: ", fileName)
 	return &cliente.ResponseCliente{},nil
 }
 

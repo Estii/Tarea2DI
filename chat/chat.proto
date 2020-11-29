@@ -12,6 +12,7 @@ message MessageCliente{
     string NombreLibro = 4;
     int64 CantidadChunks = 5;
     int64 Tipo = 6;
+    int64 origen = 7;
 }
 
 message MessagePropuesta{
