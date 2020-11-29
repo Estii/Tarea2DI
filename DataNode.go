@@ -81,38 +81,47 @@ func PropuestaD(msj *nodos.MessageNode){
 	var respuesta1c int64 = 0
 	var respuesta2c int64 = 0
 
-
-	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
-	if err != nil {
-		flag1 = 1	
-		flag1c = 0	
-	}else{
-		c := cliente.NewChatServiceClient(conn)		
-		response1,err := c.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
+	if(cantidad2>0){
+		conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 		if err != nil {
 			flag1 = 1	
-			flag1c = 0
-		}else{	
-			respuesta1 = response1.NameNodeUsed
-			respuesta1c = response1.Tiempo
+			flag1c = 0	
+		}else{
+			c := cliente.NewChatServiceClient(conn)		
+			response1,err := c.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
+			if err != nil {
+				flag1 = 1	
+				flag1c = 0
+			}else{	
+				respuesta1 = response1.NameNodeUsed
+				respuesta1c = response1.Tiempo
+			}
 		}
-	}
-	conn2, err2 := grpc.Dial("dist111:9000", grpc.WithInsecure())
-	if err2 != nil {
-		flag2 = 1		
-		flag2c = 0
 	}else{
-		c2 := cliente.NewChatServiceClient(conn2)	
-		response2,err2 := c2.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
-		if err2 != nil {
-			flag2 = 1	
-			flag2c = 0
-		}else{	
-			respuesta2 = response2.NameNodeUsed
-			respuesta2c = response2.Tiempo
-		}
+		flag1=0
+		flag1c=0
 	}
 
+	if(cantidad3>0){
+		conn2, err2 := grpc.Dial("dist111:9000", grpc.WithInsecure())
+		if err2 != nil {
+			flag2 = 1		
+			flag2c = 0
+		}else{
+			c2 := cliente.NewChatServiceClient(conn2)	
+			response2,err2 := c2.EnviarPropuesta(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
+			if err2 != nil {
+				flag2 = 1	
+				flag2c = 0
+			}else{	
+				respuesta2 = response2.NameNodeUsed
+				respuesta2c = response2.Tiempo
+			}
+		}
+	}else{
+		flag2=0
+		flag2c=0
+	}
 
 	if( respuesta1==1 && respuesta1c<tiempo){
 		flag1c = 1
