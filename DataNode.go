@@ -52,7 +52,7 @@ func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente
 }
 
 // Propuesta Version Descentralizada.
-func (s *Server) PropuestaD(ctx context.Context, msj *nodos.MessagePropuesta) (*cliente.ResponseCliente,error){
+func (s *Server) PropuestaD(ctx context.Context, msj *cliente.MessagePropuesta) (*cliente.ResponseCliente,error){
 //func PropuestaD(msj *nodos.MessageNode){
 
 	NameNodeUse = 1;
