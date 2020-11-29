@@ -189,6 +189,7 @@ func Cargar_Libro(tipo int64){
 	//var conn *grpc.ClientConn
 	flag = true
 	var ip string
+	var max_conn int = 0
 	for;flag;{		
 		ip = "dist"
 		ip += strconv.Itoa(rand.Intn(3) + 109)
@@ -197,6 +198,12 @@ func Cargar_Libro(tipo int64){
 		if err == nil {
 			ConexionSubida := cliente.NewChatServiceClient(conn)		
 			response,err := ConexionSubida.CheckEstado(context.Background(),&cliente.EstadoE{Estado:1})
+			if(err!=nil){
+				max_conn +=1
+				if(max_conn == 25){
+					return
+				}
+			}
 			if (err == nil && response.Estado==1) {		
 				id := rand.Int63n(100000000000000000)
 				var seleccion int
