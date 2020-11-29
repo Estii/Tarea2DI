@@ -372,7 +372,7 @@ func LimpiarArchivo(){
 func main() {
 	//LimpiarArchivo()
 
-	f, err := os.OpenFile("Log/log.txt", os.O_CREATE|os.O_WRONLY, 0644)
+	_, err := os.OpenFile("Log/log.txt", os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
