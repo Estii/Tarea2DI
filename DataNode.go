@@ -205,6 +205,7 @@ func LimpiarArchivos(){
 // Conexion DataNode.
 func main() {
 	LimpiarArchivos()
+	fmt.Println("DataNode escuchando...")
 	lis, err := net.Listen("tcp", ":9000")
 	if err != nil {
 		log.Fatalf("Failed to listen on port 9000: %v", err)
