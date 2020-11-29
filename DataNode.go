@@ -76,6 +76,8 @@ func PropuestaD(msj *nodos.MessageNode){
 
 	var respuesta1 int64 = 0
 	var respuesta2 int64 = 0
+	var respuesta1c int64 = 0
+	var respuesta2c int64 = 0
 
 
 	conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
@@ -87,7 +89,8 @@ func PropuestaD(msj *nodos.MessageNode){
 		if err != nil {
 			flag1 = 1	
 		}else{	
-			respuesta1 = response1.Tiempo
+			respuesta1 = response1.NameNodeUsed
+			respuesta1c = response1.Tiempo
 		}
 	}
 	conn2, err2 := grpc.Dial("dist111:9000", grpc.WithInsecure())
@@ -99,7 +102,8 @@ func PropuestaD(msj *nodos.MessageNode){
 		if err2 != nil {
 			flag2 = 1	
 		}else{	
-			respuesta2 = response2.Tiempo
+			respuesta2 = response2.NameNodeUsed
+			respuesta2c = response2.Tiempo
 		}
 	}
 	
@@ -107,10 +111,10 @@ func PropuestaD(msj *nodos.MessageNode){
 	fmt.Println(flag2)
 
 
-	if( respuesta1.NameNodeUse==1 && respuesta1.Tiempo>tiempo){
+	if( respuesta1==1 && respuesta1c>tiempo){
 		flag1c = 0
 	}	
-	if( respuesta2.NameNodeUse==1 && respuesta2.Tiempo>tiempo){
+	if( respuesta2==1 && respuesta2c>tiempo){
 		flag2c = 0
 	}
 	if(flag1==0 && flag2 ==0 && flag1c==0 && flag2c ==0){
