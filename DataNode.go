@@ -122,7 +122,7 @@ func (s *Server) PropuestaD(ctx context.Context, msj *nodos.MessagePropuesta) (*
 		conn3, err3 := grpc.Dial("dist112:9000", grpc.WithInsecure())
 		if err3 != nil {
 			fmt.Println("Error con NameNode")
-			return 
+			return &cliente.ResponseCliente{},nil 
 		}else{
 			c3 := cliente.NewChatServiceClient(conn3)	
 			response3,err3 := c3.PropuestaD(context.Background(),&cliente.MessagePropuesta{Cantidad1:cantidad1,Cantidad2:cantidad2,Cantidad3:cantidad3,ID:IDNODE,NombreLibro:msj.NombreLibro})
