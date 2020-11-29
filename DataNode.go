@@ -22,7 +22,7 @@ var nombre_libro string
 var listachunks [][]byte
 
 var NameNodeUse int64 = 0;
-
+var timestart int64 = 0;
 
 // Utilizada para saber si el DataNode esta disponible para usar.
 func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cliente.EstadoS,error){
@@ -30,16 +30,20 @@ func (s *Server) CheckEstado(ctx context.Context, message *cliente.EstadoE) (*cl
 }
 
 // Utilizada para saber si el DataNode esta disponible para usar.
+func (s *Server) CheckNameNodeUse(ctx context.Context, message *cliente.EstadoE) (*cliente.EstadoS,error){
+	return &cliente.EstadoS{Estado:NameNodeUse},nil
+}
+
+// Utilizada para saber si el DataNode esta disponible para usar.
 func (s *Server) EnviarPropuesta(ctx context.Context, message *cliente.MessagePropuesta) (*cliente.ResponsePropuesta,error){
 	fmt.Println("Ha llegado el siguiente libro: "+message.NombreLibro +" del Nodo:" + strconv.FormatInt(message.ID,10))
 	fmt.Println("Con la siguiente propuesta: [ DN1:"+strconv.FormatInt(message.Cantidad1,10) +"  DN2:"+ strconv.FormatInt(message.Cantidad2,10) + "  DN3:"+ strconv.FormatInt(message.Cantidad3,10) + " ]" )
-	return &cliente.ResponsePropuesta{Tiempo:time.Now().Unix(),NameNodeUsed:NameNodeUse},nil
+	return &cliente.ResponsePropuesta{Tiempo:timestart,NameNodeUsed:NameNodeUse},nil
 }
 
 
 // Crea el chunk respectivo en la carpeta Fragmentos.
 func (s *Server) SubirChunk(ctx context.Context, message *cliente.MessageCliente) (*cliente.ResponseCliente,error){
-	fmt.Println("Se han recibido chunks del nodo " + strconv.FormatInt(message.ID,10))
 	fileName := message.NombreLibro
 	_, err := os.Create("Fragmentos/"+fileName)
 	if err != nil {
@@ -67,21 +71,17 @@ func PropuestaD(msj *nodos.MessageNode){
 	var flag1c int64
 	var flag2c int64
 
-	
-
 	flag1 = 0;
 	flag2 = 0;
 	flag1c = 0;
 	flag2c = 0;
-	tiempo := time.Now().Unix()
-
+	var tiempo int64 = timestart
 	var respuesta1 int64 = 0
 	var respuesta2 int64 = 0
 	var respuesta1c int64 = 0
 	var respuesta2c int64 = 0
 
-	if(cantidad2>0){
-		
+	if(cantidad2>0){		
 		var conn *grpc.ClientConn
 		conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
 		if err != nil {
@@ -103,8 +103,7 @@ func PropuestaD(msj *nodos.MessageNode){
 		flag1c=0
 	}
 
-	if(cantidad3>0){
-		
+	if(cantidad3>0){		
 		var conn2 *grpc.ClientConn
 		conn2, err2 := grpc.Dial("dist111:9000", grpc.WithInsecure())
 		if err2 != nil {
@@ -184,8 +183,9 @@ func PropuestaD(msj *nodos.MessageNode){
 					indice+=1
 				}
 			}
-			fmt.Println("Propuesta Aceptada !")					
-			NameNodeUse = 0;
+			fmt.Println("Propuesta Aceptada !")		
+			timestart = 0		
+			NameNodeUse = 0
 			return 
 		}
 
@@ -208,11 +208,85 @@ func PropuestaD(msj *nodos.MessageNode){
 			msjn := nodos.MessageNode{ Cantidad1:cantidad1+cantidad_error, Cantidad2:0,Cantidad3:0,NombreLibro:nombre_libro,ID: msj.ID}
 			PropuestaD(&msjn)
 		}
+	}
+	if( flag1c==1 && flag2c ==0 ){
+		var conn *grpc.ClientConn
+		conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
+		if err != nil {
+			flag1 = 1	
+			flag1c = 0	
+		}else{
+			c := cliente.NewChatServiceClient(conn)		
+			m := cliente.EstadoE{ Estado: 1}
+			for;bandera;{
+				r ,e := c.CheckNameNodeUse(m)
+				if(r == 0){
+					bandera = false
+				}
+			}
+			PropuestaD(&msj)
+		}
+	}
+	if( flag1c==0 && flag2c ==1 ){
+		var conn *grpc.ClientConn
+		conn, err := grpc.Dial("dist111:9000", grpc.WithInsecure())
+		if err != nil {
+			flag1 = 1	
+			flag1c = 0	
+		}else{
+			c := cliente.NewChatServiceClient(conn)		
+			m := cliente.EstadoE{ Estado: 1}
+			for;bandera;{
+				r ,e := c.CheckNameNodeUse(m)
+				if(r == 0){
+					bandera = false
+				}
+			}
+			PropuestaD(&msj)
+		}
+	}
+	if( flag1c==1 && flag2c ==1 ){
 
+		if(respuesta1c > respuesta2c){
+			var conn *grpc.ClientConn
+			conn, err := grpc.Dial("dist110:9000", grpc.WithInsecure())
+			if err != nil {
+				flag1 = 1	
+				flag1c = 0	
+			}else{
+				c := cliente.NewChatServiceClient(conn)		
+				m := cliente.EstadoE{ Estado: 1}
+				for;bandera;{
+					r ,e := c.CheckNameNodeUse(m)
+					if(r == 0){
+						bandera = false
+					}
+				}
+				PropuestaD(&msj)
+			}
+		}		
+		if(respuesta1c < respuesta2c){
+			var conn *grpc.ClientConn
+			conn, err := grpc.Dial("dist111:9000", grpc.WithInsecure())
+			if err != nil {
+				flag1 = 1	
+				flag1c = 0	
+			}else{
+				c := cliente.NewChatServiceClient(conn)		
+				m := cliente.EstadoE{ Estado: 1}
+				for;bandera;{
+					r ,e := c.CheckNameNodeUse(m)
+					if(r == 0){
+						bandera = false
+					}
+				}
+				PropuestaD(&msj)
+			}
+		}
 	}
 
-	NameNodeUse = 0;
-	
+
+	NameNodeUse = 0;	
 	return
 }
 
@@ -286,7 +360,8 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 		cantidad_uniforme := cantidad/3
 		cantidad_resto := cantidad%3	
 		if(message.Tipo == 1){
-			fmt.Println("Distribucion Descentralizada")
+			fmt.Println("Distribucion Descentralizada")			
+			timestart := time.Now().Unix()
 			message := nodos.MessageNode{ Cantidad1:cantidad_uniforme + cantidad_resto, Cantidad2:cantidad_uniforme,Cantidad3:cantidad_uniforme,NombreLibro:nombre_libro,ID: IDNODE}
 			PropuestaD(&message)
 		}
