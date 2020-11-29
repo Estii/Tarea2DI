@@ -24,7 +24,6 @@ func Ver_Catalogo(){
 		return
 	}
 	c := nodo.NewChatService2Client(conn)	
-	message := 
 	c.MostrarCatalogo(context.Background(),&cliente.ResponseNameNode{Ok:1})
 }
 
