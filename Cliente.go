@@ -111,7 +111,7 @@ func Cargar_Libro(tipo int64){
 					saltar = 1
 					indicef = indice
 				}
-				fmt.Println(strconv.Itoa(indice+1)+"-  Salir")
+				fmt.Println(strconv.Itoa(indicef+1)+"-  Salir")
 				
 				fmt.Scanln(&seleccion)
 				if(seleccion ==indicef+1 ){
