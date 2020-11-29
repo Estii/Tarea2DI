@@ -45,7 +45,7 @@ func (s *Server) PropuestaD(ctx context.Context, message *nodos.MessagePropuesta
 	file.Close()
 
 	fmt.Println("Propuesta aceptada")
-	fmt.Println("Se registraran "+strconv.FormatInt(cantidadT)+" chunks")
+	fmt.Println("Se registraran "+strconv.FormatInt(cantidadT,10)+" chunks")
 	var k int64
 	// Escribimos log de chunks DataNode 1.
 	
