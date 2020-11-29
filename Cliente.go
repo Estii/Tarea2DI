@@ -109,7 +109,13 @@ func Descargar_Libro(){
 
 						c := cliente.NewChatServiceClient(conn)	
 						message := cliente.MessageCliente{NombreLibro:nombre_libro+"_"+strconv.Itoa(z)}
-						c.EnviarChunks(context.Background(),&message)
+						resdn, errdn := c.EnviarChunks(context.Background(),&message)
+						if(errdn != nil){
+							fmt.Println("No se pudo acceder a la ip:" + response.ListaIPS[z] + ":9000")
+						}
+						else{
+							fmt.Println(resdn)
+						}
 					}
 
 
