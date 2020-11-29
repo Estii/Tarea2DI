@@ -37,35 +37,30 @@ func (s *Server) BuscarChunks(ctx context.Context, message *nodos.MessageNode) (
 	var resultado []string
 	var largo int
 
-	fmt.Println(message.NombreLibro)
+	fmt.Println("Se ha solicitado el lbiro: "+message.NombreLibro)
     for scanner.Scan() {
 		nombre = scanner.Text()	
 		resultado = strings.Split(nombre, " ") 
-		fmt.Println(message.NombreLibro)
 		if(len(resultado)==2 && resultado[0]==message.NombreLibro){
 			largo,_ = strconv.Atoi(resultado[1])
 			fmt.Println(largo)
 			break
 		}
 	}
-	fmt.Println(largo)
 	var i int = 0	
-	for i<largo{
+	for i<largo-1{
 		scanner.Scan()
 		nombre = scanner.Text()
-		fmt.Println(nombre)
 		resultado = strings.Split(nombre, " ") 
+		
+		fmt.Println("IP:"+strconv.Atoi(resultado[1])+" Chunk:"+resultado[0])
 		ListaIps = append(ListaIps , resultado[1])
 		i+=1
 	}
-
-
     if err := scanner.Err(); err != nil {
         log.Fatal(err)
 	}
-	fmt.Println(ListaIps)
 	return &nodos.ResponseChunks{ListaIPS:ListaIps},nil
-		
 }
 
 
