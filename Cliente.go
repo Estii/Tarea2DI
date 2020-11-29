@@ -100,7 +100,7 @@ func Cargar_Libro(tipo int64){
 				}
 				fmt.Scanln(&seleccion)
 				if(seleccion>0 && seleccion < len(files)){
-					libro = file[seleccion-1]
+					libro = files[seleccion-1]
 				}
 
 
