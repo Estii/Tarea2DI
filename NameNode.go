@@ -198,14 +198,14 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 	}
 
 	for semaforo != message.ID { // Si no esta disponible, esperara hasta que pueda.
-		fmt.Println("NameNode Ocupado porfavor espere un momento...")
+		fmt.Println("\nNameNode Ocupado porfavor espere un momento...")
 		time.Sleep(5 * time.Second)	
 		if( semaforo ==0 ){
 			semaforo = message.ID
 		}				
 	}
 
-	fmt.Println("DataNode " + strconv.FormatInt(message.ID,10) +" ha enviando una solicitud [ Centralizada ]")
+	fmt.Println("\nDataNode " + strconv.FormatInt(message.ID,10) +" ha enviando una solicitud [ Centralizada ]")
 	var flag int64 = 0
 	var flag1 int64 = 0
 	var flag2 int64 = 0
@@ -347,7 +347,7 @@ func (s *Server) Propuesta(ctx context.Context, message *nodos.MessageNode) (*no
 		cantidad3 += cantidad_error		
 		cantidad_error = 0	
 	}	
-	
+
 	var k int64
 	var indice int64
 	indice = 0 // Indice ayuda a enumerar chunks.
