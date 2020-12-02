@@ -17,6 +17,12 @@ import (
     "path/filepath"
 )
 
+func elapsed(what string) func() {
+    start := time.Now()
+    return func() {
+        fmt.Printf("%s se demoro %v\n", what, time.Since(start))
+    }
+}
 
 func BorrarBiblioteca(){
 	conn, err := grpc.Dial("dist112:9000", grpc.WithInsecure())
@@ -183,7 +189,7 @@ func Ver_Catalogo(){
 }
 
 func Cargar_Libro(tipo int64){
-
+	defer elapsed("Upload")() 
 	var flag bool
 	rand.Seed(time.Now().UnixNano())
 	//var conn *grpc.ClientConn

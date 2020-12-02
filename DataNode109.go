@@ -409,7 +409,6 @@ func (s *Server) EnviarLibro(ctx context.Context, message *cliente.MessageClient
 		if(message.Tipo == 2){
 			fmt.Println("Distribucion Centralizada")
 			message := nodos.MessageNode{ Cantidad1:cantidad_uniforme + cantidad_resto, Cantidad2:cantidad_uniforme,Cantidad3:cantidad_uniforme,NombreLibro:nombre_libro,ID: IDNODE}
-			
 			resultado = Propuesta(&message)
 		}
 		nombre_libro = " "
